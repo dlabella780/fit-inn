@@ -1,0 +1,10 @@
+.Links {
+    color: white;
+}
+
+.SocialMediaIcons {
+    float: right;
+    justify-content: end;
+    margin-right: 2rem;
+    text-align: right;
+}

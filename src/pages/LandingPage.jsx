@@ -7,6 +7,7 @@ import SampleTwo from "./SamplePageTwo";
 import SampleThree from "./SamplePageThree.jsx";
 import NotFound from "./404";
 import NavBarTop from "../components/navbar/NavBarTop.jsx";
+import NavBarBottom from "../components/navbar/NavBarBottom.jsx";
 
 class LandingPage extends Component {  
   render() {
@@ -32,7 +33,7 @@ class LandingPage extends Component {
                 </Switch>            
             </span>
             <span id = "bottomrNavBar">
-                
+                <NavBarBottom />
             </span>
         </div>
     );

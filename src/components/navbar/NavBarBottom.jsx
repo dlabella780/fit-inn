@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { NavLink } from "react-router-dom";
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -37,7 +38,12 @@ import {
         color: "yellow",
         cursor: "pointer",
       },
-    },
+     },
+      linkActive: {
+          textDecoration: "none",
+          color: "slategray",
+          fontSize: "15px"
+     }
   }));
 
 export default function SimpleBottomNavigation() {
@@ -49,15 +55,15 @@ export default function SimpleBottomNavigation() {
     <AppBar position="static">
     <CssBaseline />
       <Toolbar>
-        <Typography variant="h6" className={classes.navlinks}>
-          <div className={classes.link}>Help Center</div>
+          <Typography variant="h6" className={classes.navlinks}>
+                  <NavLink to="/pages/SamplePageOne" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-          <div className={classes.link}>Terms of Use</div>
+                  <NavLink to="/pages/SamplePageTwo" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-          <div className={classes.link}>Privacy Policy</div>
-        </Typography>
+                  <NavLink to="/pages/SamplePageThree" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
+          </Typography>
 
         <div className = "SocialMediaIcons">
             <BottomNavigationAction className={classes.link} label="Facebook" icon={<FacebookIcon style={{ fill: 'white' }} />} href="#"/>

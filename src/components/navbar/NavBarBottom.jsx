@@ -56,19 +56,22 @@ export default function SimpleBottomNavigation() {
     <CssBaseline />
       <Toolbar>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/pages/SamplePageOne" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
+                  <NavLink to="/pages/Help" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/pages/SamplePageTwo" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
+                  <NavLink to="/pages/Terms" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/pages/SamplePageThree" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
+                  <NavLink to="/pages/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
           </Typography>
 
         <div className = "SocialMediaIcons">
-            <BottomNavigationAction className={classes.link} label="Facebook" icon={<FacebookIcon style={{ fill: 'white' }} />} href="#"/>
-            <BottomNavigationAction className={classes.link} label="Twitter" icon={<TwitterIcon style={{ fill: 'white' }}/>} href="#"/>
-            <BottomNavigationAction className={classes.link} label="Instagram" icon={<InstagramIcon style={{ fill: 'white' }}/>} href="#"/>
+                  <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.facebook.com", "_blank")}
+                      label="Facebook" icon={<FacebookIcon style={{ fill: 'white' }} />} href="#" />
+                  <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.twitter.com", "_blank")}
+                      label="Twitter" icon={<TwitterIcon style={{ fill: 'white' }} />} href="#" />
+                  <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.instagram.com", "_blank")} 
+                      label = "Instagram" icon = {< InstagramIcon style = {{ fill: 'white' }} />} href="#"/>
         </div>
       </Toolbar>
     </AppBar>

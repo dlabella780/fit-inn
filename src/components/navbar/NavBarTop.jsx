@@ -9,31 +9,38 @@ import {
   useTheme,
   useMediaQuery,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import DrawerComponent from "./Drawer";
 import "./NavBarTop.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountDropdown from "./AccountDropdown";
 
 const useStyles = makeStyles((theme) => ({
-  navlinks: {
-    marginLeft: theme.spacing(5),
-    display: "flex",
-  },
-  logo: {
-    flexGrow: "1",
-    cursor: "pointer",
-  },
-  link: {
-    textDecoration: "none",
-    color: "white",
-    fontSize: "20px",
-    marginLeft: theme.spacing(20),
-    "&:hover": {
-      color: "yellow",
+    navlinks: {
+        marginLeft: theme.spacing(5),
+        display: "flex",
     },
-  },
+    logo: {
+        textDecoration: "none",
+        color: "white",
+        flexGrow: "1",
+        cursor: "pointer",
+    },
+    link: {
+        textDecoration: "none",
+        color: "white",
+        fontSize: "20px",
+        marginLeft: theme.spacing(10),
+        "&:hover": {
+            color: "yellow",
+        },
+    },
+    linkActive: {
+        textDecoration: "none",
+        color: "slategray",
+        fontSize: "20px",
+        marginLeft: theme.spacing(10),
+    }
 }));
 
 
@@ -48,16 +55,14 @@ function Navbar() {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-
-          <p>FIT-INN</p>
-
+           <Link to="/" className={classes.logo}>FIT-INN</Link>
         </Typography>
         {isMobile ? (
           <DrawerComponent />
         ) : (
           <div className={classes.navlinks}>
-            <p className={classes.link}>Find a Gym</p>
-            <p className={classes.link}>List a Gym</p>
+            <NavLink to="/pages/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
+            <NavLink to="/pages/GymUpload" className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink>
             <IconButton className={classes.link} onClick={() => toggleAccountDropdown(!accountDropDownUp)}>
               <AccountCircleIcon fontSize="large"/>
             </IconButton>

@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\components\\navbar"
+    "\\src\\components\\navbar",
+    "\\src\\pages"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\src\\pages\\LandingPage.jsx",
   "PreviewInSolutionExplorer": false
 }

@@ -1,11 +1,6 @@
 import React from "react";
 import LandingPage from "./pages/LandingPage";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
 export default function App() {
   return (

@@ -7,14 +7,20 @@ import {
   Redirect
 } from "react-router-dom";
 
+
+
 export default function App() {
   return (
-    <Router>
+ 
+      <Router>
       <Switch>
         <Route path="/">
           <LandingPage />
         </Route>
       </Switch>
     </Router>
+    
+ 
+  
   );
 }

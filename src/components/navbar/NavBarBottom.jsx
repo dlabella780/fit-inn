@@ -56,13 +56,13 @@ export default function SimpleBottomNavigation() {
     <CssBaseline />
       <Toolbar>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/pages/Help" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
+                  <NavLink to="/Help" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/pages/Terms" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
+                  <NavLink to="/Terms" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/pages/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
+                  <NavLink to="/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
           </Typography>
 
         <div className = "SocialMediaIcons">

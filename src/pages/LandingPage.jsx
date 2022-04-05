@@ -26,19 +26,19 @@ class LandingPage extends Component {
                     <Route exact path={`/`}>
                         <SampleOne />
                     </Route>
-                    <Route path={`/pages/GymSearch`}>
+                    <Route path={`/GymSearch`}>
                         <GymSearchPage />
                     </Route>
-                    <Route path={`/pages/GymUpload`}>
+                    <Route path={`/GymUpload`}>
                         <GymUploadPage />
                     </Route>
-                    <Route path={'/pages/Help'}>
+                    <Route path={'/Help'}>
                         <HelpPage />
                     </Route>
-                    <Route path={'/pages/Terms'}>
+                    <Route path={'/Terms'}>
                         <TermsPage />
                     </Route>
-                    <Route path={'/pages/Privacy'}>
+                    <Route path={'/Privacy'}>
                         <PrivacyPage />
                     </Route>
                     <Route path="*">

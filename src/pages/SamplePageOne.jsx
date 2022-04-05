@@ -4,8 +4,7 @@ import Descriptions from "../components/descriptions/Descriptions"
 class SampleOne extends Component {
   render() {
     return (
-      <Fragment>
-        
+      <Fragment>     
         <Descriptions />
       </Fragment>
     );

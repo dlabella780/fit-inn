@@ -61,8 +61,8 @@ function Navbar() {
           <DrawerComponent />
         ) : (
           <div className={classes.navlinks}>
-            <NavLink to="/pages/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
-            <NavLink to="/pages/GymUpload" className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink>
+            <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
+            <NavLink to="/GymUpload" className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink>
             <IconButton className={classes.link} onClick={() => toggleAccountDropdown(!accountDropDownUp)}>
               <AccountCircleIcon fontSize="large"/>
             </IconButton>

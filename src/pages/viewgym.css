@@ -1,0 +1,29 @@
+.search-bar-form{
+    position: fixed;
+    left: 30px;
+}
+
+.row-product{
+    position: fixed;
+    top: 30%;
+    left: 30px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 20px;
+    padding: 10px;
+}
+
+.item1{
+    grid-row: 1;
+}
+
+.product-price {
+    font-weight: bold;
+    font-size: 140%;
+}
+
+.name-gym{
+    font-weight: bold;
+    font-size: 140%;
+}
+

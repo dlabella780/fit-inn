@@ -13,6 +13,7 @@ import TermsPage from "./TermsPage.jsx";
 import NotFound from "./404";
 import NavBarTop from "../components/navbar/NavBarTop.jsx";
 import NavBarBottom from "../components/navbar/NavBarBottom.jsx";
+import ViewGym from "./ViewGym.jsx"
 
 class LandingPage extends Component {  
   render() {
@@ -41,9 +42,13 @@ class LandingPage extends Component {
                     <Route path={'/Privacy'}>
                         <PrivacyPage />
                     </Route>
+                    <Route path="/ViewGym">
+                        <ViewGym />
+                    </Route>
                     <Route path="*">
                         <NotFound />
                     </Route>
+                    
                 </Switch>            
             </span>
             <span id = "bottomrNavBar">

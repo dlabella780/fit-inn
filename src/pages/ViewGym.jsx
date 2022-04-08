@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "./viewgym.css";
-import 'bootstrap/dist/css/bootstrap.css';
+//import 'bootstrap/dist/css/bootstrap.css';
 import {Routes, Route} from 'react-router-dom'
 import sampleImage from '../components/viewgym/gym1.jpg';
 import Paper from '@material-ui/core/Paper';

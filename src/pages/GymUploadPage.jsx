@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from "react";
+import UploadForm from "../components/GymUpload/UploadForm";
 
 class GymUploadPage extends Component {
     render() {
         return (
             <Fragment>
-                <h2>This is the List My Gym page.</h2>
+                <UploadForm />
             </Fragment>
         );
     }
 }
+
 export default GymUploadPage;

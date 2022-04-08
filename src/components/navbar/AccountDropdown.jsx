@@ -12,7 +12,7 @@ export default class AccountDropdown extends Component {
         <span className="close" onClick={this.handleClick}>&times;</span>
         <div className="loginFitinn"><p>FIT-INN</p></div>
         <form>
-        <div className="input-container">
+        <div className="ad-input-container">
             <input type="text" placeholder="Email" required/>
             <input type="password" placeholder="Password" required/>
             <input type="submit" value="Login"/>

@@ -20,7 +20,7 @@
     left: 5%;
 }
 
-.input-container {
+.ad-input-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -31,12 +31,12 @@
     left: 5%;
 }
 
-.input-container input[type="text"], [type="password"]{
+.ad-input-container input[type="text"], [type="password"]{
     cursor: pointer;
     font-size: 30px;
 }
 
-.input-container input[type="submit"]{
+.ad-input-container input[type="submit"]{
     cursor: pointer;
     font-size: 30px;
 }

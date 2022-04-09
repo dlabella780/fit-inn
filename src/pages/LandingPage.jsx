@@ -14,6 +14,13 @@ import NotFound from "./404";
 import NavBarTop from "../components/navbar/NavBarTop.jsx";
 import NavBarBottom from "../components/navbar/NavBarBottom.jsx";
 import ViewGym from "./ViewGym.jsx"
+import HostsPage from "./HostsPage.jsx";
+import GymUsersPage from "./GymUsersPage.jsx";
+import CommunityGuidelinesPage from "./CommunityGuidelinesPage.jsx";
+import ContactInfoPage from "./ContactInfoPage.jsx";
+import PolicyForGymUsersPage from "./PolicyForGymUsersPage.jsx";
+import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
+import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 
 class LandingPage extends Component {  
   render() {
@@ -45,6 +52,28 @@ class LandingPage extends Component {
                     <Route path="/ViewGym">
                         <ViewGym />
                     </Route>
+                    <Route path={`/pages/Hosts`}>
+                        <HostsPage />
+                    </Route>
+                    <Route path={`/pages/GymUsers`}>
+                        <GymUsersPage />
+                    </Route>
+                    <Route path={`/pages/PolicyForHosts`}>
+                        <PolicyForHostsPage />
+                    </Route>
+                    <Route path={`/pages/PolicyForGymUsers`}>
+                        <PolicyForGymUsersPage />
+                    </Route>
+                    <Route path={`/pages/CommunityGuidelines`}>
+                        <CommunityGuidelinesPage />
+                    </Route>
+                    <Route path={`/pages/ProtectionAndInsurance`}>
+                        <ProtectionAndInsurancePage />
+                    </Route>
+                    <Route path={`/pages/ContactInfo`}>
+                        <ContactInfoPage />
+                    </Route>
+
                     <Route path="*">
                         <NotFound />
                     </Route>

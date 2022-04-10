@@ -1,13 +1,21 @@
 import React, { Component, Fragment } from "react";
 import "./viewgym.css";
 import 'bootstrap/dist/css/bootstrap.css';
-import {Routes, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import sampleImage from '../components/viewgym/gym1.jpg';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import { GymA, GymB } from "./GymPages";
+import {GymA, GymB } from "./GymPages";
+// import '@fontsource/roboto/300.css';
+// import '@fontsource/roboto/400.css';
+// import '@fontsource/roboto/500.css';
+// import '@fontsource/roboto/700.css';
+import { Typography } from "@material-ui/core";
+import Slider from "./Slider.jsx";
+import { StrictMode } from "react";
+// import ViewGyms from "../components/viewgym/ViewGyms.jsx"
 
-const ViewGyms = () => {
+
+export const ViewGyms = () => {
     return (
         <div>
             <form className="search-bar-form">        
@@ -30,13 +38,19 @@ const ViewGyms = () => {
             <div className="row-product">
                 <div className="item1">
                     <div className="col-md-2">
+                        <NavLink to="/gyma">
                         <img src={sampleImage} alt="Sample Img" height="150" />
+                        </NavLink>
                     </div>
                     <div className="col-md-8 product-detail">
-                        {/* <Routes>
-                        <Route path='/gyma' element={<GymA />}>Gym A</Route>
-                        </Routes> */}
-                        <h4 className="name-gym">Gym A</h4>
+                        <Typography variant="h6">
+                            <NavLink style={{ 
+                                textDecoration: 'none', 
+                                color: 'black',
+                                fontWeight: 'bold' }} 
+                            to="/gyma">Gym A</NavLink>
+                        </Typography>
+                        
                         <p>Description</p> 
                     </div>
                     <div className="col-md-2 product-price">
@@ -71,17 +85,24 @@ const ViewGyms = () => {
                 </div>
 
             </div>
+            {/* <Slider /> */}
+
+            {/* <StrictMode>
+                <Slider2 />
+            </StrictMode> */}
         </div>
     );
-};
-
-class ViewGym extends Component {
-    render() {
-        return (
-            <Fragment>
-                <ViewGyms />
-            </Fragment>
-        );
-    }
 }
-export default ViewGym;
+
+
+// class ViewGym extends Component {
+//     render() {
+//         return (
+//             <Fragment>
+//                 <ViewGyms />
+                
+//             </Fragment>
+//         );
+//     }
+// }
+// export default ViewGym;

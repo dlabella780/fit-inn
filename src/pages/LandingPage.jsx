@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
 import "./LandingPage.css";
-import SampleOne from "./SamplePageOne";
+import HomePage from "./HomePage";
 import SampleTwo from "./SamplePageTwo";
 import SampleThree from "./SamplePageThree.jsx";
 import GymSearchPage from "./GymSearchPage.jsx";
@@ -15,6 +15,14 @@ import NavBarTop from "../components/navbar/NavBarTop.jsx";
 import NavBarBottom from "../components/navbar/NavBarBottom.jsx";
 import {ViewGyms} from "./ViewGym"
 import { GymA } from "./GymPages";
+import ViewGym from "./ViewGym.jsx"
+import HostsPage from "./HostsPage.jsx";
+import GymUsersPage from "./GymUsersPage.jsx";
+import CommunityGuidelinesPage from "./CommunityGuidelinesPage.jsx";
+import ContactInfoPage from "./ContactInfoPage.jsx";
+import PolicyForGymUsersPage from "./PolicyForGymUsersPage.jsx";
+import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
+import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 
 class LandingPage extends Component {  
   render() {
@@ -26,7 +34,7 @@ class LandingPage extends Component {
             <span id = "content">
                 <Switch>
                     <Route exact path={`/`}>
-                        <SampleOne />
+                        <HomePage />
                     </Route>
                     <Route path={`/GymSearch`}>
                         <GymSearchPage />
@@ -49,6 +57,28 @@ class LandingPage extends Component {
                     <Route path="/gyma">
                         <GymA />
                     </Route>
+                    <Route path={`/pages/Hosts`}>
+                        <HostsPage />
+                    </Route>
+                    <Route path={`/pages/GymUsers`}>
+                        <GymUsersPage />
+                    </Route>
+                    <Route path={`/pages/PolicyForHosts`}>
+                        <PolicyForHostsPage />
+                    </Route>
+                    <Route path={`/pages/PolicyForGymUsers`}>
+                        <PolicyForGymUsersPage />
+                    </Route>
+                    <Route path={`/pages/CommunityGuidelines`}>
+                        <CommunityGuidelinesPage />
+                    </Route>
+                    <Route path={`/pages/ProtectionAndInsurance`}>
+                        <ProtectionAndInsurancePage />
+                    </Route>
+                    <Route path={`/pages/ContactInfo`}>
+                        <ContactInfoPage />
+                    </Route>
+
                     <Route path="*">
                         <NotFound />
                     </Route>

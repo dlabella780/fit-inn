@@ -1,0 +1,14 @@
+.SimpleSearch {
+    position: absolute;
+    bottom: 50%;
+}
+
+.SimpleSearch input[type="text"] {
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.SimpleSearch input[type="submit"]{
+    cursor: pointer;
+    font-size: 30px;
+}

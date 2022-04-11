@@ -1,46 +1,30 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import SortingButtons from "./SortingButtons";
+import DateTime from "./DateTime";
+import NumberOfGuests from "./NumberOfGuests";
 
 const AdvSearchBar = ({setSearchQuery}) => (
   <form>
     <TextField
       id="search-bar"
       className="text"
-      onInput={(e) => {
-        setSearchQuery(e.target.value);
-      }}
-      label="Find a gym!"
+      label="Find a gym near you!"
       variant="outlined"
       placeholder="You'll be sure to fit-inn!"
       size="large"
-      fullWidth
     />
+    <DateTime/>
+    <NumberOfGuests/>
   </form>
+
+  //# of people
 );
 
-const filterData = (query, data) => {
-  if (!query) return data;
-  else return data.filter((d) => d.toLowerCase().includes(query));
-};
-
-const data = [];
-
-export default function HelpSearchBar() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const dataFiltered = filterData(searchQuery, data);
-
+export default function AdvancedSearchBar() {
   return (
     <div>
-      <AdvSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
-      <div>
-        {dataFiltered.map((d) => (
-          <div
-            className="text"
-            key={d.id}>{d}
-          </div>
-        ))}
-      </div>
+      <AdvSearchBar/>
       <SortingButtons/>
     </div>
   );

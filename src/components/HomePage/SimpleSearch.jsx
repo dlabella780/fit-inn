@@ -12,6 +12,5 @@ export default class SimpleSearch extends Component {
                 </div>
             </form>
         </div>
-        );
-    }
+    );}
 }

@@ -31,8 +31,7 @@ const filterData = (query, data) => {
   }
 };
 
-const data = [
-];  
+const data = [];
 
 export default function HelpSearchBar() {
   const [searchQuery, setSearchQuery] = useState("");

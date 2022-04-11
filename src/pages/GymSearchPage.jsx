@@ -1,8 +1,9 @@
 import React, { Component, Fragment, useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import "./GymSearchPage.css";
-import AdvancedSearch from "../components/GymSearch/AdvancedSearch";
+import AdvancedSearchBar from "../components/GymSearch/AdvancedSearchBar";
 import {ViewGyms} from "./ViewGym";
+import SortingButtons from "../components/GymSearch/SortingButtons";
 
 const GET_GYMS = gql(`
   query ListGyms {
@@ -46,7 +47,7 @@ function GetGyms() {
 class GymSearchPage extends Component {
     render() { return (
       <Fragment>
-        <AdvancedSearch/>
+        <AdvancedSearchBar/>
       </Fragment>
     );}
 }

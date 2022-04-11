@@ -1,4 +1,4 @@
-import './descriptionList.css'
+import './DescriptionList.css'
 
 import React from 'react'
 

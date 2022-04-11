@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
-import "./viewgym.css";
+import "./ViewGym.css";
 import 'bootstrap/dist/css/bootstrap.css';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {Link, NavLink} from "react-router-dom";
-import sampleImage from '../components/viewgym/gym1.jpg';
-import {GymA, GymB } from "./GymPages";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
+import sampleImage from '../components/ViewGym/gym1.jpg';
+import { GymA, GymB } from "./GymPages";
 // import '@fontsource/roboto/300.css';
 // import '@fontsource/roboto/400.css';
 // import '@fontsource/roboto/500.css';
@@ -12,8 +12,7 @@ import {GymA, GymB } from "./GymPages";
 import { Typography } from "@material-ui/core";
 import Slider from "./Slider.jsx";
 import { StrictMode } from "react";
-// import ViewGyms from "../components/viewgym/ViewGyms.jsx"
-
+// import ViewGyms from "../components/ViewGym/ViewGyms.jsx"
 
 export const ViewGyms = () => {
     return (
@@ -93,7 +92,6 @@ export const ViewGyms = () => {
         </div>
     );
 }
-
 
 // class ViewGym extends Component {
 //     render() {

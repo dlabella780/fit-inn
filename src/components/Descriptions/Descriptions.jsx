@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import './descriptions.css'
+import './Descriptions.css'
 
 import { featuredUser, featuredHost } from './data';
-import DescriptionList from './descriptionList/DescriptionList.jsx';
+import DescriptionList from './DescriptionList/DescriptionList.jsx';
 
 
  const Descriptions = () => {

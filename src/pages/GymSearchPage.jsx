@@ -1,5 +1,8 @@
-import React, {Component, Fragment, useEffect, useState} from "react";
-import {gql, useQuery} from "@apollo/client";
+import React, { Component, Fragment, useEffect, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import "./GymSearchPage.css";
+import AdvancedSearch from "../components/GymSearch/AdvancedSearch";
+import {ViewGyms} from "./ViewGym";
 
 const GET_GYMS = gql(`
   query ListGyms {
@@ -27,7 +30,7 @@ function GetGyms() {
 
   return (
     <div>
-      {gyms.map((val) => {
+      { gyms.map((val) => {
         return (
           <div>
             Gym Name : {val.gymName} <></>
@@ -35,26 +38,16 @@ function GetGyms() {
             Gym Description : {val.gymDescription} <></>
           </div>
         )
-      })}
+      }) }
     </div>
   )
 }
 
 class GymSearchPage extends Component {
-  render() {
-    return (
+    render() { return (
       <Fragment>
-        <div className={"search"}>
-          <input
-            type={"text"}
-            placeholder={"Search for a gym..."}
-            className={"input"}
-            //onChange={event => GetGyms(event.target.value)}
-          />
-        </div>
-        <GetGyms/>
+        <AdvancedSearch/>
       </Fragment>
-    );
-  }
+    );}
 }
 export default GymSearchPage;

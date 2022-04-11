@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import "../../pages/HomePage.css";
 
-export default class SimpleSearch extends Component {
+export default class AdvancedSearch extends Component {
     render() { return (
-        <div className="SimpleSearch">
+        <div className="AdvancedSearch">
             <form>
                 <div>
                     <input type="text" placeholder="Location" />

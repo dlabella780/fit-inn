@@ -21,6 +21,9 @@ import ContactInfoPage from "./ContactInfoPage.jsx";
 import PolicyForGymUsersPage from "./PolicyForGymUsersPage.jsx";
 import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
 import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
+import CreateAccount from "../components/createAccount/createAccount.jsx";
+
+<com></com>
 
 class LandingPage extends Component {  
     render() { return (
@@ -74,6 +77,9 @@ class LandingPage extends Component {
                 </Route>
                 <Route path={`/pages/ContactInfo`}>
                     <ContactInfoPage />
+                </Route>
+                <Route path={'/Register'}>
+                    <CreateAccount />
                 </Route>
 
                 <Route path="*">

@@ -8,7 +8,7 @@ export default function NumberOfGuests() {
 			label="# of guests?"
 			type="number"
 			variant="filled"
-			style = {{width: 140}}
+			style = {{width: 200}}
 		/>
 	);
 }

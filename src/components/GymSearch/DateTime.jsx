@@ -5,25 +5,23 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 export default function DateTimeValidation() {
-	const [value, setValue] = React.useState(new Date());
+	const [startTime, setStartTime] = React.useState(new Date());
+	const [endTime, setEndTime] = React.useState(new Date());
 
+	// noinspection RequiredAttributes
 	return (
 		<LocalizationProvider dateAdapter={AdapterDateFns}>
 			<DateTimePicker
 				renderInput={(params) => <TextField {...params} />}
 				label="Starting day/time?"
-				value={value}
-				onChange={(newValue) => {
-					setValue(newValue);
-				}}
+				value={startTime}
+				onChange={(newValue) => {setStartTime(newValue);}}
 			/>
 			<DateTimePicker
 				renderInput={(params) => <TextField {...params} />}
 				label="Ending day/time?"
-				value={value}
-				onChange={(newValue) => {
-					setValue(newValue);
-				}}
+				value={endTime}
+				onChange={(newValue) => {setEndTime(newValue);}}
 			/>
 		</LocalizationProvider>
 	);

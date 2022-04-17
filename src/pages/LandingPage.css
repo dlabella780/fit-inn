@@ -4,11 +4,14 @@
     align-items: center;
     height: 200px;
 }
+
 #bottomrNavBar {
     position: absolute;
     width: 100%;
     bottom: 0px;
 }
-/* body{
+
+ body{
     background-image: url('https://via.placeholder.com/400');
-} */
+} 
+

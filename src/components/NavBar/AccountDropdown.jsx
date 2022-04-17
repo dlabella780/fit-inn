@@ -5,6 +5,10 @@ export default class AccountDropdown extends Component {
     handleClick = () => {
         this.props.toggle();
     };
+    createAccount = () => {
+        document.location="/Register";
+        this.props.toggle();
+    }
 
     render() {
     return (
@@ -18,7 +22,7 @@ export default class AccountDropdown extends Component {
             <input type="submit" value="Login"/>
         </div>
         </form>
-        <button className="btn">Create Account</button>
+        <button href="/Register" className="btn" onClick={this.createAccount}>Create Account</button>
     </div>
     );
     }

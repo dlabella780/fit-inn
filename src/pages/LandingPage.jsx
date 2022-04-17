@@ -16,6 +16,7 @@ import { GymA, GymB } from "./GymPages";
 import ViewGym from "./ViewGym.jsx"
 import HostsPage from "./HostsPage.jsx";
 import GymUsersPage from "./GymUsersPage.jsx";
+import ProfilePage from "./ProfilePage.jsx";
 import CommunityGuidelinesPage from "./CommunityGuidelinesPage.jsx";
 import ContactInfoPage from "./ContactInfoPage.jsx";
 import PolicyForGymUsersPage from "./PolicyForGymUsersPage.jsx";
@@ -82,10 +83,12 @@ class LandingPage extends Component {
                 <Route path={`/pages/ContactInfo`}>
                     <ContactInfoPage />
                 </Route>
+                 <Route path={'/Profile'}>
+                    <ProfilePage />
+                 </Route>
                 <Route path={'/Register'}>
                     <CreateAccount />
                 </Route>
-
                 <Route path="*">
                     <NotFound />
                 </Route>

@@ -64,6 +64,9 @@ export default function SimpleBottomNavigation() {
           <Typography variant="h6" className={classes.navlinks}>
                   <NavLink to="/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
           </Typography>
+          <Typography variant="h6" className={classes.navlinks}>
+                  <NavLink to="/Profile/Basic" className={isActive => (isActive ? classes.linkActive : classes.link)}>Profile (Testing)</NavLink>
+          </Typography>
 
         <div className = "SocialMediaIcons">
                   <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.facebook.com", "_blank")}

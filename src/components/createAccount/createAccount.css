@@ -1,0 +1,14 @@
+#fields {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#form{
+    top: 100px;
+    -ms-flex-align: center;
+    position: absolute;
+    padding: 5px;
+    background-color: white;
+    border-radius: 12px;
+    border: 2px solid black;
+}

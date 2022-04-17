@@ -1,6 +1,31 @@
 .UploadForm {
     position: absolute;
     top: 10%;
+    background-color: white;
+    padding: 10px;
+}
+
+.uf-sidebar {
+    position: fixed;
+    left: 0px;
+    top: 100px;
+}
+
+.uf-sidebar ul{
+    display: grid;
+}
+
+.uf-sidebar li{
+    font-size: 40px;
+    margin-top: 50px;
+}
+
+.uf-sidebar li:hover{
+    background-color: darkgray;
+}
+
+.uf-sidebar li:checked{
+    background-color: blue;
 }
 
 .uf-input-container {

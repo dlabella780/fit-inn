@@ -31,8 +31,8 @@ export const ViewGyms = () => {
                 name='time'          
                 placeholder='Time'/>
             <input type="text" name='guest' placeholder=''
-            />    
-            </form> 
+            />
+            </form>
 
             <div className="row-product">
                 <div className="item1">

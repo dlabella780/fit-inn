@@ -12,7 +12,7 @@ import NotFound from "./404";
 import NavBarTop from "../components/NavBar/NavBarTop.jsx";
 import NavBarBottom from "../components/NavBar/NavBarBottom.jsx";
 import {ViewGyms} from "./ViewGym"
-import { GymA } from "./GymPages";
+import { GymA, GymB } from "./GymPages";
 import ViewGym from "./ViewGym.jsx"
 import HostsPage from "./HostsPage.jsx";
 import GymUsersPage from "./GymUsersPage.jsx";
@@ -26,7 +26,8 @@ import CreateAccount from "../components/createAccount/createAccount.jsx";
 <com></com>
 
 class LandingPage extends Component {  
-    render() { return (
+    render() { 
+        return (
     <div>
         <span id = "topNavBar">
             <NavBarTop />
@@ -56,6 +57,9 @@ class LandingPage extends Component {
                 </Route>
                 <Route path="/gyma">
                     <GymA />
+                </Route>
+                <Route path="/gymb">
+                    <GymB />
                 </Route>
                 <Route path={`/pages/Hosts`}>
                     <HostsPage />

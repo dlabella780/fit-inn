@@ -1,0 +1,57 @@
+ .name-info{
+    display: block;
+    position: fixed;
+    top: 4rem;
+    left: 30px;
+}
+
+
+.about-gym{
+    font-size: 15;
+    position: fixed;
+    margin-top: 10rem;
+    left: 10px;
+}
+
+.product-pro{
+    font-size: 10px;
+}
+
+.info-gym{
+    font-size: 20px;
+}
+
+.booking-form{
+    border-style: ridge;
+    border-color: rgb(38, 1, 249);
+    position: fixed;
+    margin-top: 100px;
+    right: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+Button {
+    padding: 2px 20px;
+    position: center;
+}
+
+.sliders{
+    justify-content: center;
+    /* align-items: center; */
+    position: fixed;
+    left: 2rem;
+    top: 10rem;
+    width: 50px;
+    max-width: 60%; 
+    max-height: 30%;
+    min-height: 20%;
+    min-width: 200px;
+}
+
+/* .item, img{
+    height: 70% !important;
+    width:  100% !important;
+} */
+
+

@@ -17,7 +17,7 @@ export default class SortingButtons extends Component {
 					<Button key="rating" onClick={() => {}}> Sort by Rating</Button>
 					<Button key="list" onClick={() => {}}> View as List</Button>
 					<Button key="title" onClick={() => {}}> View as Tiles</Button>
-					<Button key="search" onClick={() => {}}> GO!</Button>
+					<Button key="search" onClick={() => {}} href="/ViewGym"> GO!</Button>
 				</ButtonGroup>
 			</Box>
 		</div>

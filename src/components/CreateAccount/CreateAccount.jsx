@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import "./createAccount.css";
+import "./CreateAccount.css";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';

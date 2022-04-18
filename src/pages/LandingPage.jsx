@@ -22,7 +22,7 @@ import ContactInfoPage from "./ContactInfoPage.jsx";
 import PolicyForGymUsersPage from "./PolicyForGymUsersPage.jsx";
 import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
 import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
-import CreateAccount from "../components/createAccount/createAccount.jsx";
+import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 
 <com></com>
 

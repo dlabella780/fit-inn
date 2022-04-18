@@ -15,21 +15,39 @@
     display: grid;
 }
 
-.uf-sidebar li{
+.uf-sidebar button {
     font-size: 40px;
+    border: none;
     margin-top: 50px;
+    cursor: pointer;
 }
 
-.uf-sidebar li:hover{
+.uf-overall-button{
+    background-color: white;
+    color: black;
+}
+
+.uf-overall-button-selected{
+    background-color: #3F51B5;
+    color: white;
+}
+
+.uf-overall-button:hover{
     background-color: darkgray;
-}
-
-.uf-sidebar li:checked{
-    background-color: blue;
 }
 
 .uf-input-container {
     font-size: 30px;
+}
+
+.uf-input-container textarea{
+    font-size: 30px;
+    resize: none;
+    margin-bottom: 50px;
+}
+
+.uf-input-container h3{
+    font-size: 50px;
 }
 
 .uf-input-container select{
@@ -42,16 +60,38 @@
 
 .uf-input-container input {
     font-size: 30px;
+    margin-bottom: 50px;
+}
+
+.uf-address input {
+    margin-bottom: 5px;
 }
 
 .uf-input-container input[type="text"]{
     font-size: 30px;
 }
 
-.uf-input-container input[type="checkbox"]{
+.uf-input-container input[type="number"]{
     font-size: 30px;
+    width: 80px;
+}
+
+.uf-input-container input[type="radio"]{
+    width: 30px;
+    height: 30px;
 }
 
 .uf-input-container input[type="submit"]{
     font-size: 30px;
+}
+
+.uf-section-button-back {
+    font-size: 30px;
+}
+
+.uf-section-button-next {
+    font-size: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
 }

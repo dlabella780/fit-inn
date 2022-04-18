@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import "./ViewGym.css";
-//import 'bootstrap/dist/css/bootstrap.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Link, NavLink} from "react-router-dom";
 import sampleImage from '../components/ViewGym/gym1.jpg';

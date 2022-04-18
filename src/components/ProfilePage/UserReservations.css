@@ -1,0 +1,47 @@
+.GymReserveTitle{
+    position: absolute;
+    top: 15%;
+    left: 10%;
+    font-size: 20px;
+}
+
+.CurrentPastSelection{
+    position: absolute;
+    top: 25%;
+    left: 10%;
+}
+
+.Button{
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.GuestPanel{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 35%;
+    background-color: gray;
+}
+
+.HostPanel{
+    position: absolute;
+    top: 30%;
+    right: 10%;
+    width: 35%;
+    background-color: gray;
+}
+
+.ReservationPanel{
+    position: relative;
+    display: grid;
+    border-style: solid;
+    margin: 10px;
+}
+
+.ReserveComps{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    gap: 20px;
+    padding: 10px;
+}

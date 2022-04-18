@@ -3,18 +3,6 @@ import { NavLink } from "react-router-dom";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from '@mui/material/Box';
 import "./UserReservations.css";
-import {
-    AppBar,
-    Toolbar,
-    IconButton,
-    Typography,
-    CssBaseline,
-    makeStyles,
-    useTheme,
-    useMediaQuery,
-    Link,
-    Button,
-  } from "@material-ui/core";
 class UserReservations extends Component {
     render() { return (
         <>

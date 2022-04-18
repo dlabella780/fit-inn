@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from "react";
+import { NavLink } from "react-router-dom";
+import UserGymReservationEntry from "./UserGymReservationEntry";
 
 class UserReservations extends Component {
     render() { return (
         <Fragment>
-            <h2>This is the user's upcoming gym reservations.</h2>
+            <UserGymReservationEntry />
         </Fragment>
     );}
 }

@@ -6,10 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import {ApolloClient, InMemoryCache, ApolloProvider} from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: 'https://h5ajf0gyz7.execute-api.us-west-1.amazonaws.com/graphql/',
+  uri: process.env.REACT_APP_VENDIA_URI,
   cache: new InMemoryCache(),
   headers: {
-    'X-API-KEY': 'yFRZ83cVo0Y7Ii5nNOPV_S5O5RD3AJMQ0ifyeeFY'
+    'X-API-KEY': process.env.REACT_APP_API_KEY
   }
 });
 

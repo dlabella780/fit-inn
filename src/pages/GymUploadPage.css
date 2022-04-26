@@ -62,9 +62,23 @@
     font-size: 30px;
     margin-bottom: 50px;
 }
+.uf-input-container button {
+    font-size: 30px;
+    margin-left: 10px;
+}
 
 .uf-address input {
     margin-bottom: 5px;
+}
+
+.uf-input-equip button{
+    font-size: 20px;
+}
+
+.uf-input-equip-details{
+    position: absolute;
+    top: 189px;
+    right: 500px;
 }
 
 .uf-input-container input[type="text"]{

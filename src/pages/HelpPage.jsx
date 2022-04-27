@@ -28,6 +28,7 @@ class HelpPage extends Component {
                 <Typography variant="h6"><NavLink to="/pages/ProtectionAndInsurance" style={{ textDecoration: 'none' }}>Host Liability Insurance/Protection</NavLink></Typography>
                 <Typography variant="h6"><NavLink to="/pages/CommunityGuidelines" style={{ textDecoration: 'none' }}>Community Guidelines</NavLink></Typography>
             </span>
+            <a href='https://www.freepik.com/vectors/gym-room'>Gym room vector image created by upklyak - www.freepik.com</a>
         </div>
     );}
 }

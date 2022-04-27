@@ -11,40 +11,31 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { createTheme } from '@mui/material/styles';
 import "./NavBarBottom.css";
-import {
-    AppBar,
-    Toolbar,
-    IconButton,
-    Typography,
-    CssBaseline,
-    makeStyles,
-    useTheme,
-    useMediaQuery,
-    Link,
-    Button,
-  } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Typography, CssBaseline,
+  makeStyles, useTheme, useMediaQuery, Link, Button, } from "@material-ui/core";
 
-  const useStyles = makeStyles((theme) => ({
-    navlinks: {
-      marginLeft: theme.spacing(5),
-      display: "flex",
+const useStyles = makeStyles((theme) => ({
+  navlinks: {
+    marginLeft: theme.spacing(5),
+    display: "flex",
+    cursor: "pointer",
+  },
+  link: {
+    textDecoration: "none",
+    color: "white",
+    fontSize: "18px",
+    "&:hover": {
+      color: "black",
       cursor: "pointer",
     },
-    link: {
-      textDecoration: "none",
-      color: "white",
-      fontSize: "15px",
-      "&:hover": {
-        color: "yellow",
-        cursor: "pointer",
-      },
-     },
-      linkActive: {
-          textDecoration: "none",
-          color: "slategray",
-          fontSize: "15px"
-     }
-  }));
+  },
+  linkActive: {
+    background: "none",
+    textDecoration: "none",
+    color: "black",
+    fontSize: "18px"
+  }
+}));
 
 export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
@@ -53,30 +44,31 @@ export default function SimpleBottomNavigation() {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <AppBar position="static">
-    <CssBaseline />
+      <CssBaseline />
       <Toolbar>
+        <Box sx={{display: 'flex', '& > *': {m: 1,},}} className={"NavLinks"}>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/Help" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
+            <NavLink to="/Help" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/Terms" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
+            <NavLink to="/Terms" className={isActive => (isActive ? classes.linkActive : classes.link)}>Terms of Use</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
+            <NavLink to="/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
           </Typography>
           <Typography variant="h6" className={classes.navlinks}>
-                  <NavLink to="/Profile/Basic" className={isActive => (isActive ? classes.linkActive : classes.link)}>Profile (Testing)</NavLink>
+            <NavLink to="/Profile/Basic" className={isActive => (isActive ? classes.linkActive : classes.link)}>Profile</NavLink>
           </Typography>
-
+        </Box>
         <div className = "SocialMediaIcons">
-                  <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.facebook.com", "_blank")}
-                      label="Facebook" icon={<FacebookIcon style={{ fill: 'white' }} />} href="#" />
-                  <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.twitter.com", "_blank")}
-                      label="Twitter" icon={<TwitterIcon style={{ fill: 'white' }} />} href="#" />
-                  <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.instagram.com", "_blank")} 
-                      label = "Instagram" icon = {< InstagramIcon style = {{ fill: 'white' }} />} href="#"/>
+          <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.facebook.com", "_blank")}
+            label="Facebook" icon={<FacebookIcon style={{ fill: 'white' }} />} href="#" />
+          <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.twitter.com", "_blank")}
+            label="Twitter" icon={<TwitterIcon style={{ fill: 'white' }} />} href="#" />
+          <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.instagram.com", "_blank")}
+            label = "Instagram" icon = {< InstagramIcon style = {{ fill: 'white' }} />} href="#"/>
         </div>
       </Toolbar>
     </AppBar>
-  );
+);
 }

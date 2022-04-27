@@ -11,9 +11,8 @@ import TermsPage from "./TermsPage.jsx";
 import NotFound from "./404";
 import NavBarTop from "../components/NavBar/NavBarTop.jsx";
 import NavBarBottom from "../components/NavBar/NavBarBottom.jsx";
-import {ViewGyms} from "./ViewGym"
+import { ViewGyms } from "./ViewGym"
 import { GymA, GymB } from "./GymPages";
-import ViewGym from "./ViewGym.jsx"
 import HostsPage from "./HostsPage.jsx";
 import GymUsersPage from "./GymUsersPage.jsx";
 import ProfilePage from "./ProfilePage.jsx";
@@ -24,15 +23,10 @@ import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
 import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 
-<com></com>
-
 class LandingPage extends Component {  
-    render() { 
-        return (
-    <div>
+    render() { return ( <div>
         <span id = "topNavBar">
-            <NavBarTop />
-        </span>
+            <NavBarTop /></span>
         <span id = "content">
             <Switch>
                 <Route exact path={`/`}>
@@ -92,13 +86,11 @@ class LandingPage extends Component {
                 <Route path="*">
                     <NotFound />
                 </Route>
-
             </Switch>
         </span>
         <span id = "bottomrNavBar">
             <NavBarBottom />
         </span>
-    </div>
-    );}
+    </div>);}
 }
 export default withRouter(LandingPage);

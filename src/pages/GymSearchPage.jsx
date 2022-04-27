@@ -39,7 +39,7 @@ function GetGyms() {
             Gym Description : {val.gymDescription} <></>
           </div>
         )
-      }) }
+      })}
     </div>
   )
 }

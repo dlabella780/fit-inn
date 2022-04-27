@@ -1,0 +1,13 @@
+.NavLinks {
+    text-align: left;
+    top: 11px;
+    position: absolute;
+    left: 20px;
+}
+
+.SocialMediaIcons {
+    text-align: right;
+    top: 5px;
+    position: absolute;
+    right: 0px;
+}

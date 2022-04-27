@@ -12,6 +12,6 @@
 }
 
  body{
-    background-image: url('https://via.placeholder.com/400');
-} 
-
+    background-image: url('../components/HomePage/upklyak.png');
+    background-size: 2700px;
+ }

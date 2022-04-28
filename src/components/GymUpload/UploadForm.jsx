@@ -1,12 +1,55 @@
 import React, { useState } from "react";
+import { gql, useMutation, useQuery} from "@apollo/client";
 import "../../pages/GymUploadPage.css"
 
 function UploadForm () {
+
+    const GET_EQUIPMENT = gql`
+        query MyQuery {
+            list_EquipmentItems {
+            _EquipmentItems {
+                _id
+                name
+            }
+            }
+        }
+    `;
+    
+    const ADD_GYM = gql`
+    mutation gymMutation($accessInformation: String = "", $address: String = "", $availability: [String] = "", $bookingNotice: Int = 3, 
+        $cancelationWarning: Int = 24, $cost: Int = 20, $description: String = "", $tvType: String = "", $rating: Int = 0, 
+        $title: String = "", $photos: [String] = "", $ownerId: String = "", $numGuestsAllowed: Int = 2, $isHostHome: Boolean = false, 
+        $isActive: Boolean = false, $hasWifi: Boolean = false, $hasSpeakers: Boolean = false, $hasBathroom: Boolean = false,
+        $equipment: [Self_Gym_equipment_equipmentItem_Input_] = {}
+        ) {
+            add_Gym(
+            input: {accessInformation: $accessInformation, address: $address, availability: $availability, bookingNotice: $bookingNotice, 
+                cancelationWarning: $cancelationWarning, cost: $cost, description: $description, hasBathroom: $hasBathroom, 
+                hasSpeakers: $hasSpeakers, isActive: $isActive, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, 
+                ownerId: $ownerId, photos: $photos, rating: $rating, title: $title, tvType: $tvType, equipment: $equipment}
+            syncMode: NODE_LEDGERED
+            ) {
+                transaction {
+                    _id
+                    submissionTime
+                }
+                result {
+                    _id
+                }
+        }
+      }       
+    `;
+
+    
     const [ufView, toggleUfView] = useState("general");
     
     const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
         const [equipDets, setEquipDets] = useState('');
+
+        const equipmentObj = []
+        equipMap.forEach((value, key) => equipmentObj.push({key: key, value: value}));
+
 
         function setEquipmentInfo() {
             if(equip !== '') {
@@ -19,25 +62,23 @@ function UploadForm () {
         return (
             <><select name="Equipment" value={equip} onChange={(e) => setEquip(e.target.value)}>
                 <option disabled value = ''> -- select equipment -- </option>
-                <option>Barbell</option>
-                <option>Curl Bar</option>
-                <option>Rubber Plates</option>
-                <option>Iron Plates</option>
-                <option>Pullup Bar</option>
-                <option>Dumbbells</option>
-                <option>Power Rack</option>
-                <option>Bench</option>
-                <option>Dip Bar</option>
-                <option>Landmine</option>
-                <option>Safety Straps</option>
-                <option>Yoga Mat</option>
-                <option>Wahoo Trainer</option>
+                {equipmentObj.map((val) => <option value={val.key}>{val.value}</option>)}
             </select>Details:<input type="text" placeholder="Weight, Size, etc." value={equipDets} onChange={(e) => setEquipDets(e.target.value)}/>
             <button type='button' onClick={() => setEquipmentInfo()}>Add</button><br></br></>
         );
     }
 
-    const deleteEquip = (index) => {
+    const GetEquipment = () => {
+        const {loading, error, data} = useQuery(GET_EQUIPMENT);
+
+        if(data)
+            for (let i =0; i < data.list_EquipmentItems._EquipmentItems.length; i++) {
+                equipMap.set(data.list_EquipmentItems._EquipmentItems[i]._id, data.list_EquipmentItems._EquipmentItems[i].name);
+            }
+        
+    }
+
+    const DeleteEquip = (index) => {
         const reducedEquip = [...equipment];
         const reducedEquipDetails = [...equipmentDetails];
 
@@ -48,8 +89,85 @@ function UploadForm () {
         setEquipmentDetails(reducedEquipDetails);
     }
 
+    const SubmitGym = (e) => {
+        e.preventDefault();
+
+        if (title === '') {
+            toggleUfView('general')
+            alert('Please Set a Title');
+            return;
+        }
+        if (description === '') {
+            toggleUfView('general')
+            alert('Please Set a Description');
+            return;
+        }
+        if (street === '') {
+            toggleUfView('general')
+            alert('Please Set a Street');
+            return;
+        }
+        if (city === '') {
+            toggleUfView('general')
+            alert('Please Set a City');
+            return;
+        }
+        if (state === '') {
+            toggleUfView('general')
+            alert('Please Set a State');
+            return;
+        }
+        if (zip === '') {
+            toggleUfView('general')
+            alert('Please Set a Zip');
+            return;
+        }
+        if (accessInformation === '') {
+            toggleUfView('general')
+            alert('Please Give Access Information');
+            return;
+        }
+
+        if (equipment.length < 1) {
+            toggleUfView('equipment')
+            alert('Please Select at Least One Piece of Equipment');
+            return;
+        }
+        
+        const equipmentObj = []
+        for (let i = 0; i < equipment.length; i++) {
+            equipmentObj.push({"details": equipmentDetails[i], "equipmentId": equipment[i]});
+        }
+
+        const address = street + '$$' + city + '$$' + state + '$$' + zip;
+        var isHostHomeB;
+        var hasWifiB;
+        var hasSpeakersB;
+        var hasBathroomB;
+
+        if (isHostHome === 'true') isHostHomeB = true;
+        else isHostHomeB = false;
+        if (hasWifi === 'true') hasWifiB = true;
+        else hasWifiB = false;
+        if (hasSpeakers === 'true') hasSpeakersB = true;
+        else hasSpeakersB = false;
+        if (hasBathroom === 'true') hasBathroomB = true;
+        else hasBathroomB = false;
+
+        addGym({variables: {accessInformation: accessInformation, address: address, availability: availability, bookingNotice: Number(bookingNotice), 
+                cancelationWarning: Number(cancelationWarning), cost: Number(cost), description: description, hasBathroom: hasBathroomB, 
+                hasSpeakers: hasSpeakersB, isActive: isActive, hasWifi: hasWifiB, isHostHome: isHostHomeB, numGuestsAllowed: Number(numGuestsAllowed), 
+                ownerId: ownerId, photos: photos, title: title, tvType: tvType, equipment: equipmentObj}}).then((data, loading, error) => {
+                    if(error) console.log(error);
+                    else {
+                        alert('Gym Submitted');
+                    }
+        })
+            
+    }
+
     const [isActive, setIsActive] = useState(false);
-    const [ownerId, setOwnerId] = useState("Test Owner");
+    const [ownerId, setOwnerId] = useState("018054b3-f513-06be-ba11-5726fa2b1052");
     const [title, setTitle] = useState("");
     const [street, setStreet] = useState("");
     const [city, setCity] = useState("");
@@ -57,19 +175,24 @@ function UploadForm () {
     const [zip, setZip] = useState("");
     const [description, setDescription] = useState("");
     const [accessInformation, setAccessInformation] = useState("");
-    const [isHostHome, setIsHostHome] = useState(false);
+    const [isHostHome, setIsHostHome] = useState('false');
     const [numGuestsAllowed, setNumGuestsAllowed] = useState(2);
-    const [photos, setPhotos] = useState(['picture1', 'picture2']);
+    const [photos, setPhotos] = useState(['https://images.pexels.com/photos/4327024/pexels-photo-4327024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 'https://images.pexels.com/photos/416717/pexels-photo-416717.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1']);
     const [equipment, setEquipment] = useState([]);
     const [equipmentDetails, setEquipmentDetails] = useState([]);
-    const [hasBathroom, setHasBathroom] = useState(false);
-    const [hasWifi, setHasWifi] = useState(false);
-    const [hasSpeakers, setHasSpeakers] = useState(false);
+    const [hasBathroom, setHasBathroom] = useState('false');
+    const [hasWifi, setHasWifi] = useState('false');
+    const [hasSpeakers, setHasSpeakers] = useState('false');
     const [tvType, setTvType] = useState("None");
     const [cost, setCost] = useState(20);
     const [bookingNotice, setBookingNotice] = useState(3);
     const [cancelationWarning, setCancelationWarning] = useState(24);
-    const [availability, setAvailability] = useState([1, 2, 3]);
+    const [availability, setAvailability] = useState(['1', '2', '3']);
+
+    const [addGym, {data, loading, error}] = useMutation(ADD_GYM);
+
+    const equipMap = new Map();
+    GetEquipment();
 
     return (
     <div className="UploadForm">
@@ -110,7 +233,7 @@ function UploadForm () {
             <>
             Equipment: <br></br>
             <SelectEquipment/>Your Equipment:<br></br>
-            <div className="uf-input-equip">{equipment.map((val, index) => <><button type='button' onClick={() => deleteEquip(index)}><code>&#10006;</code></button> {val}: <br></br></>)}</div>
+            <div className="uf-input-equip">{equipment.map((val, index) => <><button type='button' onClick={() => DeleteEquip(index)}><code>&#10006;</code></button> {equipMap.get(val)}: <br></br></>)}</div>
             <div className="uf-input-equip-details">{equipmentDetails.map((val) => <>{val}<br></br></>)}</div><br></br>
             <button className = "uf-section-button-back" onClick={() => toggleUfView("general")}>Back</button>
             <button className = "uf-section-button-next" onClick={() => toggleUfView("amenities")}>Next</button>
@@ -156,7 +279,7 @@ function UploadForm () {
             <button className = "uf-section-button-next" onClick={() => toggleUfView("review")}>Review</button>
             </>: 
             <>
-            <input type="button" value="Submit"/>
+            <input type="button" value="Submit" onClick={(e) => SubmitGym(e)}/>
             </>}
         </div>
         </form>

@@ -26,7 +26,8 @@ import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 class LandingPage extends Component {  
     render() { return ( <div>
         <span id = "topNavBar">
-            <NavBarTop /></span>
+            <NavBarTop />
+        </span>
         <span id = "content">
             <Switch>
                 <Route exact path={`/`}>

@@ -7,7 +7,6 @@ import sampleImage2 from '../components/ViewGym/gym2.jpeg';
 import sampleImage3 from '../components/ViewGym/gym3.1.jpg';
 import { GymA, GymB } from "./GymPages";
 import { Typography } from "@material-ui/core";
-import Slider from "./Slider.jsx";
 import { StrictMode } from "react";
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import AddMap from "../components/ViewGym/AddMap";

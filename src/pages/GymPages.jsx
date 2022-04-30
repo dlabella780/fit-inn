@@ -73,72 +73,7 @@ export const GymA = () => {
 
         <BookForm />
 
-        {/* <div className='sliders'>
-        <Carousel>
-            <img src='/components/ViewGym/gym1.jpg' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-          </Carousel>
-        </div> */}
-
-        {/* <div className='product-pro'>
-          <h1 className='about-gym'>
-            About the gym
-            <br></br>
-            <FaDumbbell /> Dumbell
-            <br></br>
-            <IoBarbellSharp /> Barbell
-            <br></br>
-            <GiWeightLiftingUp /> Squat machine
-            <br></br>
-            <FcCancel /> No pet allowed
-            <br></br>
-            <FaRestroom /> Restroom  available 
-          </h1> 
-        </div> */}
-
-        {/* <div className='booking-form'>
-          <h1 className='title-book'>19.99$/month <FaStar /> 5</h1>
-          <form className="date-form">   
-            <h2>Date Joined</h2>     
-            <input           
-                type="text"          
-                name='date'          
-                placeholder='MM/DD/YYYY'/>         
-          </form>
-          <form className="duration-form">   
-            <h2>Duration</h2>     
-            <input           
-                type="text"          
-                name='duration'          
-                placeholder='How long'/>         
-          </form>
-          <form className="quantity-form">   
-            <h2>Quantity</h2>     
-            <input           
-                type="text"          
-                name='amount'          
-                placeholder='0'/>         
-          </form>
-
-            <Button className='button-book' 
-            component={Link} to="/confirmed" 
-            variant="contained" color="primary">
-              Book
-            </Button>
-        </div> */}
-
-        {/* <div className='sliders'>
-          <Carousel>
-            <img src='https://www.californiafamilyfitness.com/hubfs/2021/2021%20Indoor%20Gym%20Page%20Photos/MDT/Midtown_Freeweights.jpg' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-            <img src='https://via.placeholder.com/150' alt='imagem' title='imagem' />
-          </Carousel>
-        </div> */}
+        
     </div>
   )
 }

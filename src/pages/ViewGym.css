@@ -30,3 +30,7 @@
 .nav{
     font-size: large;
 }
+
+.view-gym{
+    flex-direction: column;
+}

@@ -3,20 +3,20 @@ import "./ViewGym.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Link, NavLink} from "react-router-dom";
 import sampleImage from '../components/ViewGym/gym1.jpg';
+import sampleImage2 from '../components/ViewGym/gym2.jpeg';
+import sampleImage3 from '../components/ViewGym/gym3.1.jpg';
 import { GymA, GymB } from "./GymPages";
-// import '@fontsource/roboto/300.css';
-// import '@fontsource/roboto/400.css';
-// import '@fontsource/roboto/500.css';
-// import '@fontsource/roboto/700.css';
 import { Typography } from "@material-ui/core";
 import Slider from "./Slider.jsx";
 import { StrictMode } from "react";
-// import ViewGyms from "../components/ViewGym/ViewGyms.jsx"
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import AddMap from "../components/ViewGym/AddMap";
+import SortingButtons from "../components/GymSearch/SortingButtons";
 
 export const ViewGyms = () => {
     return (
         <div>
-            <form className="search-bar-form">        
+            {/* <form className="search-bar-form">        
             <input           
                 type="text"          
                 name='location'          
@@ -31,7 +31,9 @@ export const ViewGyms = () => {
                 placeholder='Time'/>
             <input type="text" name='guest' placeholder=''
             />
-            </form>
+            </form> */}
+
+            <SortingButtons />
 
             <div className="row-product">
                 <div className="item1">
@@ -58,7 +60,7 @@ export const ViewGyms = () => {
                 
                 <div className="item2">
                     <div className="col-md-2">
-                        <img src={sampleImage} alt="Sample Img" height="150" />
+                        <img src={sampleImage2} alt="Sample Img" height="150" />
                     </div>
                     <div className="col-md-8 product-detail">
                         <h4 className="name-gym">Gym B</h4>
@@ -71,7 +73,7 @@ export const ViewGyms = () => {
 
                 <div className="item3">
                     <div className="col-md-2">
-                        <img src={sampleImage} alt="Sample Img" height="150" />
+                        <img src={sampleImage3} alt="Sample Img" height="150" />
                     </div>
                     <div className="col-md-8 product-detail">
                         <h4 className="name-gym">Gym C</h4>
@@ -83,23 +85,9 @@ export const ViewGyms = () => {
                 </div>
 
             </div>
-            {/* <Slider /> */}
+            
+            <AddMap />
 
-            {/* <StrictMode>
-                <Slider2 />
-            </StrictMode> */}
         </div>
     );
 }
-
-// class ViewGym extends Component {
-//     render() {
-//         return (
-//             <Fragment>
-//                 <ViewGyms />
-                
-//             </Fragment>
-//         );
-//     }
-// }
-// export default ViewGym;

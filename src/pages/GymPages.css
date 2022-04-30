@@ -1,4 +1,4 @@
- .name-info{
+ /* .name-info{
     display: block;
     position: fixed;
     top: 4rem;
@@ -36,18 +36,18 @@ Button {
     padding: 2px 20px;
     position: center;
 }
-
+ */
 .sliders{
     justify-content: center;
-    /* align-items: center; */
     position: fixed;
     left: 2rem;
     top: 10rem;
     width: 50px;
-    max-width: 60%; 
+    max-width: 70%; 
     max-height: 30%;
     min-height: 20%;
-    min-width: 200px;
+    min-width: 30%;
 }
+
 
 

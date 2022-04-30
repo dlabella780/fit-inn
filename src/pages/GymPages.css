@@ -1,4 +1,10 @@
- /* .name-info{
+.gym-name{
+    padding-top: 60%;
+    
+} 
+ 
+ 
+/* .name-info{
     display: block;
     position: fixed;
     top: 4rem;

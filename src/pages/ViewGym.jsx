@@ -16,23 +16,7 @@ import SortingButtons from "../components/GymSearch/SortingButtons";
 export const ViewGyms = () => {
     return (
         <div>
-            {/* <form className="search-bar-form">        
-            <input           
-                type="text"          
-                name='location'          
-                placeholder='Locations'/>        
-            <input           
-                type="text"           
-                name='day'          
-                placeholder='When'/>        
-            <input           
-                type="text"           
-                name='time'          
-                placeholder='Time'/>
-            <input type="text" name='guest' placeholder=''
-            />
-            </form> */}
-
+            
             <SortingButtons />
 
             <div className="row-product">

@@ -89,7 +89,7 @@ class LandingPage extends Component {
                 </Route>
             </Switch>
         </span>
-        <span id = "bottomrNavBar">
+        <span id = "bottomNavBar">
             <NavBarBottom />
         </span>
     </div>);}

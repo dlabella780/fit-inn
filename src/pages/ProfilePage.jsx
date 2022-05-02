@@ -7,6 +7,7 @@ import BasicInfo from "../components/ProfilePage/BasicInfo";
 import UserListings from "../components/ProfilePage/UserListings";
 import UserReservations from "../components/ProfilePage/UserReservations";
 import UserPayment from "../components/ProfilePage/UserPayment";
+import EditProfileInfo from "../components/ProfilePage/EditProfileInfo";
 
 class ProfilePage extends Component {
     render() {
@@ -16,7 +17,7 @@ class ProfilePage extends Component {
                    <ProfileButtons />
                     </div>
                    <Switch>
-                        <Route exact path="/Profile/Basic">
+                        <Route path="/Profile/Basic">
                             <BasicInfo />
                         </Route>
                         <Route path="/Profile/Listings">
@@ -27,7 +28,11 @@ class ProfilePage extends Component {
                         </Route>
                         <Route path="/Profile/Payment">
                             <UserPayment />
+                    </Route>
+                    <Route path="/Profile/Edit">
+                        <EditProfileInfo />
                         </Route>
+
                    </Switch>
               </div>
         );

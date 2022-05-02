@@ -1,11 +1,14 @@
-#fields {
+#registerfields {
     padding: 5px;
     border-radius: 5px;
 }
 
-#form{
+#registerform{
     top: 100px;
+    left: 40%;
+    right: 40%;
     -ms-flex-align: center;
+    align-items: center;
     position: absolute;
     padding: 5px;
     background-color: white;

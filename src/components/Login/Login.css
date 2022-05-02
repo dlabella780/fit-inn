@@ -1,9 +1,9 @@
-#fields {
+#loginfields {
     padding: 5px;
     border-radius: 5px;
 }
 
-#form{
+#loginform{
     top: 100px;
     left: 40%;
     right: 40%;

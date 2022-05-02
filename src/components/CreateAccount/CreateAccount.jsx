@@ -22,26 +22,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function createAccount(){
   return(
-    <Box id="form">
+    <Box id="registerform">
       <FormGroup>
         <Typography variant="h4">Registation</Typography>
-        <Box id="fields">
+        <Box id="registerfields">
             <TextField required id="outlined-basic" label="First Name"/>
             <TextField required id="outlined-basic" label="Last Name"/>
         </Box>
-        <Box id="fields">
+        <Box id="registerfields">
             <TextField required id="outlined-basic" label="email"/>
             <TextField required id="outlined-basic" label="Verify email"/>
         </Box>
-        <Box id="fields">
+        <Box id="registerfields">
             <TextField required id="outlined-password-input" type="password" label="Password"/>
             <TextField required id="outlined-password-input" label="Confirm Password"/>
         </Box>
-        <Box id="fields">
+        <Box id="registerfields">
             <FormControlLabel control={<Checkbox default />} onclick="ageCheck()" label="Over 18?"/>
             <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Agree to Terms and Services?"/>
         </Box>
-        <Box id="fields">
+        <Box id="registerfields">
             <Stack direction="row" spacing={12}>
                 <Button variant="contained">Create Account</Button>
                 <Button variant="contained" href="/">Cancel</Button>

@@ -22,19 +22,19 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Login(){
   return(
-    <Box id="form" >
+    <Box id="loginform" >
       <FormGroup>
         <Typography variant="h4">Login</Typography>
-        <Box id="fields">
+        <Box id="loginfields">
             <TextField required id="outlined-basic" label="email"/>
         </Box>
-        <Box id="fields">
+        <Box id="loginfields">
             <TextField required id="outlined-password-input" type="password" label="Password"/>
         </Box>
-        <Box id="fields">
+        <Box id="loginfields">
             <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Stay Logged in"/>
         </Box>
-        <Box id="fields">
+        <Box id="loginfields">
             <Stack direction="row" spacing={6}>
                 <Button variant="contained" href="/">Login</Button>
                 <Button variant="contained" href="/Register">Create Account</Button>

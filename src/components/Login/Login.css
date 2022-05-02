@@ -5,11 +5,13 @@
 
 #form{
     top: 100px;
+    left: 40%;
+    right: 40%;
     -ms-flex-align: center;
+    align-items: center;
     position: absolute;
     padding: 5px;
     background-color: white;
     border-radius: 12px;
     border: 2px solid black;
-    width: 475px;
 }

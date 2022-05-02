@@ -18,7 +18,7 @@ import {
 export default class ProfileButtons extends Component {
     render() {
         return(
-            <div className="SortingButtons">
+            <div position="fixed" top="100px" className="SortingButtons">
 			<Box sx={{display: 'flex', '& > *': {m: 1,},}}>
 				 <Typography variant="h6">
                     <NavLink to="/Profile/Basic">Basic Info</NavLink>
@@ -31,6 +31,9 @@ export default class ProfileButtons extends Component {
                  </Typography>
                  <Typography variant="h6">
                     <NavLink to="/Profile/Payment">Payment Info</NavLink>
+                 </Typography>
+                 <Typography variant="h6">
+                        <NavLink to="/Profile/Edit">Edit Information</NavLink>
                  </Typography>
 			</Box>
 		</div>

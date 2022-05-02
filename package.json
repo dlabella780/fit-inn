@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@mklaus2 
-dlabella780
-/
-fit-inn
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-fit-inn/package.json
-@caldwell-matthew
-caldwell-matthew TJ-74, replaced Descriptions.jsx with HowTo.jsx using MUI and CSS to …
-…
-Latest commit 2c28bff 20 hours ago
- History
- 6 contributors
-@huypham0427@caldwell-matthew@petertainguyen@dlabella780@brettd6@TonyB-git
-63 lines (63 sloc)  1.61 KB
-   
 {
   "name": "fit-inn",
   "version": "0.1.0",

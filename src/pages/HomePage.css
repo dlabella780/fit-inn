@@ -12,3 +12,19 @@
     cursor: pointer;
     font-size: 30px;
 }
+
+#HowTo {
+    display: flex;
+    flex-direction: column;
+    bottom: 64px;
+    position: absolute;
+    background-color: white;
+}
+
+#Bott {
+    display: flex;
+    flex-direction: column;
+    bottom: 5px;
+    position: absolute;
+    background-color: white;
+}

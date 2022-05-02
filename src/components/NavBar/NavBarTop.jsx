@@ -34,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
             color: "black",
         },
     },
+    sublink: {
+      textDecoration: "none",
+      color: "white",
+      fontSize: "15px",
+      marginRight: theme.spacing(3),
+      "&:hover": {
+          color: "black",
+      },
+  },
     linkActive: {
         textDecoration: "none",
         color: "black",
@@ -53,10 +62,10 @@ function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const accountSettings = ['Account Settings', 'Profile', 'Gym Dashboard', 'Login/Logout'];
+  //const accountSettings = ['Account Settings', 'Profile', 'Gym Dashboard', 'Login/Logout'];
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenUserMenu = (event) => { setAnchorElUser(event.currentTarget); };
-  const handleCloseUserMenu = () => { setAnchorElUser(null); };
+  const handleCloseUserMenu = () => {setAnchorElUser(null); };
 
   return ( <><AppBar position="sticky">
       <CssBaseline />
@@ -93,11 +102,9 @@ function Navbar() {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            {accountSettings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
-              </MenuItem>
-            ))}
+            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Login" className={classes.sublink}>Login</NavLink></MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Register" className={classes.sublink}>Create Account</NavLink></MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/" className={classes.sublink}>Gym Dashboard</NavLink></MenuItem>
           </Menu>
         </Box>
       </Toolbar>

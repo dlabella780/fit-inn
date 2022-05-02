@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import "./CreateAccount.css";
+import "./Login.css";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -20,31 +20,24 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function createAccount(){
+export default function Login(){
   return(
-    <Box id="registerform">
+    <Box id="loginform" >
       <FormGroup>
-        <Typography variant="h4">Registation</Typography>
-        <Box id="registerfields">
-            <TextField required id="outlined-basic" label="First Name"/>
-            <TextField required id="outlined-basic" label="Last Name"/>
-        </Box>
-        <Box id="registerfields">
+        <Typography variant="h4">Login</Typography>
+        <Box id="loginfields">
             <TextField required id="outlined-basic" label="email"/>
-            <TextField required id="outlined-basic" label="Verify email"/>
         </Box>
-        <Box id="registerfields">
+        <Box id="loginfields">
             <TextField required id="outlined-password-input" type="password" label="Password"/>
-            <TextField required id="outlined-password-input" label="Confirm Password"/>
         </Box>
-        <Box id="registerfields">
-            <FormControlLabel control={<Checkbox default />} onclick="ageCheck()" label="Over 18?"/>
-            <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Agree to Terms and Services?"/>
+        <Box id="loginfields">
+            <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Stay Logged in"/>
         </Box>
-        <Box id="registerfields">
-            <Stack direction="row" spacing={12}>
-                <Button variant="contained">Create Account</Button>
-                <Button variant="contained" href="/">Cancel</Button>
+        <Box id="loginfields">
+            <Stack direction="row" spacing={6}>
+                <Button variant="contained" href="/">Login</Button>
+                <Button variant="contained" href="/Register">Create Account</Button>
             </Stack>
         </Box>
       </FormGroup>

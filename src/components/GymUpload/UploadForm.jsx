@@ -69,7 +69,7 @@ function UploadForm () {
     }
 
     const GetEquipment = () => {
-        const {loading, error, data} = useQuery(GET_EQUIPMENT);
+        const { loading, error, data } = useQuery(GET_EQUIPMENT);
 
         if(data)
             for (let i =0; i < data.list_EquipmentItems._EquipmentItems.length; i++) {

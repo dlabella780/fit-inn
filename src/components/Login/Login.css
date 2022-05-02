@@ -1,9 +1,9 @@
-#registerfields {
+#loginfields {
     padding: 5px;
     border-radius: 5px;
 }
 
-#registerform{
+#loginform{
     top: 100px;
     left: 40%;
     right: 40%;
@@ -14,5 +14,4 @@
     background-color: white;
     border-radius: 12px;
     border: 2px solid black;
-    width: 475px;
 }

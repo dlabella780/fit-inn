@@ -5,13 +5,16 @@
     height: 200px;
 }
 
-#bottomrNavBar {
+#bottomNavBar {
     position: fixed;
     width: 100%;
     bottom: 0px;
 }
 
- body{
+body{
+    background-position-y: 64px;
     background-image: url('../components/HomePage/upklyak.png');
-    background-size: 2700px;
- }
+    background-repeat: no-repeat;
+    background-attachment:fixed;
+    background-size: 100%;
+}

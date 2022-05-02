@@ -15,6 +15,7 @@ import { AppBar, Toolbar, IconButton, Typography, CssBaseline,
   makeStyles, useTheme, useMediaQuery, Link, Button, } from "@material-ui/core";
 import {Slide, useScrollTrigger} from "@mui/material";
 import PropTypes from "prop-types";
+import {useEffect, useState} from "react";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SimpleBottomNavigation() {
+export default function NavBarBottom() {
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
   const theme = useTheme();
@@ -63,8 +64,22 @@ export default function SimpleBottomNavigation() {
     window: PropTypes.func,
   };
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <HideOnScroll>
+    //<HideOnScroll>
       <AppBar position="sticky">
         <CssBaseline />
         <Toolbar>
@@ -92,6 +107,6 @@ export default function SimpleBottomNavigation() {
           </div>
         </Toolbar>
       </AppBar>
-    </HideOnScroll>
+    //</HideOnScroll>
   );
 }

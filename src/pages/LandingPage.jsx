@@ -22,6 +22,7 @@ import PolicyForGymUsersPage from "./PolicyForGymUsersPage.jsx";
 import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
 import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
+import Login from "../components/Login/Login.jsx";
 
 class LandingPage extends Component {  
     render() { return ( <div>
@@ -84,12 +85,15 @@ class LandingPage extends Component {
                 <Route path={'/Register'}>
                     <CreateAccount />
                 </Route>
+                <Route path={'/Login'}>
+                    <Login />
+                </Route>
                 <Route path="*">
                     <NotFound />
                 </Route>
             </Switch>
         </span>
-        <span id = "bottomrNavBar">
+        <span id = "bottomNavBar">
             <NavBarBottom />
         </span>
     </div>);}

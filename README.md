@@ -20,13 +20,14 @@ The service will facilitate payment, scheduling, and keep track of every user's 
 
 # Features Implemented in CSC 190
 
-- Gym listings/user profiles that read information from Vendia database.
-- Gym uploading and profile editing features that write information to Vendia database.
-- Using database information to display the match gym for users.
-- Display gym listings with many options for users.
-- Sort function for users to have a good experience with our website. 
-- Users can create an account and log in. Users can keep track and place the approriate gym in their account.
-- As a host, we can keep track and store the user's information after the user create/ submit the request.
+- Implamented Front End UI for Gym Listings.
+- Implamented Front End UI for Gym Uploading.
+- Implamented Front End UI for Gym Search.
+- Implamented Front End UI for User Profiles.
+- Implamented Front End UI for Gym Listings 
+- Implamented feature to filter Gym Results.
+- Implamented feature to create basic Gym and add to Vendia DataBase.
+- Created page for Account login and Account Creation
 # Testing
 
 Testing was not done during CSC 190; will be expanded upon during CSC 191.

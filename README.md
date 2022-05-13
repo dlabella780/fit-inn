@@ -1,10 +1,43 @@
-# Getting Started with Create React App
+# Fit-Inn - Team Jonathan
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![banner](https://raw.githubusercontent.com/brettd6/testimgupload/main/fitinn_vendia.png)
 
-## Available Scripts
+# Table of Contents
+- Synopsis
+- Features Implemented in CSC 190
+- Testing
+- Deployment
+- Agile Timeline
+- Credits
 
-In the project directory, you can run:
+# Synopsis
+
+Fit-Inn is a web-based service that allows users to both post listings and make reservations for home gyms.
+
+Fit-Inn is a web-based home gym rental service, designed to allow owners of home gym equipment to rent their space and equipment for financial compensation as well as allowing other users to reserve a time slot at owner's home gyms. Additionally, the service serves as an open-source proof-of-concept demonstrating the capabilities and technology of Vendia. 
+
+The service will facilitate payment, scheduling, and keep track of every user's information via user profiles. Users will log into their profiles using Single Sign-On.
+
+# Features Implemented in CSC 190
+
+- Gym listings/user profiles that read information from Vendia database.
+- Gym uploading and profile editing features that write information to Vendia database.
+- Using database information to display the match gym for users.
+- Display gym listings with many options for users.
+- Sort function for users to have a good experience with our website. 
+- Users can create an account and log in. Users can keep track and place the approriate gym in their account.
+- As a host, we can keep track and store the user's information after the user create/ submit the request.
+# Testing
+
+Testing was not done during CSC 190; will be expanded upon during CSC 191.
+
+# Deployment
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Running this project requires [Node JS](https://nodejs.org/en/).
+
+### `npm install`
+
+This will install all necessary dependencies which are listed in the package.json file.
 
 ### `npm start`
 
@@ -39,32 +72,50 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+# Agile Timeline
+ 
+This is the current timeline for our project. By the end of these sprints we plan to have the following accomplished:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `Sprint 5 : 8/29 - 9/12`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Google Maps API implemented.
+- Gym upload page completed.
+- User profile page completed.
 
-### Code Splitting
+### `Sprint 6 : 9/12 - 9/26`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Calendar API implemented to manage dates.
+- Listed gyms will be updatable.
+- Gym search page will be finalized.
 
-### Analyzing the Bundle Size
+### `Sprint 7 : 9/26 - 10/10`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Users will be able to book gyms.
+- Hosts will be able to approve bookings.
+- Users will be able to review the gyms they have rented.
 
-### Making a Progressive Web App
+### `Sprint 8 : 10/10 - 10/24`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Host and Users can view and manage reservations.
+- Stripe payment API implemented.
+- Privacy Policy and terms and coniditions pages implemented.
 
-### Advanced Configuration
+### `Potential Extra Features`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Track workout progress.
+- Host ability to add tutorials for equipment.
 
-### Deployment
+# Credits
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Fit-Inn was created and developed by *Team Jonathan*:
 
-### `npm run build` fails to minify
+### `Brett Davis`
+### `Dakota LaBella`
+### `Matthew Caldwell`
+### `Matthew Klaus`
+### `Peter Tai Nguyen`
+### `Tan Anh Huy Pham`
+### `Tony Borsh`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### for Professor Chris Grove and CSC 190-191.
+### California State University, Sacramento 2022

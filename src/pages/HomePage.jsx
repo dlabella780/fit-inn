@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
-import HowTo from "../components/Descriptions/HowTo"
-import './HomePage.css'
+import HowTo from "../components/Descriptions/HowTo";
 
 class HomePage extends Component {
     render() { return (

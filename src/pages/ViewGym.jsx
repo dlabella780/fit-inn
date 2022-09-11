@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import "./ViewGym.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Link, NavLink} from "react-router-dom";
 import sampleImage from '../components/ViewGym/gym1.jpg';
@@ -12,12 +11,10 @@ import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import AddMap from "../components/ViewGym/AddMap";
 import SortingButtons from "../components/GymSearch/SortingButtons";
 
-export const ViewGyms = () => {
+export const ViewGyms = (props) => {
     return (
-        <div>
-            
-            <SortingButtons />
-
+        <div className="view-gyms">
+            {props.results ? 
             <div className="row-product">
                 <div className="item1">
                     <div className="col-md-2">
@@ -66,11 +63,9 @@ export const ViewGyms = () => {
                         $30.99
                     </div>
                 </div>
-
-            </div>
-            
+            </div>    
+            : <></>}
             <AddMap />
-
         </div>
     );
 }

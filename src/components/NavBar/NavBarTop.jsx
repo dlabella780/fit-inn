@@ -4,7 +4,6 @@ import { AppBar, Toolbar, IconButton, CssBaseline,
 } from "@material-ui/core";
 import { Link, NavLink } from "react-router-dom";
 import DrawerComponent from "./Drawer";
-import "./NavBarTop.css";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         flexGrow: "1",
         cursor: "pointer",
-        marginTop: theme.spacing(1.5),
         alignItems: 'center',
     },
     link: {
@@ -104,6 +102,7 @@ function Navbar() {
           >
             <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Login" className={classes.sublink}>Login</NavLink></MenuItem>
             <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Register" className={classes.sublink}>Create Account</NavLink></MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Profile" className={classes.sublink}>Profile</NavLink></MenuItem>
             <MenuItem onClick={handleCloseUserMenu}><NavLink to="/" className={classes.sublink}>Gym Dashboard</NavLink></MenuItem>
           </Menu>
         </Box>

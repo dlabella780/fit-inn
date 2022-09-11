@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { gql, useMutation, useQuery} from "@apollo/client";
-import "../../pages/GymUploadPage.css"
 
 function UploadForm () {
 
@@ -70,6 +69,9 @@ function UploadForm () {
 
     const GetEquipment = () => {
         const { loading, error, data } = useQuery(GET_EQUIPMENT);
+
+        if (error) 
+            console.log(error);
 
         if(data)
             for (let i =0; i < data.list_EquipmentItems._EquipmentItems.length; i++) {
@@ -154,14 +156,19 @@ function UploadForm () {
         if (hasBathroom === 'true') hasBathroomB = true;
         else hasBathroomB = false;
 
+        setGymSubmit('Loading...');
+
         addGym({variables: {accessInformation: accessInformation, address: address, availability: availability, bookingNotice: Number(bookingNotice), 
                 cancelationWarning: Number(cancelationWarning), cost: Number(cost), description: description, hasBathroom: hasBathroomB, 
                 hasSpeakers: hasSpeakersB, isActive: isActive, hasWifi: hasWifiB, isHostHome: isHostHomeB, numGuestsAllowed: Number(numGuestsAllowed), 
                 ownerId: ownerId, photos: photos, title: title, tvType: tvType, equipment: equipmentObj}}).then((data, loading, error) => {
-                    if(error) console.log(error);
+                    
+                    if(error) 
+                        console.log(error);
                     else {
                         alert('Gym Submitted');
                     }
+                    setGymSubmit('Submit');
         })
             
     }
@@ -188,6 +195,7 @@ function UploadForm () {
     const [bookingNotice, setBookingNotice] = useState(3);
     const [cancelationWarning, setCancelationWarning] = useState(24);
     const [availability, setAvailability] = useState(['1', '2', '3']);
+    const [gymSubmit, setGymSubmit] = useState('Submit');
 
     const [addGym, {data, loading, error}] = useMutation(ADD_GYM);
 
@@ -279,7 +287,7 @@ function UploadForm () {
             <button className = "uf-section-button-next" onClick={() => toggleUfView("review")}>Review</button>
             </>: 
             <>
-            <input type="button" value="Submit" onClick={(e) => SubmitGym(e)}/>
+            <input type="button" value={gymSubmit} onClick={(e) => SubmitGym(e)}/>
             </>}
         </div>
         </form>

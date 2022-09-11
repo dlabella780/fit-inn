@@ -59,13 +59,14 @@ export default function HowTo() {
 	}));
 
 	return (
+		<div className='helpsection'>
 		<Box
 			sx={{
 				bgcolor: 'background.paper',
 				width: 1000,
-				position: 'center',
 				minHeight: 200,
 			}}>
+				<h1 className='title-helpsection'>Quick Guide</h1>
 			<AppBar position="static" color="default">
 				<Tabs
 					value={value}
@@ -144,5 +145,6 @@ export default function HowTo() {
 					</Box>
 				</TabPanel>
 			</SwipeableViews>
-	</Box>);
+	</Box>
+	</div>);
 }

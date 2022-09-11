@@ -3,13 +3,12 @@ import SearchBar from "../components/HelpPage/HelpSearchBar.jsx";
 import { NavLink } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { Typography, Button, Box, Container } from "@material-ui/core";
-import "./HelpPage.css";
 
 class HelpPage extends Component {
     render() { return (
         <Box sx={{
           }}>
-            <div className = "Items"
+            <div className = "help-page-items"
                 style={{
                 }}>
                 <Typography variant="h3" style={{padding: 15, color:"black"}}>How can we help?</Typography>
@@ -28,9 +27,11 @@ class HelpPage extends Component {
                     <Typography variant="h5"><NavLink to="/pages/ProtectionAndInsurance" style={{ textDecoration: 'none' }}>Host Liability Insurance/Protection</NavLink></Typography>
                     <Typography variant="h5"><NavLink to="/pages/CommunityGuidelines" style={{ textDecoration: 'none' }}>Community Guidelines</NavLink></Typography>
                 </span>
-                <a href='https://www.freepik.com/vectors/gym-room' style={{ textDecoration: 'none' }}>Gym room vector image created by upklyak - www.freepik.com</a>
+                <a href='https://www.freepik.com/vectors/gym-room' style={{ textDecoration: 'none' }}></a>
             </div>
         </Box>
     );}
 }
 export default HelpPage;
+
+// Gym room vector image created by upklyak - www.freepik.com

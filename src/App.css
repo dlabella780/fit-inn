@@ -1,38 +1,503 @@
-.App {
-  text-align: center;
+/*BookForm*/
+
+.booking-form {
+  -ms-flex-align: center;
+  position: fixed;
+  padding: 5px;
+  background-color: rgb(51, 51, 172);
+  border-radius: 12px;
+  border: 2px solid black;
+  width: 300px;
+  right: 30px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.booking-fields {
+  padding: 5px;
+  border-radius: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/*CreateAccount*/
+
+.register-fields {
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.register-form{
+  top: 100px;
+  left: 40%;
+  right: 40%;
+  -ms-flex-align: center;
   align-items: center;
+  position: absolute;
+  padding: 5px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  width: 475px;
+}
+
+/*Home Page Quick Guide*/
+
+.helpsection {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 2px solid black;
+  position: absolute;
+  right: 30%;
+  bottom: 100px;
+}
+
+.helpsection h1{
+  color: rgb(80, 78, 78);
+}
+
+/*Login*/
+
+.login-fields {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.login-form{
+  top: 100px;
+  left: 40%;
+  right: 40%;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  padding: 5px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+}
+
+/*Bottom Nav Bar*/
+
+.bottom-nav-links {
+  text-align: left;
+  top: 11px;
+  position: absolute;
+  left: 20px;
+}
+
+.Social-media-icons {
+  text-align: right;
+  top: 5px;
+  position: absolute;
+  right: 0px;
+}
+
+/*Profile Reservations*/
+
+.Button{
+  padding: 8px;
+  margin-right: 20px;
+  background-color: #3F51B5;
+  border-radius: 4px;
+  border-style: none;
+  color: white;
+  font-weight: bold;
+}
+
+.Button:hover{
+  transition-duration: .2s;
+  background-color: #6371c5;
+}
+
+.ReservationListPanel{
+  display: inline-block;
+  background-color: lightgray;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  margin: 30px;
+  position: relative;
+}
+
+.ReservationCard{
+  position: relative;
+  display: inline-block;
+  border-style: none;
+  border-radius: 8px;
+  margin: 5%;
+  background-color:white;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ReserveComps{
+  display: inline-block;
+  padding: 10px;
+}
+
+.CenterText{
+  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  margin: 10px;
+}
+
+.Image{
+  width: 200px;
+  height: 100px;
+}
+
+.reservation-area {
+  position: fixed;
+}
+
+.reservation-area h1{
+  font-size: 30px;
+}
+
+.reservation-area h2{
+  font-size: 20px;
+}
+
+/*Individual Gym Page*/
+
+.gym-name{
+  padding-top: 60%;
+  
+} 
+
+
+/* .name-info{
+  display: block;
+  position: fixed;
+  top: 4rem;
+  left: 30px;
+}
+
+
+.about-gym{
+  font-size: 15;
+  position: fixed;
+  margin-top: 10rem;
+  left: 10px;
+}
+
+.product-pro{
+  font-size: 10px;
+}
+
+.info-gym{
+  font-size: 20px;
+}
+
+.booking-form{
+  border-style: ridge;
+  border-color: rgb(38, 1, 249);
+  position: fixed;
+  margin-top: 100px;
+  right: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+}
+
+Button {
+  padding: 2px 20px;
+  position: center;
+}
+*/
+
+.sliders{
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  position: fixed;
+  left: 2rem;
+  top: 10rem;
+  width: 50px;
+  max-width: 70%; 
+  max-height: 30%;
+  min-height: 20%;
+  min-width: 30%;
+}
+
+/*Gym Search Page*/
+
+.gym-searchbar {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid black;
+  left: 20%;
+  position: absolute;
+}
+
+.view-gyms {
+  background-color: white;
+}
+
+.googlemap {
+  position: absolute;
+  right: 1500px;
+  top: 90px;
+}
+
+.search-bar-form{
+  position: fixed;
+  left: 30px;
+}
+
+.row-product{
+  background-color: white;
+  position: fixed;
+  top: 28%;
+  left: 200px;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid black;
+}
+
+.item1{
+  grid-row: 1;
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 140%;
+}
+
+.name-gym{
+  font-weight: bold;
+  font-size: 140%;
+}
+
+.nav{
+  font-size: large;
+}
+
+.view-gym{
+  flex-direction: column;
+}
+
+/*Gym Upload Page*/
+
+.UploadForm {
+  position: absolute;
+  top: 10%;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 12px;
+}
+
+.uf-sidebar {
+  position: fixed;
+  left: 0px;
+  top: 100px;
+}
+
+.uf-sidebar ul{
+  display: grid;
+}
+
+.uf-sidebar button {
+  font-size: 40px;
+  border: none;
+  margin-top: 50px;
+  cursor: pointer;
+}
+
+.uf-overall-button{
+  background-color: white;
+  color: black;
+}
+
+.uf-overall-button-selected{
+  background-color: #3F51B5;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.uf-overall-button:hover{
+  background-color: darkgray;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.uf-input-container {
+  font-size: 25px;
+}
+
+.uf-input-container textarea{
+  font-size: 25px;
+  resize: none;
+  margin-bottom: 50px;
+}
+
+.uf-input-container h3{
+  font-size: 30px;
+}
+
+.uf-input-container select{
+  font-size: 25px;
+}
+
+.uf-input-container option{
+  font-size: 25px;
+}
+
+.uf-input-container input {
+  font-size: 25px;
+  margin-bottom: 50px;
+}
+.uf-input-container button {
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.uf-address input {
+  margin-bottom: 5px;
+}
+
+.uf-input-equip button{
+  font-size: 25px;
+}
+
+.uf-input-equip-details{
+  position: absolute;
+  top: 172px;
+  right: 400px;
+}
+
+.uf-input-container input[type="text"]{
+  font-size: 25px;
+}
+
+.uf-input-container input[type="number"]{
+  font-size: 25px;
+  width: 80px;
+}
+
+.uf-input-container input[type="radio"]{
+  width: 25px;
+  height: 25px;
+}
+
+.uf-input-container input[type="submit"]{
+  font-size: 25px;
+}
+
+.uf-section-button-back {
+  font-size: 25px;
+}
+
+.uf-section-button-next {
+  font-size: 25px;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+/*Help Page*/
+
+.help-page-items {
+  margin-top: 300px;
+  -ms-flex-align: center;
+  /*position: absolute;*/
+  padding: 40px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  
+  /*
+  background: rgb(255, 255, 255);
+  padding: 475px;
+  border-radius: 12px;
+  border: 2px solid black;
+  */
+}
+
+/*Home Page*/
+
+/* #HowTo {
+  display: flex;
+  flex-direction: column;
+  bottom: 64px;
+  position: absolute;
+  background-color: white;
+} */
+
+.title-helpsection {
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: 0px;
+}
+
+/*Landing Page*/
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.bottom-nav-bar {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+}
+
+body{
+  background-position-y: 64px;
+  background-image: url('./components/HomePage/upklyak.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 93%;
+}
+
+/*Profile Page*/
+
+.profile-page {
+  position: absolute;
+  top: 100px;
+  width: 58%;
+}
+
+.profile-page-header {
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.user-basic-info {
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.user-basic-info img{
+  margin-bottom: 40px;
+}
+
+.edit-profile {
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.edit-profile input {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.edit-profile input[type='submit'] {
+  margin-top: 40px;
+}
+
+.user-listings {
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+  font-size: 20px;
 }

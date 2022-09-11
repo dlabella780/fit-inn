@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import "./Login.css";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -22,19 +21,19 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Login(){
   return(
-    <Box id="loginform" >
+    <Box className="login-form" >
       <FormGroup>
         <Typography variant="h4">Login</Typography>
-        <Box id="loginfields">
+        <Box className="login-fields">
             <TextField required id="outlined-basic" label="email"/>
         </Box>
-        <Box id="loginfields">
+        <Box className="login-fields">
             <TextField required id="outlined-password-input" type="password" label="Password"/>
         </Box>
-        <Box id="loginfields">
+        <Box className="login-fields">
             <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Stay Logged in"/>
         </Box>
-        <Box id="loginfields">
+        <Box className="login-fields">
             <Stack direction="row" spacing={6}>
                 <Button variant="contained" href="/">Login</Button>
                 <Button variant="contained" href="/Register">Create Account</Button>

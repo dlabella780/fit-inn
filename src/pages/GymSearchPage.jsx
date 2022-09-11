@@ -1,6 +1,5 @@
-import React, { Component, Fragment, useEffect, useState } from "react";
+import React, { Component, Fragment, useEffect, useState, useCallback } from "react";
 import { gql, useQuery } from "@apollo/client";
-import "./GymSearchPage.css";
 import AdvancedSearchBar from "../components/GymSearch/AdvancedSearchBar";
 import {ViewGyms} from "./ViewGym";
 import SortingButtons from "../components/GymSearch/SortingButtons";
@@ -21,6 +20,7 @@ const GET_GYMS = gql(`
 function GetGyms() {
   const { loading, error, data } = useQuery(GET_GYMS);
   const [gyms, getGyms] = useState([]);
+  
 
   useEffect(() => {
     console.log(data);
@@ -44,11 +44,17 @@ function GetGyms() {
   )
 }
 
-class GymSearchPage extends Component {
-    render() { return (
+function GymSearchPage  () {
+
+  const [results, setResults] = useState(false);
+  
+  return (
       <Fragment>
-        <AdvancedSearchBar/>
+        <div className="gym-searchbar">
+          <AdvancedSearchBar setResults = {setResults}/>
+        </div>
+        <ViewGyms results={results}/>
       </Fragment>
-    );}
+    );
 }
 export default GymSearchPage;

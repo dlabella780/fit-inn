@@ -10,7 +10,6 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { createTheme } from '@mui/material/styles';
-import "./NavBarBottom.css";
 import { AppBar, Toolbar, IconButton, Typography, CssBaseline,
   makeStyles, useTheme, useMediaQuery, Link, Button, } from "@material-ui/core";
 import {Slide, useScrollTrigger} from "@mui/material";
@@ -83,7 +82,7 @@ export default function NavBarBottom() {
       <AppBar position="sticky">
         <CssBaseline />
         <Toolbar>
-          <Box sx={{display: 'flex', '& > *': {m: 1,},}} className={"NavLinks"}>
+          <Box sx={{display: 'flex', '& > *': {m: 1,},}} className="bottom-nav-links">
             <Typography variant="h6" className={classes.navlinks}>
               <NavLink to="/Help" className={isActive => (isActive ? classes.linkActive : classes.link)}>Help Center</NavLink>
             </Typography>
@@ -93,11 +92,8 @@ export default function NavBarBottom() {
             <Typography variant="h6" className={classes.navlinks}>
               <NavLink to="/Privacy" className={isActive => (isActive ? classes.linkActive : classes.link)}>Privacy Policy</NavLink>
             </Typography>
-            <Typography variant="h6" className={classes.navlinks}>
-              <NavLink to="/Profile/Basic" className={isActive => (isActive ? classes.linkActive : classes.link)}>Profile</NavLink>
-            </Typography>
           </Box>
-          <div className = "SocialMediaIcons">
+          <div className = "Social-media-icons">
             <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.facebook.com", "_blank")}
                                     label="Facebook" icon={<FacebookIcon style={{ fill: 'white' }} />} href="#" />
             <BottomNavigationAction className={classes.link} onClick={() => window.open("http://www.twitter.com", "_blank")}

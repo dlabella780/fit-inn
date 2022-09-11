@@ -3,8 +3,8 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 
-export default class SortingButtons extends Component {
-	render() { return (
+const SortingButtons = (props) => {
+	return (
 		<div className="SortingButtons">
 			<Box sx={{display: 'flex', '& > *': {m: 1,},}}>
 				<ButtonGroup
@@ -17,9 +17,11 @@ export default class SortingButtons extends Component {
 					<Button key="rating" onClick={() => {}}> Sort by Rating</Button>
 					<Button key="list" onClick={() => {}}> View as List</Button>
 					<Button key="title" onClick={() => {}}> View as Tiles</Button>
-					<Button key="search" onClick={() => {}} href="/ViewGym"> GO!</Button>
+					<Button key="search" onClick={() => props.setResults(true)}> GO!</Button>
 				</ButtonGroup>
 			</Box>
 		</div>
-	);}
+	);
 }
+
+export default SortingButtons;

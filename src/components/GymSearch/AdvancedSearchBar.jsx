@@ -7,25 +7,27 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 
-const AdvSearchBar = ({setSearchQuery}) => (
-  <form>
-    <Box sx={{display: 'flex', '& > *': {m: 1,},}}>
-      <TextField
-        id="search-bar"
-        className="text"
-        label="Find a gym near you!"
-        variant="outlined"
-        placeholder="You'll be sure to fit-inn!"
-        size="large"
-      />
-      <DateTime/>
-      <NumberOfGuests/>
-    </Box>
-    <SortingButtons/>
-  </form>
-  //# of people
-);
+const AdvancedSearchBar = (props) => {
+  
+  return (
+    <form>
+      {console.log(props)}
+      <Box sx={{display: 'flex', '& > *': {m: 1,},}}>
+        <TextField
+          id="search-bar"
+          className="text"
+          label="Find a gym near you!"
+          variant="outlined"
+          placeholder="You'll be sure to fit-inn!"
+          size="large"
+        />
+        <DateTime/>
+        <NumberOfGuests/>
+      </Box>
+      <SortingButtons setResults={props.setResults}/>
+    </form>
+    //# of people
+    );
+  }
 
-export default function AdvancedSearchBar() {
-  return (<AdvSearchBar/>);
-}
+export default AdvancedSearchBar;

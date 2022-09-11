@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import "./BookForm.css";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
@@ -22,26 +21,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function createAccount(){
   return(
-    <Box id="form">
+    <Box className='booking-form' id="form">
       <FormGroup>
         <Typography variant="h4">$19.99 /month</Typography>
-        <Box id="fields">
+        <Box className='booking-fields' id="fields">
             <TextField required id="outlined-basic" label="First Name"/>
             <TextField required id="outlined-basic" label="Last Name"/>
         </Box>
-        <Box id="fields">
+        <Box className='booking-fields' id="fields">
             <TextField required id="outlined-basic" label="Date Join"/>
             <TextField required id="outlined-basic" label="Duration"/>
         </Box>
-        <Box id="fields">
+        <Box className='booking-fields' id="fields">
             <TextField required id="outlined-password-input" type="password" label="Quantity"/>
             <TextField label="Promo Code"/>
         </Box>
-        <Box id="fields">
+        <Box className='booking-fields' id="fields">
             <FormControlLabel control={<Checkbox default />} onclick="ageCheck()" label="Over 18?"/>
             <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Agree to Terms and Services?"/>
         </Box>
-        <Box id="fields">
+        <Box className='booking-fields' id="fields">
             <Stack direction="row" spacing={12}>
                 <Button variant="contained" href='/confirmed'>Book</Button>
                 <Button variant="contained" href="/">Cancel</Button>

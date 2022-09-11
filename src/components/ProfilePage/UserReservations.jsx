@@ -1,8 +1,4 @@
-import React, { Component, Fragment } from "react";
-import { NavLink } from "react-router-dom";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Box from '@mui/material/Box';
-import "./UserReservations.css";
+import React, { Component } from "react";
 
 import Button from "@mui/material/Button";
 
@@ -95,21 +91,10 @@ function ReservationPanel(props){
 
 class UserReservations extends Component {
     render() { return (
-        <>
-            <div className="GymReserveTitle">
-                <h1>Gym Reservations</h1>
-            </div>
-
-            <div className="CurrentPastSelection">
-               <button className="Button">Current</button>
-                <button className="Button">Past</button>
-            </div>
-        <div>
+        <div className="reservation-area">
             <ReservationPanel title='Guest Reservations' reserves={GUEST_RESERVATIONS}/>
             <ReservationPanel title='Host Reservations' reserves={HOST_RESERVATIONS}/>
         </div>
-
-        </>
     );}
 }
 export default UserReservations;

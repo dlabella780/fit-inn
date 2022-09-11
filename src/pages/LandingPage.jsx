@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
-import "./LandingPage.css";
 import HomePage from "./HomePage";
 import GymSearchPage from "./GymSearchPage.jsx";
 import GymUploadPage from "./GymUploadPage.jsx";
@@ -26,7 +25,7 @@ import Login from "../components/Login/Login.jsx";
 
 class LandingPage extends Component {  
     render() { return ( <div>
-        <span id = "topNavBar">
+        <span classNam = "top-nav-bar">
             <NavBarTop />
         </span>
         <span id = "content">
@@ -93,7 +92,7 @@ class LandingPage extends Component {
                 </Route>
             </Switch>
         </span>
-        <span id = "bottomNavBar">
+        <span className = "bottom-nav-bar">
             <NavBarBottom />
         </span>
     </div>);}

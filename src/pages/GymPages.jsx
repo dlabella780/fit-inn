@@ -1,5 +1,4 @@
 import React from 'react'
-import "./GymPages.css"
 import { FcCancel } from 'react-icons/fc';
 import { FaRestroom } from 'react-icons/fa';
 import { FaStar } from 'react-icons/fa';

@@ -12,6 +12,7 @@ class AddMap extends Component {
       height: '400px'
     };
     return (
+      <div className='googlemap'>
       <Map style={containerStyle} google={this.props.google} zoom={14}>
         
         <Marker onClick={this.onMarkerClick}
@@ -24,6 +25,8 @@ class AddMap extends Component {
         </InfoWindow>
         
       </Map>
+      </div>
+
     );
   }
 }

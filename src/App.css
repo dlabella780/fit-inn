@@ -413,18 +413,17 @@ Button {
 
 /*Home Page*/
 
-/* #HowTo {
+#HowTo {
   display: flex;
-  flex-direction: column;
-  bottom: 64px;
-  position: absolute;
-  background-color: white;
-} */
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 100px);
+}
 
-.title-helpsection {
+.helpsection {
   text-align: center;
-  margin-bottom: 40px;
-  margin-top: 0px;
+  position: sticky;
+  top: 100%;
 }
 
 /*Landing Page*/

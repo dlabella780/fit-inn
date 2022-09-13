@@ -2,17 +2,15 @@ import React, { useState } from "react";
 import { gql, useMutation, useQuery} from "@apollo/client";
 
 function UploadForm () {
-
     const GET_EQUIPMENT = gql`
-        query MyQuery {
-            list_EquipmentItems {
+    query MyQuery {
+        list_EquipmentItems {
             _EquipmentItems {
                 _id
                 name
             }
-            }
         }
-    `;
+    }`;
     
     const ADD_GYM = gql`
     mutation gymMutation($accessInformation: String = "", $address: String = "", $availability: [String] = "", $bookingNotice: Int = 3, 
@@ -36,19 +34,15 @@ function UploadForm () {
                     _id
                 }
         }
-      }       
-    `;
+    }`;
 
-    
     const [ufView, toggleUfView] = useState("general");
-    
     const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
         const [equipDets, setEquipDets] = useState('');
-
         const equipmentObj = []
-        equipMap.forEach((value, key) => equipmentObj.push({key: key, value: value}));
 
+        equipMap.forEach((value, key) => equipmentObj.push({key: key, value: value}));
 
         function setEquipmentInfo() {
             if(equip !== '') {
@@ -72,12 +66,11 @@ function UploadForm () {
 
         if (error) 
             console.log(error);
-
-        if(data)
+        if(data) {
             for (let i =0; i < data.list_EquipmentItems._EquipmentItems.length; i++) {
                 equipMap.set(data.list_EquipmentItems._EquipmentItems[i]._id, data.list_EquipmentItems._EquipmentItems[i].name);
             }
-        
+        }
     }
 
     const DeleteEquip = (index) => {
@@ -129,7 +122,6 @@ function UploadForm () {
             alert('Please Give Access Information');
             return;
         }
-
         if (equipment.length < 1) {
             toggleUfView('equipment')
             alert('Please Select at Least One Piece of Equipment');
@@ -137,24 +129,18 @@ function UploadForm () {
         }
         
         const equipmentObj = []
-        for (let i = 0; i < equipment.length; i++) {
+        for (let i = 0; i < equipment.length; i++) 
             equipmentObj.push({"details": equipmentDetails[i], "equipmentId": equipment[i]});
-        }
-
         const address = street + '$$' + city + '$$' + state + '$$' + zip;
-        var isHostHomeB;
-        var hasWifiB;
-        var hasSpeakersB;
-        var hasBathroomB;
+        var isHostHomeB = false;
+        var hasWifiB = false;
+        var hasSpeakersB = false;
+        var hasBathroomB = false;
 
         if (isHostHome === 'true') isHostHomeB = true;
-        else isHostHomeB = false;
         if (hasWifi === 'true') hasWifiB = true;
-        else hasWifiB = false;
         if (hasSpeakers === 'true') hasSpeakersB = true;
-        else hasSpeakersB = false;
         if (hasBathroom === 'true') hasBathroomB = true;
-        else hasBathroomB = false;
 
         setGymSubmit('Loading...');
 
@@ -163,14 +149,13 @@ function UploadForm () {
                 hasSpeakers: hasSpeakersB, isActive: isActive, hasWifi: hasWifiB, isHostHome: isHostHomeB, numGuestsAllowed: Number(numGuestsAllowed), 
                 ownerId: ownerId, photos: photos, title: title, tvType: tvType, equipment: equipmentObj}}).then((data, loading, error) => {
                     
-                    if(error) 
-                        console.log(error);
-                    else {
-                        alert('Gym Submitted');
-                    }
-                    setGymSubmit('Submit');
+                if(error) 
+                    console.log(error);
+                else {
+                    alert('Gym Submitted');
+                }
+                setGymSubmit('Submit');
         })
-            
     }
 
     const [isActive, setIsActive] = useState(false);
@@ -196,10 +181,9 @@ function UploadForm () {
     const [cancelationWarning, setCancelationWarning] = useState(24);
     const [availability, setAvailability] = useState(['1', '2', '3']);
     const [gymSubmit, setGymSubmit] = useState('Submit');
-
     const [addGym, {data, loading, error}] = useMutation(ADD_GYM);
-
     const equipMap = new Map();
+    
     GetEquipment();
 
     return (

@@ -22,6 +22,7 @@ import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
 import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 import Login from "../components/Login/Login.jsx";
+import PaymentPage from "./PaymentPage.jsx";
 
 class LandingPage extends Component {  
     render() { return ( <div>
@@ -78,9 +79,12 @@ class LandingPage extends Component {
                 <Route path={`/pages/ContactInfo`}>
                     <ContactInfoPage />
                 </Route>
-                 <Route path={'/Profile'}>
+                <Route path={`/Payment`}>
+                    <PaymentPage />
+                </Route>
+                <Route path={'/Profile'}>
                     <ProfilePage />
-                 </Route>
+                </Route>
                 <Route path={'/Register'}>
                     <CreateAccount />
                 </Route>

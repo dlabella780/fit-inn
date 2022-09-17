@@ -411,6 +411,26 @@ Button {
   */
 }
 
+/*Payment Page*/
+.payment-items {
+  margin-top: 250px;
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.payment-textfields {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.payment-button {
+  text-align: right;
+}
+
 /*Home Page*/
 
 #HowTo {

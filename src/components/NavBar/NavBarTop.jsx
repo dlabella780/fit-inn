@@ -75,6 +75,7 @@ function Navbar() {
             <div className={classes.navlinks}>
               <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
               <NavLink to="/GymUpload" className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink>
+              <NavLink to="/Payment" className={isActive => (isActive ? classes.linkActive : classes.link)}>Go to Payment</NavLink>
             </div>
         )}
         <Box sx={{ flexGrow: 0 }}>

@@ -144,17 +144,35 @@ function UploadForm () {
 
         setGymSubmit('Loading...');
 
-        addGym({variables: {accessInformation: accessInformation, address: address, availability: availability, bookingNotice: Number(bookingNotice), 
-                cancelationWarning: Number(cancelationWarning), cost: Number(cost), description: description, hasBathroom: hasBathroomB, 
-                hasSpeakers: hasSpeakersB, isActive: isActive, hasWifi: hasWifiB, isHostHome: isHostHomeB, numGuestsAllowed: Number(numGuestsAllowed), 
-                ownerId: ownerId, photos: photos, title: title, tvType: tvType, equipment: equipmentObj}}).then((data, loading, error) => {
-                    
+        addGym({variables:{
+                accessInformation: accessInformation, 
+                address: address, 
+                availability: availability, 
+                bookingNotice: Number(bookingNotice), 
+                cancelationWarning: Number(cancelationWarning), 
+                cost: Number(cost), 
+                description: description, 
+                hasBathroom: hasBathroomB, 
+                hasSpeakers: hasSpeakersB, 
+                isActive: isActive, 
+                hasWifi: hasWifiB, 
+                isHostHome: isHostHomeB, 
+                numGuestsAllowed: Number(numGuestsAllowed), 
+                ownerId: ownerId, 
+                photos: photos, 
+                title: title, 
+                tvType: tvType, 
+                equipment: equipmentObj
+                }}
+            ).then((data, loading, error) => {    
+            if(error) 
                 if(error) 
-                    console.log(error);
-                else {
-                    alert('Gym Submitted');
-                }
-                setGymSubmit('Submit');
+            if(error) 
+                console.log(error);
+            else {
+                alert('Gym Submitted');
+            }
+            setGymSubmit('Submit');
         })
     }
 

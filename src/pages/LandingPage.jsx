@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import HomePage from "./HomePage";
 import GymSearchPage from "./GymSearchPage.jsx";
 import GymUploadPage from "./GymUploadPage.jsx";
@@ -23,6 +25,11 @@ import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 import Login from "../components/Login/Login.jsx";
 import PaymentPage from "./PaymentPage.jsx";
+import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
+
+//stripe test key
+const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+
 
 class LandingPage extends Component {  
     render() { return ( <div>
@@ -84,6 +91,9 @@ class LandingPage extends Component {
                 </Route>
                 <Route path={'/Profile'}>
                     <ProfilePage />
+                </Route>
+                <Route path={'/Payments'}>
+                    <StripePayment />
                 </Route>
                 <Route path={'/Register'}>
                     <CreateAccount />

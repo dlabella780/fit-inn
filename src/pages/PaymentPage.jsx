@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Typography, Box, Button } from "@material-ui/core";
 import Name from "../components/PaymentForm/Name.jsx";
 import CardNumber from "../components/PaymentForm/CardNumber.jsx";

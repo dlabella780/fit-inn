@@ -3,17 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-
-const client = new ApolloClient({
-  uri: process.env.REACT_APP_VENDIA_URI,
-  cache: new InMemoryCache(),
-  headers: {
-    'X-API-KEY': process.env.REACT_APP_API_KEY
-  }
-});
 
 // Firebase Configuration
 const firebaseConfig = {
@@ -28,9 +19,7 @@ const firebaseConfig = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
       <App/>
-    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

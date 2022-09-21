@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { useTheme } from '@mui/material/styles';
@@ -15,7 +15,6 @@ import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import DateTime2 from "./DateTime2";
-import { gql, useMutation, useQuery} from "@apollo/client";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import InputLabel from '@mui/material/InputLabel';
@@ -28,6 +27,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Axios from 'axios';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -59,82 +59,28 @@ function a11yProps(index) {
 function Item(props) {return null;}
 Item.propTypes = {children: PropTypes.node};
 
+
 function UploadTab() {
 	const theme = useTheme();
 	const [value, setValue] = React.useState(0);
 	const handleChange = (event, newValue) => { setValue(newValue); };
 	const handleChangeIndex = (index) => { setValue(index); };
-	const GET_EQUIPMENT = gql`
-		query MyQuery {
-			list_EquipmentItems {
-				_EquipmentItems {
-					_id
-					name
-				}
-			}
-		}`;
 
-    const ADD_GYM = gql`
-		mutation gymMutation(
-			$accessInformation: String = "", 
-			$address: String = "", 
-			$availability: [String] = "", 
-			$bookingNotice: Int = 3, 
-			$cancelationWarning: Int = 24, 
-			$cost: Int = 20, 
-			$description: String = "", 
-			$tvType: String = "", 
-			$rating: Int = 0, 
-			$title: String = "", 
-			$photos: [String] = "", 
-			$ownerId: String = "", 
-			$numGuestsAllowed: Int = 2, 
-			$isHostHome: Boolean = false, 
-			$isActive: Boolean = false, 
-			$hasWifi: Boolean = false, 
-			$hasSpeakers: Boolean = false, 
-			$hasBathroom: Boolean = false,
-			$equipment: [Self_Gym_equipment_equipmentItem_Input_] = {}
-		){
-		add_Gym(
-		input: {
-			accessInformation: $accessInformation, 
-			address: $address, 
-			availability: $availability, 
-			bookingNotice: $bookingNotice, 
-			cancelationWarning: $cancelationWarning, 
-			cost: $cost, 
-			description: $description, 
-			hasBathroom: $hasBathroom, 
-			hasSpeakers: $hasSpeakers, 
-			isActive: $isActive, 
-			hasWifi: $hasWifi, 
-			isHostHome: $isHostHome, 
-			numGuestsAllowed: $numGuestsAllowed, 
-			ownerId: $ownerId, 
-			photos: $photos, 
-			rating: $rating, 
-			title: $title, 
-			tvType: $tvType, 
-			equipment: $equipment}
-		syncMode: NODE_LEDGERED
-		) {
-			transaction {
-				_id
-				submissionTime
-			}
-			result {
-				_id
-			}
-    	}
-	}`;
-
-    const SelectEquipment = () => {
+    useEffect(() => {
+		Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
+		for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
+			equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
+		setEquipmentMap(equipMap);
+		console.log(equipmentMap)
+		})
+	  },[]);
+	
+	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
         const [equipDets, setEquipDets] = useState('');
         const equipmentObj = []
 
-        equipMap.forEach((value, key) => equipmentObj.push({key: key, value: value}));
+		equipmentMap.forEach((value, key) => equipmentObj.push({key: key, value: value}));
 
         function setEquipmentInfo() {
             if(equip !== '') {
@@ -167,14 +113,6 @@ function UploadTab() {
 			</button>
 			<br></br>
 		</>);
-    }
-
-    const GetEquipment = () => {
-        const { loading, error, data } = useQuery(GET_EQUIPMENT);
-
-        if (error) console.log(error);
-        if(data) for (let i =0; i < data.list_EquipmentItems._EquipmentItems.length; i++) 
-			equipMap.set(data.list_EquipmentItems._EquipmentItems[i]._id, data.list_EquipmentItems._EquipmentItems[i].name);
     }
 
     const DeleteEquip = (index) => {
@@ -247,26 +185,25 @@ function UploadTab() {
         if (hasBathroom === 'true') hasBathroomB = true;
 
         setGymSubmit('Loading...');
-        addGym({variables:{
-                accessInformation: accessInformation, 
-                address: address, 
-                availability: availability, 
-                bookingNotice: Number(bookingNotice), 
-                cancelationWarning: Number(cancelationWarning), 
-                cost: Number(cost), 
-                description: description, 
-                hasBathroom: hasBathroomB, 
-                hasSpeakers: hasSpeakersB, 
-                isActive: isActive, 
-                hasWifi: hasWifiB, 
-                isHostHome: isHostHomeB, 
-                numGuestsAllowed: Number(numGuestsAllowed), 
-                ownerId: ownerId, 
-                photos: photos, 
-                title: title, 
-                tvType: tvType, 
-                equipment: equipmentObj
-        }}).then((data, loading, error) => {    
+        
+		Axios.post('http://localhost:3001/api/uploadgym', {accessInformation: accessInformation, 
+			address: address, 
+			availability: availability, 
+			bookingNotice: Number(bookingNotice), 
+			cancelationWarning: Number(cancelationWarning), 
+			cost: Number(cost), 
+			description: description, 
+			hasBathroom: hasBathroomB, 
+			hasSpeakers: hasSpeakersB, 
+			isActive: isActive, 
+			hasWifi: hasWifiB, 
+			isHostHome: isHostHomeB, 
+			numGuestsAllowed: Number(numGuestsAllowed), 
+			ownerId: ownerId, 
+			photos: photos, 
+			title: title, 
+			tvType: tvType, 
+			equipment: equipmentObj}).then((data, loading, error) => {    
 			if(error) 
 				console.log(error);
 			else {
@@ -299,10 +236,8 @@ function UploadTab() {
     const [cancelationWarning, setCancelationWarning] = useState(24);
     const [availability, setAvailability] = useState(['1', '2', '3']);
     const [gymSubmit, setGymSubmit] = useState('Submit');
-    const [addGym, {data, loading, error}] = useMutation(ADD_GYM);
-    const equipMap = new Map();
-
-    GetEquipment();
+	const [equipmentMap, setEquipmentMap] = useState(new Map());
+	const equipMap = new Map();
 
 	const ReviewDialog = styled(Dialog)(({ theme }) => ({
 		'& .MuiDialogContent-root': {padding: theme.spacing(2),},

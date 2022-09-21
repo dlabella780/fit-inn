@@ -4,7 +4,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-export default function DateTimeValidation() {
+export default function DateTime2() {
 	const [startTime, setStartTime] = React.useState(new Date());
 	const [endTime, setEndTime] = React.useState(new Date());
 

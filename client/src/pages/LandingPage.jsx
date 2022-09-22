@@ -26,6 +26,7 @@ import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 import Login from "../components/Login/Login.jsx";
 import PaymentPage from "./PaymentPage.jsx";
 import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
+import ReservationsPage from "./ReservationsPage.jsx";
 
 //stripe test key
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
@@ -97,6 +98,9 @@ class LandingPage extends Component {
                 </Route>
                 <Route path={'/Register'}>
                     <CreateAccount />
+                </Route>
+                <Route path={'/Reservations'}>
+                    <ReservationsPage />
                 </Route>
                 <Route path={'/Login'}>
                     <Login />

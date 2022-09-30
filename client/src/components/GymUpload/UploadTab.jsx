@@ -89,38 +89,43 @@ function UploadTab() {
         }
 
         return ( <>
-			<select 
-				name="Equipment" 
-				value={equip} 
-				onChange={(e) => setEquip(e.target.value)}
+			<FormControl sx={{ m: 0.5, minWidth: 250 }}>
+				<InputLabel>-- SELECT EQUIPMENT --</InputLabel>
+				<Select
+					id="Equipment" 
+					label="Equipment"
+					variant="outlined"
+					value={equip}
+					onChange={(e) => setEquip(e.target.value)}
+				>
+					{equipmentObj.map((val) => 
+						<MenuItem value={val.key}>
+							{val.value}
+						</MenuItem>)}
+				</Select>
+			</FormControl>
+			<FormControl sx={{ m: 0.5, minWidth: 250 }}>
+				<TextField
+					required
+					id="equip-details"
+					label="Equipment Details"
+					variant="outlined"
+					defaultValue="Description"
+					value={equipDets} 
+					onChange={(e) => setEquipDets(e.target.value)}
+					helperText={equipDets === "" ? 'Please enter equipment details.' : ' '}
+				/>
+			</FormControl>
+			<Button 
+				variant="contained" 
+				onClick={() => setEquipmentInfo()}
+				size="large"
+				style={{top: "12px"}}
 			>
-                <option disabled value = ''> -- SELECT EQUIPMENT -- </option>
-                {equipmentObj.map((val) => <option value={val.key}>{val.value}</option>)}
-            </select>
-			Details:
-			<input 
-				type="text" 
-				placeholder="Weight, Size, etc." 
-				value={equipDets} 
-				onChange={(e) => setEquipDets(e.target.value)}
-			/>
-            <button 
-				type='button' 
-				onClick={() => setEquipmentInfo()}>
 				ADD
-			</button>
+			</Button>
 			<br></br>
 		</>);
-    }
-
-    const DeleteEquip = (index) => {
-        const reducedEquip = [...equipment];
-        const reducedEquipDetails = [...equipmentDetails];
-
-        reducedEquip.splice(index, 1);
-        reducedEquipDetails.splice(index,1);
-        setEquipment(reducedEquip);
-        setEquipmentDetails(reducedEquipDetails);
     }
 
     const SubmitGym = (e) => {
@@ -212,15 +217,31 @@ function UploadTab() {
         })
     }
 
+	const DeleteEquip = (index) => {
+        const reducedEquip = [...equipment];
+        const reducedEquipDetails = [...equipmentDetails];
+
+        reducedEquip.splice(index, 1);
+        reducedEquipDetails.splice(index,1);
+        setEquipment(reducedEquip);
+        setEquipmentDetails(reducedEquipDetails);
+    }
+
 	const GetEquip = () => {
 		var equip = [];
 
 		for (let i = 0; i < equipment.length; i++) {
-			equip.push((
-				<div>
-					{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}
-				</div>)
-			);
+			equip.push((<div>
+				{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}
+				<Button 
+					variant="contained" 
+					onClick={() => DeleteEquip(i)}
+					size="small"
+					style={{left: "10px"}}
+				>
+					REMOVE
+				</Button>
+			</div>));
 		}
 		return (equip);
 	}
@@ -421,7 +442,7 @@ function UploadTab() {
 			</TabPanel>
 			<TabPanel value={value} index={1} dir={theme.direction}>
 				<SelectEquipment/>
-				--Added Equipment--<br></br>
+				<h3>--Added Equipment--</h3>
 				{GetEquip()}
 			</TabPanel>
 			<TabPanel value={value} index={2} dir={theme.direction}>
@@ -519,7 +540,7 @@ function UploadTab() {
 					Description: {description}<br/>
 					Max Number of Guests Allowed: {numGuestsAllowed}<br/>
 					Access Instructions: {accessInformation}<br/>
-					Address: {street}, {city}, {state}, {zip}<br/>
+					Address: {street} {city} {state} {zip}<br/>
 					Gym Owner At Home: {isHostHome === "false" ? "No" : "Yes"}<br/>
 				</Typography>
 			</DialogContent>

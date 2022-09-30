@@ -1,3 +1,4 @@
+import React, { Component }  from 'react';
 import { useEffect, useState } from "react";
 import { getComments as getCommentsApi, 
         createComment as createCommentApi, 

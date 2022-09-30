@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-
 import { styles } from '../styles';
-
 import { LoadingOutlined } from '@ant-design/icons';
-
 import Avatar from "../Avatar";
-
 import axios  from "axios";
 
 const EmailForm = props => {

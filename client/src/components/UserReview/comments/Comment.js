@@ -1,3 +1,4 @@
+import React from 'react';
 import { updateComment } from "../api";
 import CommnetForm from "./CommentForm";
 

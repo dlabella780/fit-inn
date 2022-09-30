@@ -40,17 +40,23 @@
 /*Home Page Quick Guide*/
 
 .helpsection {
-  background-color: white;
-  padding: 30px;
-  border-radius: 12px;
-  border: 2px solid black;
   position: absolute;
-  right: 30%;
-  bottom: 100px;
+  top: 10%;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 12px;
+  margin-top:40%;
 }
 
 .helpsection h1{
   color: rgb(80, 78, 78);
+}
+
+.support-win {
+  position : fixed;
+  bottom: 65px;
+  right: 25px;
 }
 
 /*Login*/
@@ -218,23 +224,25 @@ Button {
 /*Gym Search Page*/
 
 .gym-searchbar {
-  background-color: white;
-  padding: 20px;
-  border-radius: 12px;
-  border: 2px solid black;
-  left: 20%;
   position: absolute;
+  top: 10%;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 12px;
 }
 
 .view-gyms {
   background-color: white;
 }
 
+
 .googlemap {
   position: absolute;
   right: 1500px;
   top: 90px;
 }
+
 
 .search-bar-form{
   position: fixed;
@@ -277,15 +285,6 @@ Button {
 }
 
 /*Gym Upload Page*/
-
-.UploadForm {
-  position: absolute;
-  top: 10%;
-  background-color: white;
-  padding: 10px;
-  border: 2px solid black;
-  border-radius: 12px;
-}
 
 .UploadTab {
   position: absolute;

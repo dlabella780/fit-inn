@@ -10,14 +10,12 @@ const SortingButtons = (props) => {
 				<ButtonGroup
 					orientation="outlined"
 					aria-label="outlined button group"
-					variant="contained">
+					variant="contained"
+				>
 					<Button key="distance"onClick={() => {}}> Sort by Distance</Button>
-					<Button key="availability" onClick={() => {}}> Sort by Availability</Button>
 					<Button key="price" onClick={() => {}}> Sort by Price</Button>
 					<Button key="rating" onClick={() => {}}> Sort by Rating</Button>
-					<Button key="list" onClick={() => {}}> View as List</Button>
-					<Button key="title" onClick={() => {}}> View as Tiles</Button>
-					<Button key="search" onClick={() => props.setResults(true)}> GO!</Button>
+					<Button key="search" onClick={() => {}}> GO!</Button>
 				</ButtonGroup>
 			</Box>
 		</div>

@@ -65,7 +65,6 @@ export const ViewGyms = (props) => {
                 </div>
             </div>    
             : <></>}
-            <AddMap />
         </div>
     );
 }

@@ -9,7 +9,6 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import Paper from "@mui/material/Paper";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
@@ -72,8 +71,7 @@ function UploadTab() {
 			equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
 		setEquipmentMap(equipMap);
 		console.log(equipmentMap)
-		})
-	  },[]);
+	})},[]);
 	
 	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
@@ -91,38 +89,43 @@ function UploadTab() {
         }
 
         return ( <>
-			<select 
-				name="Equipment" 
-				value={equip} 
-				onChange={(e) => setEquip(e.target.value)}
+			<FormControl sx={{ m: 0.5, minWidth: 250 }}>
+				<InputLabel>-- SELECT EQUIPMENT --</InputLabel>
+				<Select
+					id="Equipment" 
+					label="Equipment"
+					variant="outlined"
+					value={equip}
+					onChange={(e) => setEquip(e.target.value)}
+				>
+					{equipmentObj.map((val) => 
+						<MenuItem value={val.key}>
+							{val.value}
+						</MenuItem>)}
+				</Select>
+			</FormControl>
+			<FormControl sx={{ m: 0.5, minWidth: 250 }}>
+				<TextField
+					required
+					id="equip-details"
+					label="Equipment Details"
+					variant="outlined"
+					defaultValue="Description"
+					value={equipDets} 
+					onChange={(e) => setEquipDets(e.target.value)}
+					helperText={equipDets === "" ? 'Please enter equipment details.' : ' '}
+				/>
+			</FormControl>
+			<Button 
+				variant="contained" 
+				onClick={() => setEquipmentInfo()}
+				size="large"
+				style={{top: "12px"}}
 			>
-                <option disabled value = ''> -- SELECT EQUIPMENT -- </option>
-                {equipmentObj.map((val) => <option value={val.key}>{val.value}</option>)}
-            </select>
-			Details:
-			<input 
-				type="text" 
-				placeholder="Weight, Size, etc." 
-				value={equipDets} 
-				onChange={(e) => setEquipDets(e.target.value)}
-			/>
-            <button 
-				type='button' 
-				onClick={() => setEquipmentInfo()}>
 				ADD
-			</button>
+			</Button>
 			<br></br>
 		</>);
-    }
-
-    const DeleteEquip = (index) => {
-        const reducedEquip = [...equipment];
-        const reducedEquipDetails = [...equipmentDetails];
-
-        reducedEquip.splice(index, 1);
-        reducedEquipDetails.splice(index,1);
-        setEquipment(reducedEquip);
-        setEquipmentDetails(reducedEquipDetails);
     }
 
     const SubmitGym = (e) => {
@@ -186,7 +189,8 @@ function UploadTab() {
 
         setGymSubmit('Loading...');
         
-		Axios.post('http://localhost:3001/api/uploadgym', {accessInformation: accessInformation, 
+		Axios.post('http://localhost:3001/api/uploadgym', {
+			accessInformation: accessInformation, 
 			address: address, 
 			availability: availability, 
 			bookingNotice: Number(bookingNotice), 
@@ -212,6 +216,35 @@ function UploadTab() {
 			}
         })
     }
+
+	const DeleteEquip = (index) => {
+        const reducedEquip = [...equipment];
+        const reducedEquipDetails = [...equipmentDetails];
+
+        reducedEquip.splice(index, 1);
+        reducedEquipDetails.splice(index,1);
+        setEquipment(reducedEquip);
+        setEquipmentDetails(reducedEquipDetails);
+    }
+
+	const GetEquip = () => {
+		var equip = [];
+
+		for (let i = 0; i < equipment.length; i++) {
+			equip.push((<div>
+				{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}
+				<Button 
+					variant="contained" 
+					onClick={() => DeleteEquip(i)}
+					size="small"
+					style={{left: "10px"}}
+				>
+					REMOVE
+				</Button>
+			</div>));
+		}
+		return (equip);
+	}
 
     const [isActive, setIsActive] = useState(false);
     const [ownerId, setOwnerId] = useState("018054b3-f513-06be-ba11-5726fa2b1052");
@@ -409,19 +442,8 @@ function UploadTab() {
 			</TabPanel>
 			<TabPanel value={value} index={1} dir={theme.direction}>
 				<SelectEquipment/>
-				Your Equipment:<br></br>
-				<div className="uf-input-equip">
-					{equipment.map((val, index) => <>
-					<button 
-						type='button' 
-						onClick={() => DeleteEquip(index)}
-					>
-						<code>&#10006;</code>
-					</button> {equipMap.get(val)}: <br></br></>)}
-				</div>
-				<div className="uf-input-equip-details">
-					{equipmentDetails.map((val) => <>{val}<br></br></>)}
-				</div><br></br>
+				<h3>--Added Equipment--</h3>
+				{GetEquip()}
 			</TabPanel>
 			<TabPanel value={value} index={2} dir={theme.direction}>
 				<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
@@ -482,6 +504,26 @@ function UploadTab() {
 					error={cost <= 0 || cost > 100 || isNaN(cost)}
 				/>
 				<DateTime2 startTime endTime/>
+				<div>
+					<TextField
+						required
+						id="booking-notice"
+						label="Booking Notice? (In hours)"
+						variant="outlined"
+						value={bookingNotice} 
+						onChange={(e) => setBookingNotice(e.target.value)}
+						helperText={bookingNotice === "" ? 'Please enter any booking requirements.' : ' '}
+					/>
+					<TextField
+						required
+						id="cancel-notice"
+						label="Cancelation Notice? (In hours)"
+						variant="outlined"
+						value={cancelationWarning} 
+						onChange={(e) => setCancelationWarning(e.target.value)}
+						helperText={cancelationWarning === "" ? 'Please enter any cancelation requirements.' : ' '}
+					/>
+				</div>
 			</TabPanel>
 		</SwipeableViews>
 		<Button variant="contained" onClick={handleOpen}>
@@ -498,16 +540,13 @@ function UploadTab() {
 					Description: {description}<br/>
 					Max Number of Guests Allowed: {numGuestsAllowed}<br/>
 					Access Instructions: {accessInformation}<br/>
-					Address: {street}, {city}, {state}, {zip}<br/>
+					Address: {street} {city} {state} {zip}<br/>
 					Gym Owner At Home: {isHostHome === "false" ? "No" : "Yes"}<br/>
 				</Typography>
 			</DialogContent>
 			<DialogContent dividers>
 				--Equipment--
-				<Typography gutterBottom>
-					PopulateEquipmentHere
-					{equipment}
-				</Typography>
+				{GetEquip()}
 			</DialogContent>
 			<DialogContent dividers>
 				--Amenities--
@@ -524,6 +563,8 @@ function UploadTab() {
 					Hourly Rate: ${cost}/hour<br/>
 					Starting Availability: AddStartDateTimeHere<br/>
 					Ending Availability: AddEndDateTimeHere<br/>
+					Booking Notice: {bookingNotice} hours<br/>
+					Cancelation Notice: {cancelationWarning} hours<br/>
 				</Typography>
 			</DialogContent>
 			<DialogActions>

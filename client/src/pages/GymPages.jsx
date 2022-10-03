@@ -13,6 +13,7 @@ import sampleImage from '../components/ViewGym/gym1.jpg';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import BookForm from '../components/BookForm/BookForm';
+import Comments from '../components/UserReview/comments/Comments';
 
 const itemData = [
   {
@@ -72,6 +73,7 @@ export const GymA = () => {
 
         <BookForm />
 
+        <Comments currentUserId="1" />
         
     </div>
   )
@@ -81,6 +83,7 @@ export const GymB = () => {
     return (
       <div>                                                                                                                  
           Gym B
+          
       </div>
 
       

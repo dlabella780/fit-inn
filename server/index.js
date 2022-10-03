@@ -1,13 +1,11 @@
 import { request, GraphQLClient, gql } from 'graphql-request';
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { query } from 'express';
-import * as dotenv from 'dotenv'
-dotenv.config()
-
-const stripe = require('stripe')(process.env.STRIPE_SK);
+import * as dotenv from 'dotenv';
+dotenv.config();
+import stripe from 'stripe';
 const app = express();
 
 app.use(cors());

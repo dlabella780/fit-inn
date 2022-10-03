@@ -1,6 +1,6 @@
 # Fit-Inn - Team Jonathan
 
-![banner](https://raw.githubusercontent.com/dlabella780/fit-inn/main/public/fitinn_vendia.png)
+![banner](https://raw.githubusercontent.com/dlabella780/fit-inn/main/client/public/fitinn_vendia.png)
 
 # Table of Contents
 - [Synopsis](#synopsis)

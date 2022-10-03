@@ -46,7 +46,7 @@ Unis are "cross-cloud, cross-party, cross-account, cross-region data and code sh
 
 
 
-<img src="https://raw.githubusercontent.com/dlabella780/fit-inn/client/public/fitinn_homepage.png" width="1000">
+<img src="https://raw.githubusercontent.com/dlabella780/fit-inn/main/client/public/fitinn_homepage.png" width="1000">
 
 **Home Page shown here with top and bottom navigation bars and quick guide.**
 

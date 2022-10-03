@@ -1,7 +1,0 @@
-GRAPHQL_ENDPOINT='https://lc32vjdv2j.execute-api.us-west-2.amazonaws.com/graphql/'
-
-API_KEY='7WzCPJihVf8jRSKNAoLJfrZYa5iKBYq6HXm9srnaa3Fb'
-
-CLIENT_URL='http://localhost:3000'
-
-CLIENT_URL_SECURE='https://localhost:3000'

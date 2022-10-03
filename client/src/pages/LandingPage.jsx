@@ -34,9 +34,6 @@ import {
     signOut,
     getAuth,
   } from "firebase/auth";
-  
-//stripe test key
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 
 class LandingPage extends Component {  

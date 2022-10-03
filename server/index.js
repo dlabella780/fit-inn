@@ -7,12 +7,18 @@ import { query } from 'express';
 import * as dotenv from 'dotenv'
 dotenv.config()
 
+const stripe = require('stripe')(process.env.STRIPE_SK);
 const app = express();
 
 app.use(cors());
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const calculateOrderAmount = (items) => {
+	// TODO: extract price from gym listing
+	return 1000;
+};
 
 const graphQLClient = new GraphQLClient(process.env.GRAPHQL_ENDPOINT, {
 headers: {
@@ -127,6 +133,22 @@ app.post('/api/uploadGym', async (req, res) => {
   }
   else res.send('Access Denied.');
 })
+
+app.post('/create-payment-intent', async (req, res) => {
+	const { items } = req.body;
+
+	const paymentIntent = await stripe.paymentIntent.create({
+		amount: calculateOrderAmount(items),
+		currency: "usd",
+		automatic_payment_methods: {
+			enabled: true,
+		},
+	});
+
+	res.send({
+		clientSecret: paymentIntent.client_secret,
+    })
+});
 
 app.listen(3001, () =>  {
     console.log(`Server running on port 3001`);

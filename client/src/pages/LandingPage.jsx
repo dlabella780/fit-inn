@@ -27,13 +27,23 @@ import Login from "../components/Login/Login.jsx";
 import PaymentPage from "./PaymentPage.jsx";
 import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
 import ReservationsPage from "./ReservationsPage.jsx";
-
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut,
+    getAuth,
+  } from "firebase/auth";
+  
 //stripe test key
 const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 
 class LandingPage extends Component {  
-    render() { return ( <div>
+    render() {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        return ( <div>
         <span classNam = "top-nav-bar">
             <NavBarTop />
         </span>
@@ -109,6 +119,15 @@ class LandingPage extends Component {
                     <NotFound />
                 </Route>
             </Switch>
+
+            {/*example of how to do if statement with user logged in/logged out*/}
+            <div>
+                {
+                user
+                    ? <h1>Hello, {user.displayName}</h1>
+                    : <h1>Not Signed In</h1>
+                }
+            </div>
         </span>
         <span className = "bottom-nav-bar">
             <NavBarBottom />

@@ -5,7 +5,8 @@ import cors from 'cors';
 import { query } from 'express';
 import * as dotenv from 'dotenv';
 dotenv.config();
-import stripe from 'stripe';
+import Stripe from 'stripe';
+const stripe = Stripe(process.env.STRIPE_SK);
 const app = express();
 
 app.use(cors());

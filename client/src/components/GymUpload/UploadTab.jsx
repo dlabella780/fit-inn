@@ -59,7 +59,8 @@ function Item(props) {return null;}
 Item.propTypes = {children: PropTypes.node};
 
 
-function UploadTab() {
+function UploadTab(props) {
+	
 	const theme = useTheme();
 	const [value, setValue] = React.useState(0);
 	const handleChange = (event, newValue) => { setValue(newValue); };
@@ -70,7 +71,6 @@ function UploadTab() {
 		for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
 			equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
 		setEquipmentMap(equipMap);
-		console.log(equipmentMap)
 	})},[]);
 	
 	const SelectEquipment = () => {
@@ -147,7 +147,7 @@ function UploadTab() {
             alert('Please Give Access Information');
             return;
         }
-        if (street === '') {
+        if (street1 === '') {
             alert('Please Set a Street');
             return;
         }
@@ -177,7 +177,7 @@ function UploadTab() {
         for (let i = 0; i < equipment.length; i++) 
             equipmentObj.push({"details": equipmentDetails[i], "equipmentId": equipment[i]});
 
-		const address = street + '$$' + city + '$$' + state + '$$' + zip;
+		const address = {"street1": street1, "stree2": street2, "City": city, "State": state, "Country": "United States", "zipcode": zip};
 		var isHostHomeB = false;
         var hasWifiB = false;
         var hasSpeakersB = false;
@@ -189,32 +189,62 @@ function UploadTab() {
 
         setGymSubmit('Loading...');
         
-		Axios.post('http://localhost:3001/api/uploadgym', {
-			accessInformation: accessInformation, 
-			address: address, 
-			availability: availability, 
-			bookingNotice: Number(bookingNotice), 
-			cancelationWarning: Number(cancelationWarning), 
-			cost: Number(cost), 
-			description: description, 
-			hasBathroom: hasBathroomB, 
-			hasSpeakers: hasSpeakersB, 
-			isActive: isActive, 
-			hasWifi: hasWifiB, 
-			isHostHome: isHostHomeB, 
-			numGuestsAllowed: Number(numGuestsAllowed), 
-			ownerId: ownerId, 
-			photos: photos, 
-			title: title, 
-			tvType: tvType, 
-			equipment: equipmentObj}).then((data, loading, error) => {    
-			if(error) 
-				console.log(error);
-			else {
-				alert('Gym Submitted');
-				setGymSubmit('Submit');
-			}
-        })
+		if(!props.gymId) {
+			Axios.post('http://localhost:3001/api/uploadgym', {
+				accessInformation: accessInformation, 
+				address: address, 
+				availability: availability, 
+				bookingNotice: Number(bookingNotice), 
+				cancelationWarning: Number(cancelationWarning), 
+				cost: Number(cost), 
+				description: description, 
+				hasBathroom: hasBathroomB, 
+				hasSpeakers: hasSpeakersB, 
+				isActive: isActive, 
+				hasWifi: hasWifiB, 
+				isHostHome: isHostHomeB, 
+				numGuestsAllowed: Number(numGuestsAllowed), 
+				ownerId: ownerId, 
+				photos: photos, 
+				title: title, 
+				tvType: tvType, 
+				equipment: equipmentObj}).then((data, loading, error) => {    
+				if(error) 
+					console.log(error);
+				else {
+					alert('Gym Submitted');
+					setGymSubmit('Submit');
+				}
+			})
+		} else {
+			Axios.post('http://localhost:3001/api/updateGym', {
+				accessInformation: accessInformation, 
+				address: address, 
+				availability: availability, 
+				bookingNotice: Number(bookingNotice), 
+				cancelationWarning: Number(cancelationWarning), 
+				cost: Number(cost), 
+				description: description, 
+				hasBathroom: hasBathroomB, 
+				hasSpeakers: hasSpeakersB, 
+				isActive: isActive, 
+				hasWifi: hasWifiB, 
+				isHostHome: isHostHomeB, 
+				numGuestsAllowed: Number(numGuestsAllowed), 
+				ownerId: ownerId, 
+				photos: photos, 
+				title: title, 
+				tvType: tvType, 
+				equipment: equipmentObj,
+				id: props.gymId}).then((data, loading, error) => {    
+				if(error) 
+					console.log(error);
+				else {
+					alert('Gym Submitted');
+					setGymSubmit('Submit');
+				}
+			})
+		}
     }
 
 	const DeleteEquip = (index) => {
@@ -247,9 +277,10 @@ function UploadTab() {
 	}
 
     const [isActive, setIsActive] = useState(false);
-    const [ownerId, setOwnerId] = useState("018054b3-f513-06be-ba11-5726fa2b1052");
+    const [ownerId, setOwnerId] = useState("0183a543-f4a8-2e69-a854-1a5839b079b1");
     const [title, setTitle] = useState("");
-    const [street, setStreet] = useState("");
+    const [street1, setStreet1] = useState("");
+	const [street2, setStreet2] = useState("");
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [zip, setZip] = useState("");
@@ -270,7 +301,42 @@ function UploadTab() {
     const [availability, setAvailability] = useState(['1', '2', '3']);
     const [gymSubmit, setGymSubmit] = useState('Submit');
 	const [equipmentMap, setEquipmentMap] = useState(new Map());
+	const [oldGymLoaded, setOldGymLoaded] = useState(false);
 	const equipMap = new Map();
+
+	if(props.gymId && !oldGymLoaded) {
+		let str = 'http://localhost:3001/api/getGym/' + props.gymId
+		Axios.get(str).then((response) => {
+				setTitle(response.data.get_Gym.title);
+				setStreet1(response.data.get_Gym.address.street1);
+				setStreet2(response.data.get_Gym.address.stree2);
+				setCity(response.data.get_Gym.address.City);
+				setState(response.data.get_Gym.address.State);
+				setZip(response.data.get_Gym.address.zipcode);
+				setDescription(response.data.get_Gym.description);
+				setAccessInformation(response.data.get_Gym.accessInformation);
+				if (response.data.get_Gym.isHostHome)
+					setIsHostHome('true');
+				setNumGuestsAllowed(response.data.get_Gym.numGuestsAllowed);
+				if (response.data.get_Gym.hasBathroom)
+					setHasBathroom('true');
+				if (response.data.get_Gym.hasWifi)
+					setHasWifi('true');
+				if (response.data.get_Gym.hasSpeakers)
+					setHasSpeakers('true');
+				setTvType(response.data.get_Gym.tvType);
+				setCost(response.data.get_Gym.cost);
+				setBookingNotice(response.data.get_Gym.bookingNotice);
+				setCancelationWarning(response.data.get_Gym.cancelationWarning);		
+				for (let i = 0; i <response.data.get_Gym.equipment.length; i++) {
+					setEquipment(prevState => [...prevState, response.data.get_Gym.equipment[i].equipmentId]);
+                	setEquipmentDetails(prevState => [...prevState, response.data.get_Gym.equipment[i].details]);
+					
+				}
+				console.log(equipment)
+			})
+		setOldGymLoaded(true);
+	}
 
 	const ReviewDialog = styled(Dialog)(({ theme }) => ({
 		'& .MuiDialogContent-root': {padding: theme.spacing(2),},
@@ -378,9 +444,9 @@ function UploadTab() {
 						label="Street"
 						variant="outlined"
 						defaultValue="Street"
-						value={street} 
-						onChange={(e) => setStreet(e.target.value)}
-						helperText={street === "" ? 'Please enter your street.' : ' '}
+						value={street1} 
+						onChange={(e) => setStreet1(e.target.value)}
+						helperText={street1 === "" ? 'Please enter your street.' : ' '}
 					/>
 					<TextField
 						required
@@ -540,7 +606,7 @@ function UploadTab() {
 					Description: {description}<br/>
 					Max Number of Guests Allowed: {numGuestsAllowed}<br/>
 					Access Instructions: {accessInformation}<br/>
-					Address: {street} {city} {state} {zip}<br/>
+					Address: {street1} {city} {state} {zip}<br/>
 					Gym Owner At Home: {isHostHome === "false" ? "No" : "Yes"}<br/>
 				</Typography>
 			</DialogContent>

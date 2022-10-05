@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 import { gql, useQuery } from "@apollo/client";
+import { Link, NavLink } from "react-router-dom";
+import GymUploadPage from "../../pages/GymUploadPage";
 
 
 const UserListings = (props) => {
@@ -21,6 +23,10 @@ const UserListings = (props) => {
                         Country: {val.address.Country} <br/>
                         Zipcode: {val.address.zipcode} <br/>
                         Rating: {val.rating} Stars<br/>
+                        <NavLink to={{pathname: '/GymUpload',
+                            state:{ gymId: val._id}}}>
+                            Update
+                        </NavLink><br/>
                     </>
                 )
             })}

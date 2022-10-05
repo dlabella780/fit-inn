@@ -65,6 +65,7 @@ query MyQuery($eq: String = "") {
 		description
 		title
 		rating
+		_id
 	  }
 	}
   }
@@ -116,7 +117,37 @@ const gymQuery = gql`
   }
 `;
 
-const userMutation = gql`
+const userAddMutation = gql`
+	mutation MyMutation($City: String = "", 
+		$Country: String = "", 
+		$State: String = "", 
+		$stree2: String = "", 
+		$street1: String = "", 
+		$zipcode: String = "", 
+		$email: String = "", 
+		$favoriteGymIds: [String] = "", 
+		$fname: String = "", 
+		$lname: String = "", 
+		$notificationSetting: Int = 10, 
+		$paymentapitoken: String = "", 
+		$phoneNumber: String = "", 
+		$profilePicture: String = "", 
+		$ssoapitoken: String = "",
+		$id: ID = "") {
+	Add_User(
+	  input: {email: $email, favoriteGymIds: $favoriteGymIds, fname: $fname, lname: $lname, notificationSetting: $notificationSetting, paymentapitoken: $paymentapitoken, phoneNumber: $phoneNumber, profilePicture: $profilePicture, ssoapitoken: $ssoapitoken, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}}
+	) {
+	  transaction {
+		_id
+	  }
+	  result {
+		_id
+	  }
+	}
+  	}
+`;
+
+const userUpdateMutation = gql`
 	mutation MyMutation($City: String = "", 
 		$Country: String = "", 
 		$State: String = "", 
@@ -149,30 +180,26 @@ const userMutation = gql`
 
 const gymAddMutation = gql`
 	mutation MyMutation($accessInformation: String = "", 
-		$City: String = "", 
-		$Country: String = "", 
-		$State: String = "", 
-		$stree2: String = "", 
-		$street1: String = "", 
-		$zipcode: String = "", 
+		$address: Self_Gym_address_Input_ = {},
 		$availability: [String] = "", 
 		$bookingNotice: Int = 10, 
 		$cancelationWarning: Int = 10, 
 		$cost: Int = 10, 
 		$description: String = "", 
-		$equipment: [Self_Gym_equipment_equipmentItem_UpdateInput_] = {}, 
+		$equipment: [Self_Gym_equipment_equipmentItem_Input_] = {}, 
 		$hasBathroom: Boolean = false, 
 		$hasSpeakers: Boolean = false, 
 		$hasWifi: Boolean = false, 
 		$isActive: Boolean = false, 
 		$isHostHome: Boolean = false, 
 		$numGuestsAllowed: Int = 10, 
+		$ownerId: String = "",
 		$photos: [String] = "", 
 		$rating: Int = 10, 
 		$tvType: String = "", 
 		$title: String = "") {
 	add_Gym(
-	  input: {accessInformation: $accessInformation, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, photos: $photos, rating: $rating, tvType: $tvType, title: $title}
+	  input: {accessInformation: $accessInformation, address: $address, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, isActive: $isActive, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, ownerId: $ownerId, photos: $photos, rating: $rating, tvType: $tvType, title: $title}
 	) {
 	  result {
 		_id
@@ -186,12 +213,7 @@ const gymAddMutation = gql`
 
 const gymUpdateMutation = gql`
 	mutation MyMutation($accessInformation: String = "", 
-		$City: String = "", 
-		$Country: String = "", 
-		$State: String = "", 
-		$stree2: String = "", 
-		$street1: String = "", 
-		$zipcode: String = "", 
+		$address: Self_Gym_address_UpdateInput_ = {},
 		$availability: [String] = "", 
 		$bookingNotice: Int = 10, 
 		$cancelationWarning: Int = 10, 
@@ -211,7 +233,7 @@ const gymUpdateMutation = gql`
 		$id: ID = "") {
 	update_Gym(
 	  id: $id
-	  input: {accessInformation: $accessInformation, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, photos: $photos, rating: $rating, tvType: $tvType, title: $title}
+	  input: {accessInformation: $accessInformation, address: $address, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, hasWifi: $hasWifi, isActive: $isActive, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, photos: $photos, rating: $rating, tvType: $tvType, title: $title}
 	) {
 	  result {
 		_id
@@ -375,11 +397,7 @@ app.post('/api/uploadGym', async (req, res) => {
   if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
     const variables = {
 		accessInformation: req.body.accessInformation, 
-		Country: req.body.country, 
-		State: req.body.state, 
-		stree2: req.body.street2, 
-		street1: req.body.street1, 
-		zipcode: req.body.zipcode, 
+		address: req.body.address,
 		availability: req.body.availability, 
 		bookingNotice: req.body.bookingNotice, 
 		cancelationWarning: req.body.cancelationWarning, 
@@ -398,7 +416,6 @@ app.post('/api/uploadGym', async (req, res) => {
 		tvType: req.body.tvType, 
 		equipment: req.body.equipment
     }
-
     const data = await graphQLClient.request(gymAddMutation, variables)
       
   }
@@ -410,11 +427,7 @@ app.post('/api/updateGym', async (req, res) => {
 	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
 	  const variables = {
 		  accessInformation: req.body.accessInformation, 
-		  Country: req.body.country, 
-		  State: req.body.state, 
-		  stree2: req.body.street2, 
-		  street1: req.body.street1, 
-		  zipcode: req.body.zipcode, 
+		  address: req.body.address,
 		  availability: req.body.availability, 
 		  bookingNotice: req.body.bookingNotice, 
 		  cancelationWarning: req.body.cancelationWarning, 
@@ -432,7 +445,7 @@ app.post('/api/updateGym', async (req, res) => {
 		  title: req.body.title, 
 		  tvType: req.body.tvType, 
 		  equipment: req.body.equipment,
-		  id: "0183a53e-399f-d6d0-7138-547fc0f424c6"
+		  id: req.body.id
 	  }
   
 	  const data = await graphQLClient.request(gymUpdateMutation, variables)
@@ -464,7 +477,7 @@ app.post('/api/UpdateProfile', async (req, res) => {
 			id: "0183a537-c25c-ea39-d099-993004c2dc6c"
 		}
 	
-		const data = await graphQLClient.request(userMutation, variables)
+		const data = await graphQLClient.request(userUpdateMutation, variables)
 		  
 	  }
 	  else res.send('Access Denied.');

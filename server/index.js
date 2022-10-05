@@ -26,7 +26,7 @@ headers: {
 });
 
 const userQuery = gql`
-	query MyQuery($id: ID = "0183a537-c25c-ea39-d099-993004c2dc6c") {
+	query MyQuery($id: ID = "") {
 		get_User(id: $id) {
 		email
 		favoriteGymIds
@@ -50,7 +50,7 @@ const userQuery = gql`
 `;
 
 const userGyms = gql`
-query MyQuery($eq: String = "0183a537-c25c-ea39-d099-993004c2dc6c") {
+query MyQuery($eq: String = "") {
 	list_GymItems(filter: {ownerId: {eq: $eq}}) {
 	  _GymItems {
 		address {
@@ -223,20 +223,93 @@ const gymUpdateMutation = gql`
   }
 `;
 
+const queryReservatiosGym = gql`
+	query MyQuery($eq: String = "") {
+		list_GymReservationItems(filter: {gymId: {eq: $eq}}) {
+			_GymReservationItems {
+				duration
+				guestReview
+				numGuests
+				rating
+				timeSlot
+			}
+		}
+  	}
+`;
 
+const queryReservatiosUser = gql`
+	query MyQuery($eq: String = "") {
+		list_GymReservationItems(filter: {guestId: {eq: $eq}}) {
+			_GymReservationItems {
+				duration
+				guestReview
+				numGuests
+				rating
+				timeSlot
+			}
+		}
+	}
+`;
 
-app.get('/api/getUser', async (req,res) => {
+const reservationAddMutation = gql`
+	mutation MyMutation($duration: Int = 10, 
+			$guestId: String = "", 
+			$guestReview: String = "", 
+			$gymId: String = "", 
+			$numGuests: Int = 10, 
+			$rating: Int = 10, 
+			$timeSlot: String = "") {
+		add_GymReservation(
+		input: {duration: $duration, guestId: $guestId, guestReview: $guestReview, gymId: $gymId, numGuests: $numGuests, rating: $rating, timeSlot: $timeSlot}
+		) {
+		result {
+			_id
+		}
+		transaction {
+			_id
+		}
+		}
+	}  
+`;
+
+const reservationUpdateMutation = gql`
+	mutation MyMutation($duration: Int = 10, 
+			$guestReview: String = "", 
+			$numGuests: Int = 10, 
+			$rating: Int = 10, 
+			$timeSlot: String = "") {
+		update_GymReservation(
+			id: $id
+			input: {duration: $duration, guestReview: $guestReview, numGuests: $numGuests, rating: $rating, timeSlot: $timeSlot}
+		) {
+		result {
+			_id
+		}
+		transaction {
+			_id
+		}
+		}
+	}  
+`;
+
+app.get('/api/getUser/:id', async (req,res) => {
 	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
-		const results = await graphQLClient.request(userQuery);
+		const variables = {
+			id: req.params.id
+		}
+		const results = await graphQLClient.request(userQuery, variables);
 		res.send(results);
 	}
 	else res.send('Access Denied.');
 	
 })
 
-app.get('/api/getUserGyms', async (req,res) => {
+app.get('/api/getUserGyms/:id', async (req,res) => {
 	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
-		const results = await graphQLClient.request(userGyms);
+		const variables = {
+			eq: req.params.id
+		}
+		const results = await graphQLClient.request(userGyms, variables);
 		res.send(results);
 	}
 	else res.send('Access Denied.');
@@ -253,15 +326,48 @@ app.get('/api/getUserGyms', async (req,res) => {
 })
 
 app.get('/api/getGym/:id', async (req,res) => {
-    //if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+    if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
 		const variables = {
 			id: req.params.id
 		}
 		const results = await graphQLClient.request(gymQuery, variables);
       res.send(results);
-    //}
-    //else res.send('Access Denied.');
+    }
+    else res.send('Access Denied.');
     
+})
+
+app.get('/api/getReservationGym/:id', async (req,res) => {
+	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			eq: req.params.id
+		}
+		const results = await graphQLClient.request(queryReservatiosGym, variables);
+      res.send(results);
+    }
+    else res.send('Access Denied.');
+	
+})
+
+app.get('/api/getReservationUser/:id', async (req,res) => {
+	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			eq: req.params.id
+		}
+		const results = await graphQLClient.request(queryReservatiosUser, variables);
+      res.send(results);
+    }
+    else res.send('Access Denied.');
+	
+})
+
+app.get('/api/getUser', async (req,res) => {
+	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const results = await graphQLClient.request(userQuery);
+		res.send(results);
+	}
+	else res.send('Access Denied.');
+	
 })
 
 app.post('/api/uploadGym', async (req, res) => {
@@ -359,6 +465,41 @@ app.post('/api/UpdateProfile', async (req, res) => {
 		}
 	
 		const data = await graphQLClient.request(userMutation, variables)
+		  
+	  }
+	  else res.send('Access Denied.');
+});
+
+app.post('/api/UpdateReservation', async (req, res) => {
+	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			timeSlot: req.body.timeSlot,
+			duration: req.body.duration,
+			numGuests: req.body.numGuests,
+			guestReview: req.body.guestReview,
+			rating: req.body.rating,
+			id: req.body.id
+		}
+	
+		const data = await graphQLClient.request(reservationUpdateMutation, variables)
+		  
+	  }
+	  else res.send('Access Denied.');
+});
+
+app.post('/api/AddReservation', async (req, res) => {
+	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			gymId: req.body.gymId,
+			guestId: req.body.guestID,
+			timeSlot: req.body.timeSlot,
+			duration: req.body.duration,
+			numGuests: req.body.numGuests,
+			guestReview: req.body.guestReview,
+			rating: req.body.rating
+		}
+	
+		const data = await graphQLClient.request(reservationAddMutation, variables)
 		  
 	  }
 	  else res.send('Access Denied.');

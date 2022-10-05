@@ -97,12 +97,12 @@ export default function BasicTabs() {
   const [userGymLoading, setUserGymLoading] = useState(true);
 
   useEffect(() => {
-		Axios.get('http://localhost:3001/api/getUser').then((response) => {
+		Axios.get('http://localhost:3001/api/getUser/0183a537-c25c-ea39-d099-993004c2dc6c').then((response) => {
       setUserData(response.data);
       setUserLoading(false);
 	  })
 
-    Axios.get('http://localhost:3001/api/getUserGyms').then((response) => {
+    Axios.get('http://localhost:3001/api/getUserGyms/0183a537-c25c-ea39-d099-993004c2dc6c').then((response) => {
       setUserGymData(response.data);
       setUserGymLoading(false);
 	  })

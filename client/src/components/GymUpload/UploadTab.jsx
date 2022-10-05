@@ -89,7 +89,7 @@ function UploadTab() {
         }
 
         return ( <>
-			<FormControl sx={{ m: 0.5, minWidth: 250 }}>
+			<FormControl sx={{ m: 1, minWidth: 250 }}>
 				<InputLabel>-- SELECT EQUIPMENT --</InputLabel>
 				<Select
 					id="Equipment" 
@@ -104,7 +104,7 @@ function UploadTab() {
 						</MenuItem>)}
 				</Select>
 			</FormControl>
-			<FormControl sx={{ m: 0.5, minWidth: 250 }}>
+			<FormControl sx={{ m: 1, minWidth: 250 }}>
 				<TextField
 					required
 					id="equip-details"
@@ -327,7 +327,7 @@ function UploadTab() {
 			index={value}
 			onChangeIndex={handleChangeIndex}>
 			<TabPanel value={value} index={0} dir={theme.direction}>
-				<Box sx={{ '& .MuiTextField-root': { m: 0.5, width: '30ch' }}}><div>
+				<Box sx={{ '& .MuiTextField-root': { m: 1, width: '30ch' }}}><div>
 					<TextField
 						required
 						id="name"

@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 import AdvancedSearchBar from "../components/GymSearch/AdvancedSearchBar";
 import {ViewGyms} from "./ViewGym";
 import SortingButtons from "../components/GymSearch/SortingButtons";
+import { Box, Stack, Typography, Grid } from '@mui/material';
 
 const GET_GYMS = gql(`
   query ListGyms {
@@ -21,7 +22,6 @@ function GetGyms() {
   const { loading, error, data } = useQuery(GET_GYMS);
   const [gyms, getGyms] = useState([]);
   
-
   useEffect(() => {
     console.log(data);
     if (data) getGyms(data.list_GymsItems._GymsItems);
@@ -58,3 +58,20 @@ function GymSearchPage  () {
     );
 }
 export default GymSearchPage;
+
+/*
+<Stack direction="row" spacing={16}>
+  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
+    asDFasdfasdfasdf
+  </Box>
+  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
+    asDFasdfasdfasdf
+  </Box>
+  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
+    asDFasdfasdfasdf
+  </Box>
+  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
+    asDFasdfasdfasdf
+  </Box>
+</Stack>
+*/

@@ -69,7 +69,7 @@ export default function CreateAccount(){
         <Box className="register-fields">
             <TextField 
               required id="outlined-basic" 
-              label="email"
+              label="Email"
               value={registerEmail}
               onChange={(e) => setEmail(e.target.value)}/>
             <TextField required id="outlined-basic" label="Verify email"/>

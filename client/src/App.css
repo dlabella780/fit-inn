@@ -232,6 +232,129 @@ Button {
   border-radius: 12px;
 }
 
+/*Gym Search Result Page*/
+
+.help-search-result-items {
+  margin-top: 250px;
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
+.help-line-texts {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/*How can I contact Fit-Inn?*/
+
+.how-to-contact-us-page {
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  margin-top: 375px;
+}
+
+.contact-us-button {
+  text-align: center;
+  padding: 5px;
+}
+
+/*Host Resource Page*/
+
+.host-resource-pages-items {
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  margin-top: 75px;
+}
+
+/*Host Policy Page*/
+
+.host-policy-pages-items {
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  margin-top: 0px;
+}
+
+/*Gym User Policy Page*/
+
+.gym-user-policy-pages-items {
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  margin-top: 0px;
+}
+
+/*Pages from the Help Center Links*/
+
+.help-center-link-pages-items {
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  margin-top: 525px;
+}
+
+.help-center-link-pages-texts {
+  text-align: left;
+}
+
+.policy-page-update {
+  padding-bottom: 20px;
+}
+
+.terms-page-links {
+  text-align: left;
+
+}
+
+.terms-contents {
+  text-align: left;
+  padding-top: 20px;
+}
+
+/*Privacy Policy Page*/
+.policy-page-items {
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  margin-top: 525px;
+}
+
+/*Contact Us Page*/
+
+.contact-us-items {
+  margin-top: 375px;
+  left: 40%;
+  right: 40%;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
 .view-gyms {
   background-color: white;
 }

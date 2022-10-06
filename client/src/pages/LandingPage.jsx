@@ -27,6 +27,7 @@ import Login from "../components/Login/Login.jsx";
 import PaymentPage from "./PaymentPage.jsx";
 import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
 import ReservationsPage from "./ReservationsPage.jsx";
+import ContactUsPage from "./ContactUsPage.jsx";
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -34,7 +35,6 @@ import {
     signOut,
     getAuth,
   } from "firebase/auth";
-
 
 class LandingPage extends Component {  
     render() {
@@ -63,6 +63,9 @@ class LandingPage extends Component {
                 </Route>
                 <Route path={'/Privacy'}>
                     <PrivacyPage />
+                </Route>
+                <Route path={'/pages/ContactUs'}>
+                    <ContactUsPage />
                 </Route>
                 <Route path="/ViewGym">
                     <ViewGyms />
@@ -121,8 +124,10 @@ class LandingPage extends Component {
             <div>
                 {
                 user
+                /*
                     ? <h1>Hello, {user.displayName}</h1>
                     : <h1>Not Signed In</h1>
+                */
                 }
             </div>
         </span>

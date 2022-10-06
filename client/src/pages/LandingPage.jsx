@@ -122,13 +122,13 @@ class LandingPage extends Component {
 
             {/*example of how to do if statement with user logged in/logged out*/}
             <div>
-                {
+                {/*
                 user
-                /*
+                
                     ? <h1>Hello, {user.displayName}</h1>
                     : <h1>Not Signed In</h1>
-                */
-                }
+                
+        */}
             </div>
         </span>
         <span className = "bottom-nav-bar">

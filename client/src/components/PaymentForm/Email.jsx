@@ -6,7 +6,7 @@ import EmailIcon from '@mui/icons-material/Email';
 export default function Email(){
   return(
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-        <EmailIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <EmailIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
         <TextField fullWidth required id="outlined-basic" label="Email" variant="standard" />
     </Box>
   )

@@ -8,9 +8,9 @@ export default function ExpirationDateAndCVC(){
   return(
       <Box>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <CalendarMonthIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+            <CalendarMonthIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
             <TextField id="expiration-date" label="Expiration Date*" placeholder="MM/YY" multiline variant="standard" />
-            <VpnKeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+            <VpnKeyIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
             <TextField id="cvc" label="CVC*" variant="standard" />
         </Box>
       </Box>

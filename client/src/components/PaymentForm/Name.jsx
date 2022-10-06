@@ -7,9 +7,9 @@ export default function Name(){
   return(
       <Box>
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <DriveFileRenameOutlineIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <DriveFileRenameOutlineIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
           <TextField required id="outlined-basic" label="First Name" variant="standard" />
-          <DriveFileRenameOutlineIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <DriveFileRenameOutlineIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
           <TextField required id="outlined-basic" label="Last Name" variant="standard" />
         </Box>
       </Box>

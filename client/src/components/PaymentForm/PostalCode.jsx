@@ -6,7 +6,7 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 export default function PostalCode(){
   return(
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-        <LocalShippingIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+        <LocalShippingIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
         <TextField required id="outlined-basic" label="Postal Code" variant="standard" />
     </Box>
   )

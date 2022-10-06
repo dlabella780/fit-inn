@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import EmailIcon from '@mui/icons-material/Email';
 
-export default function Email(){
+export default function YourEmail(){
   return(
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
         <EmailIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />

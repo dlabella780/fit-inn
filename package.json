@@ -3,5 +3,8 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "react-test-renderer": "^18.2.0"
+  },
+  "dependencies": {
+    "react-google-button": "^0.7.2"
   }
 }

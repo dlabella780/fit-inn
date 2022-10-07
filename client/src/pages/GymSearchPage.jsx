@@ -58,20 +58,3 @@ function GymSearchPage  () {
     );
 }
 export default GymSearchPage;
-
-/*
-<Stack direction="row" spacing={16}>
-  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
-    asDFasdfasdfasdf
-  </Box>
-  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
-    asDFasdfasdfasdf
-  </Box>
-  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
-    asDFasdfasdfasdf
-  </Box>
-  <Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
-    asDFasdfasdfasdf
-  </Box>
-</Stack>
-*/

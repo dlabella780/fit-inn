@@ -359,13 +359,11 @@ Button {
   background-color: white;
 }
 
-
 .googlemap {
   position: absolute;
   right: 1500px;
   top: 90px;
 }
-
 
 .search-bar-form{
   position: fixed;
@@ -375,8 +373,7 @@ Button {
 .row-product{
   background-color: white;
   position: fixed;
-  top: 28%;
-  left: 200px;
+  top: 35%;
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
   gap: 20px;

@@ -7,11 +7,10 @@ import { Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
 
-
 export const ViewGyms = () => {
-
     const theme = useTheme();
     const [gymInfo, setGymInfo] = React.useState([]);
+    
     React.useEffect(() => {
         let str = 'http://localhost:3001/api/getGym/' + '0183a53e-399f-d6d0-7138-547fc0f424c6';
         Axios.get(str).then((response) => {

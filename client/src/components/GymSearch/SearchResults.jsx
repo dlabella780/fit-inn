@@ -1,40 +1,29 @@
 import * as React from 'react';
 import { Box } from '@mui/system';
 import { Stack, Typography, Grid } from '@mui/material';
+import { useState } from 'react';
 
 export default function SearchResults({searchType}) {
 	var prompt;
-	var GymA = <div>
-		Gym A<br/>
-		Description<br/>
-		Address<br/>
-		Equipment<br/>
-		Amenities<br/>
-		Hourly Rate<br/>
-		Availability<br/>
-		Rating<br/>
-	</div>
-	var GymB = <div>
-		Gym B<br/>
-		Description<br/>
-		Address<br/>
-		Equipment<br/>
-		Amenities<br/>
-		Hourly Rate<br/>
-		Availability<br/>
-		Rating<br/>
-	</div>
-	var GymC = <div>
-		Gym C<br/>
-		Description<br/>
-		Address<br/>
-		Equipment<br/>
-		Amenities<br/>
-		Hourly Rate<br/>
-		Availability<br/>
-		Rating<br/>
-	</div>
-	var gymOrder = [];
+	const testGyms = useState([
+		{"id" : 1, 
+		"name": "GymA", 
+		"address": "a", 
+		"hourlyRate": 20,
+		"rating" : 4},
+
+		{"id" : 2, 
+		"name": "GymB", 
+		"address": "b", 
+		"hourlyRate": 21,
+		"rating" : 3},
+
+		{"id" : 3, 
+		"name": "GymC", 
+		"address": "c", 
+		"hourlyRate": 19,
+		"rating" : 5},
+	]) 
 
 	switch(searchType) {
 		case "distance":
@@ -59,12 +48,17 @@ export default function SearchResults({searchType}) {
 			{prompt}
 			<Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
 				<br></br>
-				<Stack direction="row" spacing={16}>
-					{GymA}
-					{GymB}
-					{GymC}
-				</Stack>
 			</Box>
 		</div>
 	);
 }
+
+/* 
+{testGyms.map(gym => {
+	return(
+		<Stack direction="row" spacing={16}>
+			{gym}
+		</Stack>
+	)
+})}
+*/

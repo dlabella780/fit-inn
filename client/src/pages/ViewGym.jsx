@@ -14,10 +14,9 @@ export const ViewGyms = () => {
     React.useEffect(() => {
         let str = 'http://localhost:3001/api/getGym/' + '0183a53e-399f-d6d0-7138-547fc0f424c6';
         Axios.get(str).then((response) => {
-        setGymInfo(response.data);
+        setGymInfo(response.data.get_Gym);
 
     })},[]);
-    console.log(gymInfo);
 
     //Temporary fill-in values if no valid gymInfo is loaded
     return(
@@ -88,7 +87,7 @@ export const ViewGyms = () => {
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Cancel {gymInfo.cancelHoursAhead} hours in advance</Typography>
                     </Box>
                     <Box display="flex" border="solid" borderRadius="10px">
-                        <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available: {gymInfo.equipment}</Typography>
+                        <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available: {gymInfo.equipment[0].equipmentId}</Typography>
                     </Box>
                 </Box>
             }

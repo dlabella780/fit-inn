@@ -1,33 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import SortingButtons from "./SortingButtons";
-import DateTime from "./DateTime";
 import Box from "@mui/material/Box";
-import SearchResults from "./SearchResults";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import GymThumbnail from "./GymThumbnail";
 
 const AdvancedSearchBar = (props) => {
+    const [startTime, setStartTime] = React.useState(new Date());
+
     return (
-        <Box sx={{ '& .MuiTextField-root': { m: 1, width: '30ch' }}}>
+        <Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
           <TextField
             id="search-bar"
-            className="text"
-            label="Add date!"
+            label="Find a gym near you!"
             variant="outlined"
-            placeholder="You'll be sure to fit-inn!"
+            placeholder="Enter a zip code!"
             size="large"
           />
-          <TextField
-            id="max-guests"
-            label="# of guests?"
-            type="number"
-            variant="outlined"
-            placeholder={'1-100'}
-            InputProps={{inputProps: { min: 1 }}}
-          />
-          <div>
-            <DateTime/>
-          </div>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              renderInput={(params) => <TextField {...params} />}
+              label="Starting day/time?"
+              value={startTime}
+              onChange={(newValue) => {setStartTime(newValue);}}
+            />
+          </LocalizationProvider>
           <SortingButtons/>
+          <GymThumbnail gymData={props.gymData} loading={props.loading}/>
         </Box>
     );
 }

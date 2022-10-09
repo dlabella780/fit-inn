@@ -55,9 +55,16 @@ import UserReservations from "../components/ProfilePage/UserReservations";
 import UserPayment from "../components/ProfilePage/UserPayment";
 import EditProfileInfo from "../components/ProfilePage/EditProfileInfo";
 import Axios from 'axios';
+import {
+  getAuth,
+} from "firebase/auth";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if(user)
+    console.log(user.photoURL);
 
   return (
     <div
@@ -106,7 +113,6 @@ export default function BasicTabs() {
       setUserGymData(response.data);
       setUserGymLoading(false);
 	  })
-
   },[]);
 
   const handleChange = (event, newValue) => {

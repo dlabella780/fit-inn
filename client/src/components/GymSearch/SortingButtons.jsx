@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
-import SearchResults from "./SearchResults";
 import Stack from '@mui/material/Stack';
 
 const SortingButtons = () => {
@@ -20,13 +19,12 @@ const SortingButtons = () => {
 						Sort by Price
 					</Button>
 					<Button variant="contained" 
-							onClick={(e) => setSearchType("rating")}>
-						Sort by Rating
+							onClick={(e) => setSearchType("availability")}>
+						Sort by Availability
 					</Button>
 				</Stack>
 			</Box>
 			<br></br>
-			<SearchResults searchType={searchType}/>
 		</div>
 	);
 }

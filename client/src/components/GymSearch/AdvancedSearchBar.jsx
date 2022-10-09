@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import SortingButtons from "./SortingButtons";
 import Box from "@mui/material/Box";
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import GymThumbnail from "./GymThumbnail";
 
-const AdvancedSearchBar = () => {
+const AdvancedSearchBar = (props) => {
     const [startTime, setStartTime] = React.useState(new Date());
 
     return (
@@ -27,6 +28,7 @@ const AdvancedSearchBar = () => {
             />
           </LocalizationProvider>
           <SortingButtons/>
+          <GymThumbnail gymData={props.gymData} loading={props.loading}/>
         </Box>
     );
 }

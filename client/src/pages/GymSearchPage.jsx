@@ -4,17 +4,19 @@ import Axios from 'axios';
 
 function GymSearchPage() {
   const [gymData, setGymData] = useState([]);
+  const [gymDataLoading, setgymDataLoading] = useState(true);
 
 	useEffect(() => {
 		Axios.get('http://localhost:3001/api/gymSearch', 
-			{params: {zipcode: '95818', day: ''}})
-			.then((response) => { setGymData(response.data); })
-	}, []);
+			{params: {zipcode: '95818', day: ''}}).then((response) => { 
+        setGymData(response.data); 
+        setgymDataLoading(false);}
+    )}, []);
 
   return (
       <Fragment>
         <div className="gym-searchbar">
-          <AdvancedSearchBar gymData={gymData}/>
+          <AdvancedSearchBar gymData={gymData} loading={gymDataLoading}/>
         </div>
       </Fragment>
     );

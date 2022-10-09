@@ -11,7 +11,7 @@ const AdvancedSearchBar = (props) => {
           <TextField
             id="search-bar"
             className="text"
-            label="Find a gym near you!"
+            label="Add date!"
             variant="outlined"
             placeholder="You'll be sure to fit-inn!"
             size="large"

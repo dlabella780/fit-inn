@@ -850,3 +850,56 @@ code {
   margin-top: 20px;
 }
 
+
+/* Pop up Reservation */
+body.active-modal {
+  overflow-y: hidden;
+}
+
+.btn-modal {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+}
+
+.modal, .overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 75px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+}
+
+.overlay {
+  background: rgba(49,49,49,0.8);
+}
+.modal-content {
+  position: absolute;
+  border-radius: 10px;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #6b6be8;
+  padding: 14px 28px;
+  border-radius: 10px;
+  max-width: 400px;
+  min-width: 300px;
+}
+
+.confirm-title {
+  top: 10px;
+  padding: 10px;
+  color: #91919c;
+  word-spacing: 10rem;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
+}

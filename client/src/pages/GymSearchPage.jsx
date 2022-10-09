@@ -1,22 +1,20 @@
-import React, { Component, Fragment, useEffect, useState, useCallback } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import AdvancedSearchBar from "../components/GymSearch/AdvancedSearchBar";
-import SortingButtons from "../components/GymSearch/SortingButtons";
-import { Box, Stack, Typography, Grid } from '@mui/material';
 import Axios from 'axios';
 
+function GymSearchPage() {
+  const [gymData, setGymData] = useState([]);
 
-function GymSearchPage  () {
+	useEffect(() => {
+		Axios.get('http://localhost:3001/api/gymSearch', 
+			{params: {zipcode: '95818', day: ''}})
+			.then((response) => { setGymData(response.data); })
+	}, []);
 
-  useEffect(() => {
-    Axios.get('http://localhost:3001/api/gymSearch', {params: {zipcode: '95818', day: ''}}).then((response) => {
-      console.log(response)
-	  })
-  }, []);
-  
   return (
       <Fragment>
         <div className="gym-searchbar">
-          <AdvancedSearchBar/>
+          <AdvancedSearchBar gymData={gymData}/>
         </div>
       </Fragment>
     );

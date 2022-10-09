@@ -20,8 +20,8 @@ const SortingButtons = () => {
 						Sort by Price
 					</Button>
 					<Button variant="contained" 
-							onClick={(e) => setSearchType("rating")}>
-						Sort by Rating
+							onClick={(e) => setSearchType("availability")}>
+						Sort by Availability
 					</Button>
 				</Stack>
 			</Box>

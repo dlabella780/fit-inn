@@ -1,30 +1,17 @@
-import * as React from 'react';
-import { Box } from '@mui/system';
-import { Stack, Typography, Grid } from '@mui/material';
-import { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import Axios from 'axios';
+import GymThumbnail from "./GymThumbnail";
 
 export default function SearchResults({searchType}) {
+	const [gymData, setGymData] = useState([]);
+
+	useEffect(() => {
+		Axios.get('http://localhost:3001/api/gymSearch', 
+			{params: {zipcode: '95818', day: ''}})
+			.then((response) => { setGymData(response.data); })
+	}, []);
+	
 	var prompt;
-	const testGyms = useState([
-		{"id" : 1, 
-		"name": "GymA", 
-		"address": "a", 
-		"hourlyRate": 20,
-		"rating" : 4},
-
-		{"id" : 2, 
-		"name": "GymB", 
-		"address": "b", 
-		"hourlyRate": 21,
-		"rating" : 3},
-
-		{"id" : 3, 
-		"name": "GymC", 
-		"address": "c", 
-		"hourlyRate": 19,
-		"rating" : 5},
-	]) 
-
 	switch(searchType) {
 		case "distance":
 			prompt = "Sorting by distance!"
@@ -34,31 +21,21 @@ export default function SearchResults({searchType}) {
 			prompt = "Sorting by price!"
 			break;
 
-		case "rating":
-			prompt = "Sorting by rating!"
+		case "availability":
+			prompt = "Sorting by availability!"
 			break;
 
 		default:
-			prompt = "Default"
+			prompt = "default"
 			break;
 	}
 
-	return (
-        <div>
-			{prompt}
-			<Box sx={{ '& .MuiTextField-root': { m: 1 }}}>
-				<br></br>
-			</Box>
-		</div>
-	);
+	// TODO : GymThumbnail crashes since the gymData is not loaded? 
+	// Props sometimes doesnt realize what the map val is.
+	return ( 
+	<div> 
+		{console.log(gymData)}
+		
+    </div> );
 }
-
-/* 
-{testGyms.map(gym => {
-	return(
-		<Stack direction="row" spacing={16}>
-			{gym}
-		</Stack>
-	)
-})}
-*/
+//<GymThumbnail data={gymData}/>

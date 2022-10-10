@@ -8,7 +8,7 @@ function GymSearchPage() {
 
 	useEffect(() => {
 		Axios.get('http://localhost:3001/api/gymSearch', 
-			{params: {zipcode: '95818', day: ''}}).then((response) => { 
+			{params: {zipcode: '95630', day: ''}}).then((response) => { 
         setGymData(response.data); 
         setgymDataLoading(false);}
     )}, []);
@@ -22,3 +22,5 @@ function GymSearchPage() {
     );
 }
 export default GymSearchPage;
+
+//zipcode: '95818'

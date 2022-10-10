@@ -277,7 +277,7 @@ function UploadTab(props) {
 	}
 
     const [isActive, setIsActive] = useState(false);
-    const [ownerId, setOwnerId] = useState("0183a543-f4a8-2e69-a854-1a5839b079b1");
+    const [ownerId, setOwnerId] = useState(props.userId);
     const [title, setTitle] = useState("");
     const [street1, setStreet1] = useState("");
 	const [street2, setStreet2] = useState("");
@@ -298,7 +298,7 @@ function UploadTab(props) {
     const [cost, setCost] = useState(20);
     const [bookingNotice, setBookingNotice] = useState(3);
     const [cancelationWarning, setCancelationWarning] = useState(24);
-    const [availability, setAvailability] = useState(['1', '2', '3']);
+    const [availability, setAvailability] = useState(['2022-11-01T13:00:00+01:00', '2022-11-01T14:00:00+01:00', '2022-11-01T15:00:00+01:00']);
     const [gymSubmit, setGymSubmit] = useState('Submit');
 	const [equipmentMap, setEquipmentMap] = useState(new Map());
 	const [oldGymLoaded, setOldGymLoaded] = useState(false);

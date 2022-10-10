@@ -36,8 +36,8 @@ export default function Login(){
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const auth = getAuth();
-  const user = auth.currentUser;
+  // const auth = getAuth();
+  // const user = auth.currentUser;
   return(
     <Box className="login-form" >
       <FormGroup>
@@ -58,7 +58,7 @@ export default function Login(){
             onChange={(e) => setLoginPassword(e.target.value)}/>
         </Box>
         <Box className="login-fields">
-            <FormControlLabel control={<Checkbox default />} onclick="agreeTOS()" label="Stay Logged in"/>
+            <FormControlLabel control={<Checkbox default />} /*onClick="agreeTOS()"*/ label="Stay Logged in"/>
         </Box>
         <Box className="login-fields">
           <Stack direction="column" spacing={1}>

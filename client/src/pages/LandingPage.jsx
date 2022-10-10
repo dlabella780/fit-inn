@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -29,20 +29,15 @@ import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
 import ReservationsPage from "./ReservationsPage.jsx";
 import ContactUsPage from "./ContactUsPage.jsx";
 import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
     signOut,
     getAuth,
   } from "firebase/auth";
 
-class LandingPage extends Component {  
-    render() {
-        const auth = getAuth();
-        const user = auth.currentUser;
+const LandingPage = (props) => {  
+        
         return ( <div>
         <span classNam = "top-nav-bar">
-            <NavBarTop />
+            <NavBarTop userId={props.userId}/>
         </span>
         <span id = "content">
             <Switch>
@@ -53,7 +48,7 @@ class LandingPage extends Component {
                     <GymSearchPage />
                 </Route>
                 <Route path={`/GymUpload`}>
-                    <GymUploadPage />
+                    <GymUploadPage userId={props.userId}/>
                 </Route>
                 <Route path={'/Help'}>
                     <HelpPage />
@@ -101,7 +96,7 @@ class LandingPage extends Component {
                     <PaymentPage />
                 </Route>
                 <Route path={'/Profile'}>
-                    <ProfilePage />
+                    <ProfilePage userId={props.userId}/>
                 </Route>
                 <Route path={'/Payments'}>
                     <StripePayment />
@@ -119,21 +114,10 @@ class LandingPage extends Component {
                     <NotFound />
                 </Route>
             </Switch>
-
-            {/*example of how to do if statement with user logged in/logged out*/}
-            <div>
-                {/*
-                user
-                
-                    ? <h1>Hello, {user.displayName}</h1>
-                    : <h1>Not Signed In</h1>
-                
-        */}
-            </div>
         </span>
         <span className = "bottom-nav-bar">
             <NavBarBottom />
         </span>
     </div>);}
-}
+//}
 export default withRouter(LandingPage);

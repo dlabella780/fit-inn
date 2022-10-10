@@ -15,7 +15,8 @@ function EditProfileInfo (props) {
                 email: email, 
                 fname: fname,
                 lname: lname,  
-                phoneNumber: phoneNumber, 
+                phoneNumber: phoneNumber,
+                id: props.userId 
             }).then((data, loading, error) => {    
 			if(error) 
 				console.log(error);
@@ -41,7 +42,7 @@ function EditProfileInfo (props) {
             <form>
                 Street1: <input type="text" value={street1} onChange={(e) => setStreet1(e.target.value)} /><br />
                 Street2: <input type="text" value={street2} onChange={(e) => setStreet2(e.target.value)} /><br />
-                City: <input type="text" value={country} onChange={(e) => setCity(e.target.value)} /><br />
+                City: <input type="text" value={city} onChange={(e) => setCity(e.target.value)} /><br />
                 State: <input type="text" value={state} onChange={(e) => setState(e.target.value)} /><br />
                 Country: <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} /><br />
                 Zipcode: <input type="text" value={zipcode} onChange={(e) => setZipcode(e.target.value)} /><br />

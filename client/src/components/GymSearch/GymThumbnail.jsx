@@ -24,7 +24,7 @@ const GymThumbnail = (props) => {
                 alignItems="flex-start"
             >
                 {props.gymData.list_GymItems._GymItems.map((val) => (
-                <Grid item xs={2} sm={4} md={4} key={val}>
+                <Grid item xs={"flexGrow"} key={val}>
                     <Item><Typography gutterBottom>
                     Title: {val.title}<br/>
                     Cost: {val.cost}<br/>
@@ -39,9 +39,8 @@ const GymThumbnail = (props) => {
 				    </Typography></Item>
                 </Grid>
                 ))}
-            </Grid>
+            </Grid> 
         </Box>
-        {console.log(props.gymData)}
     </div> );
 }
 export default GymThumbnail;

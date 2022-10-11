@@ -168,7 +168,6 @@
   
 } 
 
-
 /* .name-info{
   display: block;
   position: fixed;
@@ -226,6 +225,15 @@ Button {
 .gym-searchbar {
   position: absolute;
   top: 10%;
+  background-color: white;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 12px;
+}
+
+.gym-thumbnails {
+  position: absolute;
+  top: 23%;
   background-color: white;
   padding: 10px;
   border: 2px solid black;

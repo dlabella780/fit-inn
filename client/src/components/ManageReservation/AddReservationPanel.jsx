@@ -6,7 +6,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { purple, yellow } from "@mui/material/colors";
 
 
-export default function AddReservation(){
+export default function AddReservation(props){
   
   const[modal, setModal] = useState(false);
   const toggleModal = () => {
@@ -76,8 +76,7 @@ export default function AddReservation(){
                 />
                 <Button variant="contained">Continue</Button>
                 <p>You won't be charged yet</p>
-
-
+                <h1>{props.gymInfo.accessInformation}</h1>
             </Box>
             </div>
           </div>

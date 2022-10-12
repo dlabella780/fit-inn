@@ -6,6 +6,8 @@ import sampleImage3 from '../components/ViewGym/gym3.1.jpg';
 import { Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
+import AddReservation from "../components/ManageReservation/AddReservationPanel";
+import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = () => {
     const theme = useTheme();
@@ -15,6 +17,7 @@ export const ViewGyms = () => {
         let str = 'http://localhost:3001/api/getGym/' + '0183a53e-399f-d6d0-7138-547fc0f424c6';
         Axios.get(str).then((response) => {
         setGymInfo(response.data.get_Gym);
+        console.log(gymInfo);
 
     })},[]);
 
@@ -55,6 +58,7 @@ export const ViewGyms = () => {
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Barbells</Typography>
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Leg Press</Typography>
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Bench Press</Typography>
+                        
                     </Box>
                 </Box>
                 :
@@ -67,6 +71,7 @@ export const ViewGyms = () => {
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Up to {gymInfo.maxGuests} guests allowed</Typography>
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Host will {gymInfo.isHostHome === 'false' ? "NOT" : ""} be home</Typography>
                     </Box>
+                    <ViewConfirmation gymInfo={gymInfo}/>
                     <span id = "images">
                         <Box display="flex" justifyContent="space-between">
                             <img src={gymInfo.image} alt="Sample Img" height="300" />

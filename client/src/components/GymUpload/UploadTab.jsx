@@ -307,34 +307,33 @@ function UploadTab(props) {
 	if(props.gymId && !oldGymLoaded) {
 		let str = 'http://localhost:3001/api/getGym/' + props.gymId
 		Axios.get(str).then((response) => {
-				setTitle(response.data.get_Gym.title);
-				setStreet1(response.data.get_Gym.address.street1);
-				setStreet2(response.data.get_Gym.address.stree2);
-				setCity(response.data.get_Gym.address.City);
-				setState(response.data.get_Gym.address.State);
-				setZip(response.data.get_Gym.address.zipcode);
-				setDescription(response.data.get_Gym.description);
-				setAccessInformation(response.data.get_Gym.accessInformation);
-				if (response.data.get_Gym.isHostHome)
-					setIsHostHome('true');
-				setNumGuestsAllowed(response.data.get_Gym.numGuestsAllowed);
-				if (response.data.get_Gym.hasBathroom)
-					setHasBathroom('true');
-				if (response.data.get_Gym.hasWifi)
-					setHasWifi('true');
-				if (response.data.get_Gym.hasSpeakers)
-					setHasSpeakers('true');
-				setTvType(response.data.get_Gym.tvType);
-				setCost(response.data.get_Gym.cost);
-				setBookingNotice(response.data.get_Gym.bookingNotice);
-				setCancelationWarning(response.data.get_Gym.cancelationWarning);		
-				for (let i = 0; i <response.data.get_Gym.equipment.length; i++) {
-					setEquipment(prevState => [...prevState, response.data.get_Gym.equipment[i].equipmentId]);
-                	setEquipmentDetails(prevState => [...prevState, response.data.get_Gym.equipment[i].details]);
-					
-				}
-				console.log(equipment)
-			})
+			setTitle(response.data.get_Gym.title);
+			setStreet1(response.data.get_Gym.address.street1);
+			setStreet2(response.data.get_Gym.address.stree2);
+			setCity(response.data.get_Gym.address.City);
+			setState(response.data.get_Gym.address.State);
+			setZip(response.data.get_Gym.address.zipcode);
+			setDescription(response.data.get_Gym.description);
+			setAccessInformation(response.data.get_Gym.accessInformation);
+			if (response.data.get_Gym.isHostHome)
+				setIsHostHome('true');
+			setNumGuestsAllowed(response.data.get_Gym.numGuestsAllowed);
+			if (response.data.get_Gym.hasBathroom)
+				setHasBathroom('true');
+			if (response.data.get_Gym.hasWifi)
+				setHasWifi('true');
+			if (response.data.get_Gym.hasSpeakers)
+				setHasSpeakers('true');
+			setTvType(response.data.get_Gym.tvType);
+			setCost(response.data.get_Gym.cost);
+			setBookingNotice(response.data.get_Gym.bookingNotice);
+			setCancelationWarning(response.data.get_Gym.cancelationWarning);		
+			for (let i = 0; i <response.data.get_Gym.equipment.length; i++) {
+				setEquipment(prevState => [...prevState, response.data.get_Gym.equipment[i].equipmentId]);
+				setEquipmentDetails(prevState => [...prevState, response.data.get_Gym.equipment[i].details]);
+			}
+			console.log(equipment)
+		})
 		setOldGymLoaded(true);
 	}
 
@@ -391,7 +390,10 @@ function UploadTab(props) {
 		<SwipeableViews
 			axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 			index={value}
-			onChangeIndex={handleChangeIndex}>
+			onChangeIndex={handleChangeIndex}
+			style={{width: '100ch', height: '70ch'}}
+			// TODO :: FIX THE STYLE HERE
+		>
 			<TabPanel value={value} index={0} dir={theme.direction}>
 				<Box sx={{ '& .MuiTextField-root': { m: 1, width: '30ch' }}}><div>
 					<TextField

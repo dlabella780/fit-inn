@@ -76,7 +76,6 @@ export default function AddReservation(props){
                 />
                 <Button variant="contained">Continue</Button>
                 <p>You won't be charged yet</p>
-                <h1>{props.gymInfo.accessInformation}</h1>
             </Box>
             </div>
           </div>

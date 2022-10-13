@@ -22,6 +22,7 @@ function GymSearchPage() {
   }
 
   useEffect(() => {searchForGym()}, [updateSearch]);
+  //REMOVE WHEN NOT NEEDED
   console.log(gymData);
 
   return ( <Fragment>

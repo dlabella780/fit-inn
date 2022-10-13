@@ -234,9 +234,14 @@ Button {
 .gym-thumbnails {
   position: absolute;
   top: 23%;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   padding: 10px;
+  border-radius: 12px;
+}
+
+.gym-thumbnail-indiv {
   border: 2px solid black;
+  padding: 10px;
   border-radius: 12px;
 }
 

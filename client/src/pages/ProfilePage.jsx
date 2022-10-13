@@ -1,47 +1,3 @@
-// import React, { Component, Fragment } from "react";
-// import { Switch, Route } from 'react-router-dom';
-//  import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-//  import 'react-pro-sidebar/dist/css/styles.css';
-// import ProfileButtons from "../components/ProfilePage/ProfileButtons";
-// import BasicInfo from "../components/ProfilePage/BasicInfo";
-// import UserListings from "../components/ProfilePage/UserListings";
-// import UserReservations from "../components/ProfilePage/UserReservations";
-// import UserPayment from "../components/ProfilePage/UserPayment";
-// import EditProfileInfo from "../components/ProfilePage/EditProfileInfo";
-// import './ProfilePage.css'
-
-
-
-// const ProfilePage = () => {
-
-//     return (
-//           <div>
-//                 <div>
-//                <ProfileButtons />
-//                 </div>
-//                <Switch>
-//                     <Route path="/Profile/Basic">
-//                         <BasicInfo />
-//                     </Route>
-//                     <Route path="/Profile/Listings">
-//                         <UserListings />
-//                     </Route>
-//                     <Route path="/Profile/Reservations">
-//                         <UserReservations />
-//                     </Route>
-//                     <Route path="/Profile/Payment">
-//                         <UserPayment />
-//                 </Route>
-//                 <Route path="/Profile/Edit">
-//                     <EditProfileInfo />
-//                     </Route>
-
-//                </Switch>
-//           </div>
-//     );
-// }
-// export default ProfilePage;
-
 import * as React from 'react';
 import { useState, useEffect } from "react";
 import PropTypes from 'prop-types';
@@ -55,16 +11,9 @@ import UserReservations from "../components/ProfilePage/UserReservations";
 import UserPayment from "../components/ProfilePage/UserPayment";
 import EditProfileInfo from "../components/ProfilePage/EditProfileInfo";
 import Axios from 'axios';
-import {
-  getAuth,
-} from "firebase/auth";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  const auth = getAuth();
-  const user = auth.currentUser;
-  if(user)
-    console.log(user.photoURL);
 
   return (
     <div
@@ -96,7 +45,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs(props) {
   const [value, setValue] = useState(0);
   const [userData, setUserData] = useState([]);
   const [userLoading, setUserLoading] = useState(true);
@@ -104,12 +53,13 @@ export default function BasicTabs() {
   const [userGymLoading, setUserGymLoading] = useState(true);
 
   useEffect(() => {
-		Axios.get('http://localhost:3001/api/getUser/0183a537-c25c-ea39-d099-993004c2dc6c').then((response) => {
+		let str = 'http://localhost:3001/api/getUser/' + props.userId
+    Axios.get(str).then((response) => {
       setUserData(response.data);
       setUserLoading(false);
 	  })
-
-    Axios.get('http://localhost:3001/api/getUserGyms/0183a537-c25c-ea39-d099-993004c2dc6c').then((response) => {
+    str = 'http://localhost:3001/api/getUserGyms/' + props.userId
+    Axios.get(str).then((response) => {
       setUserGymData(response.data);
       setUserGymLoading(false);
 	  })
@@ -144,7 +94,7 @@ export default function BasicTabs() {
         <UserPayment />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <EditProfileInfo data={userData} loading={userLoading}/>
+        <EditProfileInfo userId = {props.userId} data={userData} loading={userLoading}/>
       </TabPanel>
       </div>
     </Box>

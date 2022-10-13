@@ -11,10 +11,8 @@ export const ViewGyms = () => {
         let str = 'http://localhost:3001/api/getGym/0183a53e-399f-d6d0-7138-547fc0f424c6';
         Axios.get(str).then((response) => {
         setGymInfo(response.data.get_Gym);
-        console.log(response.data);
     })},[]);
 
-    //Temporary fill-in values if no valid gymInfo is loaded
     return(
         <div className="row-product" style={{}}>
             {gymInfo.length === 0 ?

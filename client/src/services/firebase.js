@@ -44,7 +44,7 @@ export const signInWithGoogle = async () => {
       });
     }
   } catch (err) {
-    alert(err.message);
+    console.log(err.message);
   }
 };
 

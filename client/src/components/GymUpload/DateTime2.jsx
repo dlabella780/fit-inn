@@ -6,7 +6,6 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 export default function DateTime2() {
 	const [startTime, setStartTime] = React.useState(new Date());
-	const [endTime, setEndTime] = React.useState(new Date());
 
 	// noinspection RequiredAttributes
 	return (
@@ -16,12 +15,6 @@ export default function DateTime2() {
 				label="Starting day/time?"
 				value={startTime}
 				onChange={(newValue) => {setStartTime(newValue);}}
-			/>
-			<DateTimePicker
-				renderInput={(params) => <TextField {...params} />}
-				label="Ending day/time?"
-				value={endTime}
-				onChange={(newValue) => {setEndTime(newValue);}}
 			/>
 		</LocalizationProvider>
 	);

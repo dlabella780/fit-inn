@@ -5,6 +5,7 @@
     "react-test-renderer": "^18.2.0"
   },
   "dependencies": {
+    "all": "^0.0.0",
     "react-google-button": "^0.7.2"
   }
 }

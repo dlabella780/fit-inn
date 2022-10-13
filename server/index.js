@@ -25,6 +25,28 @@ headers: {
 },
 });
 
+const getId = gql`
+	query MyQuery($eq: String = "") {
+		list_UserItems(filter: {ssoapitoken: {eq: $eq}}) {
+		_UserItems {
+			_id
+		}
+		}
+	}  
+`;
+
+app.get('/api/getUserId/:id', async (req,res) => {
+	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			eq: req.params.id
+		}
+		const results = await graphQLClient.request(getId, variables)
+		res.send(results.list_UserItems._UserItems);
+	}
+	else res.send('Access Denied.');
+	
+})
+
 const userQuery = gql`
 	query MyQuery($id: ID = "") {
 		get_User(id: $id) {
@@ -243,13 +265,12 @@ const userAddMutation = gql`
 		$favoriteGymIds: [String] = "", 
 		$fname: String = "", 
 		$lname: String = "", 
-		$notificationSetting: Int = 10, 
+		$notificationSetting: Int = 0, 
 		$paymentapitoken: String = "", 
 		$phoneNumber: String = "", 
 		$profilePicture: String = "", 
-		$ssoapitoken: String = "",
-		$id: ID = "") {
-	Add_User(
+		$ssoapitoken: String = "") {
+	add_User(
 	  input: {email: $email, favoriteGymIds: $favoriteGymIds, fname: $fname, lname: $lname, notificationSetting: $notificationSetting, paymentapitoken: $paymentapitoken, phoneNumber: $phoneNumber, profilePicture: $profilePicture, ssoapitoken: $ssoapitoken, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}}
 	) {
 	  transaction {
@@ -277,11 +298,10 @@ const userUpdateMutation = gql`
 		$paymentapitoken: String = "", 
 		$phoneNumber: String = "", 
 		$profilePicture: String = "", 
-		$ssoapitoken: String = "",
 		$id: ID = "") {
 	update_User(
 	  id: $id
-	  input: {email: $email, favoriteGymIds: $favoriteGymIds, fname: $fname, lname: $lname, notificationSetting: $notificationSetting, paymentapitoken: $paymentapitoken, phoneNumber: $phoneNumber, profilePicture: $profilePicture, ssoapitoken: $ssoapitoken, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}}
+	  input: {email: $email, favoriteGymIds: $favoriteGymIds, fname: $fname, lname: $lname, notificationSetting: $notificationSetting, paymentapitoken: $paymentapitoken, phoneNumber: $phoneNumber, profilePicture: $profilePicture, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}}
 	) {
 	  transaction {
 		_id
@@ -615,8 +635,7 @@ app.post('/api/UpdateProfile', async (req, res) => {
 			paymentapitoken: "striketoken", 
 			phoneNumber: req.body.phoneNumber, 
 			profilePicture: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Waffles_with_Strawberries.jpg", 
-			ssoapitoken: "ssotoken",
-			id: "0183a537-c25c-ea39-d099-993004c2dc6c"
+			id: req.body.id
 		}
 	
 		const data = await graphQLClient.request(userUpdateMutation, variables)
@@ -660,6 +679,18 @@ app.post('/api/AddReservation', async (req, res) => {
 	  else res.send('Access Denied.');
 });
 
+app.post('/api/AddUser', async (req, res) => {
+	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			ssoapitoken: req.body.uid,
+		}
+	
+		const data = await graphQLClient.request(userAddMutation, variables)
+		res.send(data)
+	  }
+	  else res.send('Access Denied.');
+});
+
 app.post('/create-payment-intent', async (req, res) => {
 	const { items } = req.body;
 
@@ -675,6 +706,7 @@ app.post('/create-payment-intent', async (req, res) => {
 		clientSecret: paymentIntent.client_secret,
     })
 });
+
 
 app.listen(3001, () =>  {
     console.log(`Server running on port 3001`);

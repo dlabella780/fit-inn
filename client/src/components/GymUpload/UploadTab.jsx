@@ -373,7 +373,7 @@ function UploadTab(props) {
 	return ( 
 	<div className='UploadTab'>
 		<Box sx={{bgcolor: 'background.paper',}}>
-		<AppBar position="static" color="default">
+		<AppBar className='UploadTab-AppBar' position="static" color="default">
 			<Tabs
 				value={value}
 				onChange={handleChange}

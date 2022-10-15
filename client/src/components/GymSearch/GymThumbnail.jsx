@@ -5,7 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import ButtonBase from '@mui/material/ButtonBase';
-
+import CircularProgress from '@mui/material/CircularProgress';
+  
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -14,7 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const GymThumbnail = (props) => {
-    if (props.loading) return "";
+    if (props.loading) return (<CircularProgress/>)
     else return ( <div> 
     <Grid container 
         direction="row"

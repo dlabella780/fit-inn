@@ -318,13 +318,17 @@ Button {
 /*Pages from the Help Center Links*/
 
 .help-center-link-pages-items {
-  left: 40%;
-  right: 40%;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
   padding: 25px;
-  margin-top: 525px;
+  margin: auto;
+  margin-top: 630px;
+  width: 90%;
+  height: 815px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
 
 .help-center-link-pages-texts {
@@ -347,13 +351,17 @@ Button {
 
 /*Privacy Policy Page*/
 .policy-page-items {
-  left: 40%;
-  right: 40%;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
   padding: 25px;
-  margin-top: 525px;
+  margin: auto;
+  margin-top: 630px;
+  width: 90%;
+  height: 815px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
 
 /*Contact Us Page*/

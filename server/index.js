@@ -499,7 +499,7 @@ app.get('/api/gymSearch', async (req,res) => {
 		if (req.query.zipcode != '' && req.query.day != '') {
 			const variables = {
 				eq: req.query.zipcode,
-				contains: req.query.day
+				eq: req.query.day
 			}
 			const results = await graphQLClient.request(gymSearchZipAvail, variables);
 			res.send(results);
@@ -511,7 +511,7 @@ app.get('/api/gymSearch', async (req,res) => {
 			res.send(results);
 		} else if (req.query.day != '') {
 			const variables = {
-				contains: req.query.day
+				eq: req.query.day
 			}
 			const results = await graphQLClient.request(gymSearchAvail, variables);
 			res.send(results);
@@ -706,7 +706,6 @@ app.post('/create-payment-intent', async (req, res) => {
 		clientSecret: paymentIntent.client_secret,
     })
 });
-
 
 app.listen(3001, () =>  {
     console.log(`Server running on port 3001`);

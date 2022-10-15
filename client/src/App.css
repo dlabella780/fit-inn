@@ -262,6 +262,14 @@ Button {
   border-radius: 5px;
 }
 
+.row-product {
+  margin-top: -300px;
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 10px;
+}
+
 /*How can I contact Fit-Inn?*/
 
 .how-to-contact-us-page {

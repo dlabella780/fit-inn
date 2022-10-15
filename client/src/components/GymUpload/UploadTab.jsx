@@ -27,6 +27,8 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Axios from 'axios';
+import { Stack } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -58,9 +60,7 @@ function a11yProps(index) {
 function Item(props) {return null;}
 Item.propTypes = {children: PropTypes.node};
 
-
 function UploadTab(props) {
-	
 	const theme = useTheme();
 	const [value, setValue] = React.useState(0);
 	const handleChange = (event, newValue) => { setValue(newValue); };
@@ -391,11 +391,11 @@ function UploadTab(props) {
 			axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 			index={value}
 			onChangeIndex={handleChangeIndex}
-			style={{width: '100ch', height: '70ch'}}
-			// TODO :: FIX THE STYLE HERE
+			style={{width: '87ch', height: '65ch'}}
+/////////// TODO :: FIX THE STYLE HERE
 		>
 			<TabPanel value={value} index={0} dir={theme.direction}>
-				<Box sx={{ '& .MuiTextField-root': { m: 1, width: '30ch' }}}><div>
+				<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
 					<TextField
 						required
 						id="name"
@@ -439,7 +439,6 @@ function UploadTab(props) {
 						onChange={(e) => setAccessInformation(e.target.value)}
 						helperText={accessInformation === "" ? 'Please enter any access instructions.' : ' '}
 					/>
-				</div><div>
 					<TextField
 						required
 						id="location-street"
@@ -492,21 +491,27 @@ function UploadTab(props) {
 						}
 						error={isNaN(zip)}
 					/>
-				</div><div>
-					<RadioGroup 
-						row 
-						value={isHostHome}
-						onChange={(e) => setIsHostHome(e.target.value)}
-					>
-						Will You Be At Home? 
-						<FormControlLabel value="true" control={<Radio />} label="YES" />
-						<FormControlLabel value="false" control={<Radio />} label="NO" />
-					</RadioGroup>
-				</div><div>
-					<Button variant="contained" component="label" startIcon={<PhotoCamera/>}>
-						Upload<input hidden accept="image/*" multiple type="file" />
-					</Button>
-				</div></Box>
+					<Box sx={{ flexGrow: 1 }}>
+					  <Grid>
+						<Stack direction="row" spacing={2}>
+							<Typography>
+								Will You Be At Home?
+							</Typography>
+							<RadioGroup 
+								row 
+								value={isHostHome}
+								onChange={(e) => setIsHostHome(e.target.value)}
+							>
+								<FormControlLabel value="true" control={<Radio />} label="YES" />
+								<FormControlLabel value="false" control={<Radio />} label="NO" />
+							</RadioGroup>
+						</Stack>
+						<Button variant="contained" component="label" startIcon={<PhotoCamera/>}>
+							Upload<input hidden accept="image/*" multiple type="file" />
+						</Button>	
+					  </Grid>
+					</Box>
+				</Box>
 			</TabPanel>
 			<TabPanel value={value} index={1} dir={theme.direction}>
 				<SelectEquipment/>
@@ -544,7 +549,6 @@ function UploadTab(props) {
 					</RadioGroup>
 				</Box>
 				<Box sx={{ minWidth: 120 }}>
-					What Kind of Television Does Your Gym Have?
 					<FormControl><InputLabel>TV</InputLabel>
 						<Select
 							value={tvType}
@@ -559,42 +563,44 @@ function UploadTab(props) {
 				</Box>
 			</TabPanel>
 			<TabPanel value={value} index={3} dir={theme.direction}>
-				<TextField
-					id="hourly-rate"
-					label="Hourly Rate?"
-					type="number"
-					variant="outlined"
-					placeholder={'1-100'}
-					InputProps={{inputProps: { min: 1, max: 100}}}
-					value={cost} 
-					onChange={(e) => setCost(e.target.value)}
-					helperText={cost === "" || cost <= 0 || cost > 100 ? 'Please enter a number from 1-100' : ' '}
-					error={cost <= 0 || cost > 100 || isNaN(cost)}
-				/>
-				<DateTime2 startTime endTime/>
-				<div>
+			  	<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
 					<TextField
-						required
-						id="booking-notice"
-						label="Booking Notice? (In hours)"
+						id="hourly-rate"
+						label="Hourly Rate?"
+						type="number"
 						variant="outlined"
-						value={bookingNotice} 
-						onChange={(e) => setBookingNotice(e.target.value)}
-						helperText={bookingNotice === "" ? 'Please enter any booking requirements.' : ' '}
+						placeholder={'1-100'}
+						InputProps={{inputProps: { min: 1, max: 100}}}
+						value={cost} 
+						onChange={(e) => setCost(e.target.value)}
+						helperText={cost === "" || cost <= 0 || cost > 100 ? 'Please enter a number from 1-100' : ' '}
+						error={cost <= 0 || cost > 100 || isNaN(cost)}
 					/>
-					<TextField
-						required
-						id="cancel-notice"
-						label="Cancelation Notice? (In hours)"
-						variant="outlined"
-						value={cancelationWarning} 
-						onChange={(e) => setCancelationWarning(e.target.value)}
-						helperText={cancelationWarning === "" ? 'Please enter any cancelation requirements.' : ' '}
-					/>
-				</div>
+					<DateTime2 startTime endTime/>
+					<div>
+						<TextField
+							required
+							id="booking-notice"
+							label="Booking Notice? (In hours)"
+							variant="outlined"
+							value={bookingNotice} 
+							onChange={(e) => setBookingNotice(e.target.value)}
+							helperText={bookingNotice === "" ? 'Please enter any booking requirements.' : ' '}
+						/>
+						<TextField
+							required
+							id="cancel-notice"
+							label="Cancelation Notice? (In hours)"
+							variant="outlined"
+							value={cancelationWarning} 
+							onChange={(e) => setCancelationWarning(e.target.value)}
+							helperText={cancelationWarning === "" ? 'Please enter any cancelation requirements.' : ' '}
+						/>
+					</div>
+				</Box>
 			</TabPanel>
 		</SwipeableViews>
-		<Button variant="contained" onClick={handleOpen}>
+		<Button variant="contained" onClick={handleOpen} style={{left: '556px'}}>
 			REVIEW GYM
 		</Button>
 		<ReviewDialog onClose={handleClose} open={open}>

@@ -21,21 +21,11 @@ function GymSearchPage() {
   const [time, setTime] = useState(null);
   
 	function searchForGym() {
-    if (time !== null) convertToVendiaTime();
     Axios.get('http://localhost:3001/api/gymSearch', {
         params: {zipcode: searchZip, day: searchAvailability}}).then((response) => { 
           setGymData(response.data); 
           setgymDataLoading(false);
     });
-  }
-
-  function convertToVendiaTime() {
-    let year = time.$y;
-    let day = time.$D;
-    let month = time.$M + 1;
-    let str = year+ "-" + day + "-" + month;
-    setSearchAvailability('2022-11-01T1:00:00+01:00');
-    //VENDIA AVAILABILITY FORMAT "2022-11-01T1:00:00+01:00"
   }
 
   useEffect(() => {searchForGym()}, [updateSearch]);

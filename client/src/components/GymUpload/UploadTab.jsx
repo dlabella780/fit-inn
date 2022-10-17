@@ -13,7 +13,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import DateTime2 from "./DateTime2";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,6 +28,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import Axios from 'axios';
 import { Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -295,10 +297,14 @@ function UploadTab(props) {
     const [hasWifi, setHasWifi] = useState('false');
     const [hasSpeakers, setHasSpeakers] = useState('false');
     const [tvType, setTvType] = useState("None");
-    const [cost, setCost] = useState(20);
-    const [bookingNotice, setBookingNotice] = useState(3);
-    const [cancelationWarning, setCancelationWarning] = useState(24);
-    const [availability, setAvailability] = useState(['2022-11-01T13:00:00+01:00', '2022-11-01T14:00:00+01:00', '2022-11-01T15:00:00+01:00']);
+    const [cost, setCost] = useState(1);
+    const [bookingNotice, setBookingNotice] = useState('');
+    const [cancelationWarning, setCancelationWarning] = useState('');
+    const [availability, setAvailability] = useState([]);
+	const [startTimeUTC, setStartTime] = useState(null);
+	const [endTimeUTC, setEndTime] = useState(null);
+	const [lastStartTimeUTC, setLastStartTime] = useState(null);
+	const [lastEndTimeUTC, setLastEndTime] = useState(null);
     const [gymSubmit, setGymSubmit] = useState('Submit');
 	const [equipmentMap, setEquipmentMap] = useState(new Map());
 	const [oldGymLoaded, setOldGymLoaded] = useState(false);
@@ -344,12 +350,9 @@ function UploadTab(props) {
 	  
 	const ReviewDialogTitle = (props) => {
 		const { children, onClose, ...other } = props;
-	  
-		return (
-		  <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+		return ( <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
 			{children}
-			{onClose ? (
-			  <IconButton
+			{onClose ? ( <IconButton
 				aria-label="close"
 				onClick={onClose}
 				sx={{
@@ -357,18 +360,35 @@ function UploadTab(props) {
 				  right: 8,
 				  top: 8,
 				  color: (theme) => theme.palette.grey[500],
-				}}
-			  >
-				<CloseIcon />
+				}}>
+			  <CloseIcon />
 			  </IconButton>
 			) : null}
-		  </DialogTitle>
-		);
+		</DialogTitle> );
 	};
 	  
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => {setOpen(true);};
 	const handleClose = () => {setOpen(false);};
+
+/// TODO :: UTC TIME STUFF //////////////////////////////////
+	// const updateTimes = (start, end) => {
+	// 	if (lastStartTimeUTC === null) setLastStartTime(startTimeUTC);
+	// 	if (lastEndTimeUTC === null) setLastEndTime(endTimeUTC);
+	// };
+
+	// const getTimezoneOffset = value => value.getTimezoneOffset() * 60000;
+	// const makeLocalAppearUTC = value => {
+	// 	const dateTime = new Date(value);
+	// 	const utcFromLocal = new Date(dateTime.getTime() + getTimezoneOffset(dateTime));
+	// 	return utcFromLocal;
+	// };
+
+	// const localToUTC = (dateTime) => {
+	// 	const utcFromLocal = new Date(dateTime.getTime() - getTimezoneOffset(dateTime));
+	// 	return utcFromLocal;
+	// };
+////////////////////////////////////////////////////////////
 
 	return ( 
 	<div className='UploadTab'>
@@ -392,7 +412,7 @@ function UploadTab(props) {
 			index={value}
 			onChangeIndex={handleChangeIndex}
 			style={{width: '87ch', height: '65ch'}}
-/////////// TODO :: FIX THE STYLE HERE
+// TODO :: FIX THE STYLE HERE ///////////////////////////////
 		>
 			<TabPanel value={value} index={0} dir={theme.direction}>
 				<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
@@ -515,11 +535,12 @@ function UploadTab(props) {
 			</TabPanel>
 			<TabPanel value={value} index={1} dir={theme.direction}>
 				<SelectEquipment/>
-				<h3>--Added Equipment--</h3>
+				<Typography variant='h5'>--Added Equipment--</Typography>
 				{GetEquip()}
 			</TabPanel>
 			<TabPanel value={value} index={2} dir={theme.direction}>
-				<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
+			  <Stack direction="row" spacing={2}>
+			  	<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
 					Wifi Access? 
 					<RadioGroup 
 						row 
@@ -529,6 +550,8 @@ function UploadTab(props) {
 						<FormControlLabel value="true" control={<Radio />} label="YES" />
 						<FormControlLabel value="false" control={<Radio />} label="NO" />
 					</RadioGroup>
+				</Box>
+				<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
 					Bathroom Access?
 					<RadioGroup 
 						row 
@@ -538,6 +561,8 @@ function UploadTab(props) {
 						<FormControlLabel value="true" control={<Radio />} label="YES" />
 						<FormControlLabel value="false" control={<Radio />} label="NO" />
 					</RadioGroup>
+				</Box>
+				<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
 					Speaker Access?
 					<RadioGroup 
 						row 
@@ -554,6 +579,7 @@ function UploadTab(props) {
 							value={tvType}
 							label="TV"
 							onChange={(e) => setTvType(e.target.value)}
+							sx={{ width: 135 }}
 						>
 							<MenuItem value={"None"}>None</MenuItem>
 							<MenuItem value={"Traditional"}>Traditional</MenuItem>
@@ -561,9 +587,26 @@ function UploadTab(props) {
 						</Select>
 					</FormControl>
 				</Box>
+			  </Stack>
 			</TabPanel>
 			<TabPanel value={value} index={3} dir={theme.direction}>
 			  	<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
+						<DateTimePicker
+							id="start-day"
+							label="Starting Time?"
+							value={startTimeUTC}
+							onChange={(e) => {setStartTime(e)}}
+							renderInput={(params) => <TextField {...params} />}
+						/>
+						<DateTimePicker
+							id="end-day"
+							label="Ending Time?"
+							value={endTimeUTC}
+							onChange={(e) => {setEndTime(e)}}
+							renderInput={(params) => <TextField {...params} />}
+						/>
+					</LocalizationProvider>
 					<TextField
 						id="hourly-rate"
 						label="Hourly Rate?"
@@ -576,7 +619,6 @@ function UploadTab(props) {
 						helperText={cost === "" || cost <= 0 || cost > 100 ? 'Please enter a number from 1-100' : ' '}
 						error={cost <= 0 || cost > 100 || isNaN(cost)}
 					/>
-					<DateTime2 startTime endTime/>
 					<div>
 						<TextField
 							required
@@ -635,10 +677,10 @@ function UploadTab(props) {
 				--Pricing and Availability--
 				<Typography gutterBottom>
 					Hourly Rate: ${cost}/hour<br/>
-					Starting Availability: AddStartDateTimeHere<br/>
-					Ending Availability: AddEndDateTimeHere<br/>
-					Booking Notice: {bookingNotice} hours<br/>
-					Cancelation Notice: {cancelationWarning} hours<br/>
+					Starting Availability: {startTimeUTC === null ? '' : JSON.stringify(startTimeUTC)}<br/>
+					Ending Availability: {endTimeUTC === null ? '' : JSON.stringify(endTimeUTC)}<br/>
+					Booking Notice: {bookingNotice === '' ? '' : bookingNotice + ' hours'}<br/>
+					Cancelation Notice: {cancelationWarning === '' ? '' : cancelationWarning + ' hours'}<br/>
 				</Typography>
 			</DialogContent>
 			<DialogActions>

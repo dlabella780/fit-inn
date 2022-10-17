@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import ButtonBase from '@mui/material/ButtonBase';
 import CircularProgress from '@mui/material/CircularProgress';
-  
+import { Link, NavLink, useHistory, Redirect } from 'react-router-dom';
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -32,7 +33,6 @@ const GymThumbnail = (props) => {
             <Grid item>
               <ButtonBase 
                   sx={{ width: 180, height: 180 }}
-                  onClick={(e) => alert("THIS IS A BUTTON")}
               >
                   <img src={val.photos[0]} width="180" height="180" ></img>
               </ButtonBase>

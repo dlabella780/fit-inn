@@ -13,6 +13,7 @@ import {
   signOut,
   getAuth,
 } from "firebase/auth";
+import { UserAddOutlined } from "@ant-design/icons";
 
 const useStyles = makeStyles((theme) => ({
     navlinks: {
@@ -60,10 +61,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 function Navbar(props) {
   const logout = () => {
     getAuth().signOut();
     history.push('/');
+    handleCloseUserMenu();
   }
   
   const classes = useStyles();
@@ -80,21 +83,46 @@ function Navbar(props) {
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
             <Link to="/" className={classes.logo}>FIT-INN</Link>
-            <button onClick={logout}>logout</button>
-        </Typography> { isMobile ? (
-          <DrawerComponent />) : (
+        </Typography> { !props.userId ? (
+          <div className={classes.navlinks}>
+          <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
+                  <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <AccountCircleIcon fontSize="large"/>
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    className={classes.menu}
+                    sx={{ mt: '48px' }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Login" className={classes.sublink}>Login</NavLink></MenuItem>
+                  </Menu>
+                </Box>
+                </div>) : (
             <div className={classes.navlinks}>
               <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
               {props.userId ? <NavLink to={{pathname: '/GymUpload', state:{ gymId: false}}} className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink> :
               <NavLink onClick={() => alert('Please Login to upload a Gym.')} to={{state:{ gymId: false}}} className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink> }<br/>
               <NavLink to="/Payment" className={isActive => (isActive ? classes.linkActive : classes.link)}>Go to Payment</NavLink>
               <NavLink to="/Reservations" className={isActive => (isActive ? classes.linkActive : classes.link)}>Make or Cancel Reservation</NavLink>
-            </div>
-        )}
-        <Box sx={{ flexGrow: 0 }}>
+              <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <AccountCircleIcon fontSize="large"/>
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 4 }}>
+            <AccountCircleIcon fontSize="large"/>
             </IconButton>
           </Tooltip>
           <Menu
@@ -114,13 +142,15 @@ function Navbar(props) {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
-            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Login" className={classes.sublink}>Login</NavLink></MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Register" className={classes.sublink}>Create Account</NavLink></MenuItem>
+            <MenuItem onClick={logout}><NavLink to="/" className={classes.sublink}>Logout</NavLink></MenuItem>
             {props.userId ? <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Profile" className={classes.sublink}>Profile</NavLink></MenuItem> : 
             <MenuItem onClick={() => alert('Please Login to View Profile')}>Profile</MenuItem>}
             <MenuItem onClick={handleCloseUserMenu}><NavLink to="/" className={classes.sublink}>Gym Dashboard</NavLink></MenuItem>
           </Menu>
         </Box>
+            </div>
+        )}
+
       </Toolbar>
   </AppBar></>);}
 export default Navbar;

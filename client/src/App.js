@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import LandingPage from "./pages/LandingPage";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
 import './App.css'
 import firebase from "./services/firebase.js";
 import Axios from 'axios'
-
+import {
+  getAuth,
+} from "firebase/auth";
 //stripe test key
 const stripePromise = loadStripe("pk_test_51LjZ0MHSMtfvYBv6DzWueAsBhltM9JDeLSZGfifoFVXTT5ugkU6fbMb0x4f4VVugcgJ9hh3P8EkTiJrvIi2EyRe1002tCfXrIL");
 
@@ -16,6 +18,8 @@ export default function App() {
     const [clientSecret, setClientSecret] = useState("");
     const [userId, setUserId] = useState("");
     const [loading, setLoading] = useState(false);
+    const auth = getAuth();
+    const user = auth.currentUser;
 
   useEffect(() => {
     // Create Stripe PaymentIntent as soon as page loads
@@ -28,11 +32,12 @@ export default function App() {
           .then((data) => setClientSecret(data.clientSecret));
     
     firebase.auth().onAuthStateChanged(user => {
-      console.log('auth called')
       if(!user)
         setUserId('');
       else 
         GetUserId(user)
+        
+      console.log('Success')
     }) 
       
   }, [])
@@ -65,7 +70,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/">
-            <LandingPage userId={userId}/>
+            <LandingPage userId={userId} user={user}/>
         </Route>
       </Switch>
     </Router>

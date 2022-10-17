@@ -4,6 +4,16 @@ import { getAnalytics } from "firebase/analytics";
 import firebase from "firebase/compat/app";
 import { getFirestore, collection, addDoc, where, query, getDocs} from "firebase/firestore"
 import "firebase/compat/auth";
+import {
+  onAuthStateChanged,
+  signOut,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  FacebookAuthProvider,
+  OAuthProvider  
+} from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -23,50 +33,60 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = getFirestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
+const providerGoogle = new GoogleAuthProvider();
+providerGoogle.setCustomParameters({ prompt: 'select_account' });
 
 export const auth = firebase.auth();
 export default firebase;
 
 export const signInWithGoogle = async () => {
-  try {
-    const res = await auth.signInWithPopup(provider);
-    const user = res.user;
-    const userRef = collection(db, "users");
-    const result = await getDocs(query(userRef, where("uid", "==", user.uid)));
-    if (result.empty) {
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name: user.displayName,
-        authProvider: "google",
-        email: user.email,
-      });
-    }
-  } catch (err) {
-    console.log(err.message);
-  }
-};
-
-export const signInWithEmailAndPassword = async (email, password) => {
-  try {
-    await auth.signInWithEmailAndPassword(email, password);
-  } catch (err) {
-    alert(err.message);
-  }
-};
-
-export const registerWithEmailAndPassword = async (name, email, password) => {
-  try {
-    const res = await auth.createUserWithEmailAndPassword(email, password);
-    const user = res.user;
-    await addDoc(collection(db, "users"), {
-      uid: user.uid,
-      name,
-      authProvider: "local",
-      email,
+  const auth = getAuth();
+  signInWithPopup(auth, providerGoogle)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
     });
-  } catch (err) {
-    alert(err.message);
-  }
+};
+
+const providerFacebook = new FacebookAuthProvider();
+providerFacebook.setCustomParameters({ 'display': 'popup' });
+
+
+export const signInWithFacebook = async () => {
+  const auth = getAuth();
+  signInWithPopup(auth, providerFacebook)
+    .then((result) => {
+      // The signed-in user info.
+      const user = result.user;
+  
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      const credential = FacebookAuthProvider.credentialFromResult(result);
+      const accessToken = credential.accessToken;
+  
+      // ...
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = FacebookAuthProvider.credentialFromError(error);
+  
+      // ...
+    });
 };

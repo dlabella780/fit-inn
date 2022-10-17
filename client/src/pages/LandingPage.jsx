@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -108,7 +108,7 @@ const LandingPage = (props) => {
                     <ReservationsPage />
                 </Route>
                 <Route path={'/Login'}>
-                    <Login />
+                    <Login userId={props.userId} />
                 </Route>
                 <Route path="*">
                     <NotFound />

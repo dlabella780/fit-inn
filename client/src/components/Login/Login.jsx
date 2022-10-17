@@ -10,15 +10,17 @@ import FormGroup from '@mui/material/FormGroup';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Typography, } from "@material-ui/core";
-import { auth, signInWithGoogle } from "../../services/firebase.js";
+import { auth, signInWithGoogle} from "../../services/firebase.js";
 import GoogleButton from 'react-google-button';
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
   getAuth,
 } from "firebase/auth";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LandingPage from "../../pages/LandingPage";
+import { withRouter } from "react-router";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -28,48 +30,22 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary
 }));
 
-export default function Login(){
-  const [Fname, setFirstName] = useState("");
-  const [Lname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-  // const auth = getAuth();
-  // const user = auth.currentUser;
+const loginWithGoogle = async () => {
+  signInWithGoogle();
+}
+const Login = (props) =>{
   return(
-    <Box className="login-form" >
+  <div> 
+<Box className="login-form" >
       <FormGroup>
         <Typography variant="h4">Login</Typography>
         <Box className="login-fields">
-            <TextField 
-            required id="outlined-basic" 
-            label="email" 
-            value={loginEmail} 
-            onChange={(e) => setLoginEmail(e.target.value)}/>
-        </Box>
-        <Box className="login-fields">
-            <TextField 
-            required id="outlined-password-input" 
-            type="password" 
-            label="Password" 
-            value={loginPassword} 
-            onChange={(e) => setLoginPassword(e.target.value)}/>
-        </Box>
-        <Box className="login-fields">
-            <FormControlLabel control={<Checkbox default />} /*onClick="agreeTOS()"*/ label="Stay Logged in"/>
-        </Box>
-        <Box className="login-fields">
           <Stack direction="column" spacing={1}>
-            <Stack direction="row" spacing={6}>
-                <Button variant="contained" href="/">Login</Button>
-                <Button variant="contained" href="/Register">Create Account</Button>
-            </Stack>
-            <GoogleButton onClick={signInWithGoogle}/>
+          <NavLink to="/"><GoogleButton onClick={loginWithGoogle}/></NavLink>
           </Stack>
         </Box>
       </FormGroup>
     </Box>
-  )
-}
+  </div>
+  );
+};export default withRouter(Login);

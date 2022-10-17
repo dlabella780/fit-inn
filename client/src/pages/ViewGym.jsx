@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = () => {
     const [gymInfo, setGymInfo] = React.useState([]);
@@ -31,6 +32,7 @@ export const ViewGyms = () => {
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Rating: {gymInfo.rating}</Typography>
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Up to {gymInfo.numGuestsAllowed} guests allowed</Typography>
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Host will {gymInfo.isHostHome = 'false' ? "not" : ""} be home</Typography>
+                        <ViewConfirmation gymInfo={gymInfo}/>
                     </Box>
                     <span id = "images">
                         <Box display="flex" justifyContent="space-between">

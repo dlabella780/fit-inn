@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 function GymSearchPage() {
   const [gymData, setGymData] = useState([]);
-  const [gymDataLoading, setgymDataLoading] = useState(true);
+  const [gymDataLoading, setgymDataLoading] = useState(false);
   const [searchZip, setSearchZip] = useState('');
   const [searchAvailability, setSearchAvailability] = useState('');
   const [updateSearch, setUpdateSearch] = useState(0);
@@ -24,7 +24,7 @@ function GymSearchPage() {
     Axios.get('http://localhost:3001/api/gymSearch', {
         params: {zipcode: searchZip, day: searchAvailability}}).then((response) => { 
           setGymData(response.data); 
-          setgymDataLoading(false);
+          setgymDataLoading(true);
     });
   }
 

@@ -5,12 +5,13 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
-export const ViewGyms = () => {
+export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
-    
+    let gymID = props.props.location.props._id;
+
     React.useEffect(() => {
-        let str = 'http://localhost:3001/api/getGym/0183a53e-399f-d6d0-7138-547fc0f424c6';
-        Axios.get(str).then((response) => {
+        let gym = 'http://localhost:3001/api/getGym/' + gymID;
+        Axios.get(gym).then((response) => {
         setGymInfo(response.data.get_Gym);
     })},[]);
 

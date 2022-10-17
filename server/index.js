@@ -99,6 +99,7 @@ query MyQuery($eq: String = "", $contains: String = "") {
 	  filter: {address: {zipcode: {eq: $eq}}, availability: {contains: $contains}}
 	) {
 	  _GymItems {
+		_id
 		accessInformation
 		address {
 		  City
@@ -137,6 +138,7 @@ query MyQuery($contains: String = "") {
 	  filter: {availability: {contains: $contains}}
 	) {
 	  _GymItems {
+		_id
 		accessInformation
 		address {
 		  City
@@ -175,6 +177,7 @@ query MyQuery($eq: String = "") {
 	  filter: {address: {zipcode: {eq: $eq}}}
 	) {
 	  _GymItems {
+		_id
 		accessInformation
 		address {
 		  City

@@ -5,9 +5,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import ButtonBase from '@mui/material/ButtonBase';
-import CircularProgress from '@mui/material/CircularProgress';
-import { Link, NavLink, useHistory, Redirect } from 'react-router-dom';
-
+import { Link, Redirect, Switch, Route } from "react-router-dom";
+  
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -16,7 +15,8 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const GymThumbnail = (props) => {
-    if (props.loading) return (<CircularProgress/>)
+    if (props.gymData.length === 0) return '';
+    //if (props.loading) return (<CircularProgress/>)
     else return ( <div> 
     <Grid container 
         direction="row"
@@ -31,11 +31,13 @@ const GymThumbnail = (props) => {
           <Item className="gym-thumbnail-indiv">
            <Grid item container direction="row" spacing={2}>
             <Grid item>
-              <ButtonBase 
-                  sx={{ width: 180, height: 180 }}
-              >
-                  <img src={val.photos[0]} width="180" height="180" ></img>
-              </ButtonBase>
+              <Link to={{pathname: "/ViewGym", props: val }}>
+                <ButtonBase 
+                    sx={{ width: 180, height: 180 }}
+                >
+                    <img src={val.photos[0]} width="180" height="180" ></img>
+                </ButtonBase>
+              </Link>
             </Grid>
             <Grid item>
               <Typography variant="h4">

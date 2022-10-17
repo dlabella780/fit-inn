@@ -63,7 +63,7 @@ const LandingPage = (props) => {
                     <ContactUsPage />
                 </Route>
                 <Route path="/ViewGym">
-                    <ViewGyms />
+                    <ViewGyms props={props}/>
                 </Route>
                 <Route path="/gyma">
                     <GymA />

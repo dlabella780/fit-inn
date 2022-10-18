@@ -3,7 +3,6 @@ import { Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
@@ -24,8 +23,12 @@ export const ViewGyms = (props) => {
     })},[]);
 
     return( <div className="row-product" style={{}}>
-        {gymInfo.length === 0 ?
-            <Typography variant="h2" align="left" style={{padding: 15, margin: 10, color:"red"}}>Invalid Gym Info</Typography>
+        {gymInfo.length === 0 ? 
+            <Typography variant="h2" 
+                align="left" 
+                style={{padding: 15, margin: 10, color:"red"}}>
+                Invalid Gym Info
+            </Typography>
             :
             <Box sx={{}}>
                 <Typography variant="h4" align="left" style={{padding: 15, color:"black"}}>{gymInfo.title}</Typography>

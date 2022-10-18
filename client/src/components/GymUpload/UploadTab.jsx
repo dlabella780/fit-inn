@@ -81,6 +81,10 @@ function UploadTab(props) {
 		history.push('/ViewGym',{props: props});
 	}
 
+	const redirectToHome = () => {
+		history.push('/', {});
+	}
+
 	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
         const [equipDets, setEquipDets] = useState('');
@@ -191,7 +195,7 @@ function UploadTab(props) {
         if (hasWifi === 'true') hasWifiB = true;
         if (hasSpeakers === 'true') hasSpeakersB = true;
         if (hasBathroom === 'true') hasBathroomB = true;
-		//setAvailability();
+/// TODO :: ///setAvailability();
 
 		if(!props.gymId) { try {
 			Axios.post('http://localhost:3001/api/uploadgym', {
@@ -214,8 +218,8 @@ function UploadTab(props) {
 				tvType: tvType, 
 				equipment: equipmentObj})
 				.then(
-					setGymSubmit('Gym Submitted!'),
-					redirectToGym(props.gymId)
+					alert("Gym Submitted!"),
+					redirectToHome()
 				)
 			} catch (error) { console.log(error); }
 		} else { try {
@@ -240,7 +244,7 @@ function UploadTab(props) {
 				equipment: equipmentObj,
 				id: props.gymId})
 				.then(() => 
-					setGymSubmit('Gym Updated!'),
+					alert("Gym Updated!"),
 					redirectToGym(props.gymId)
 				)
 			} catch (error) { console.log(error); }
@@ -301,7 +305,6 @@ function UploadTab(props) {
     const [availability, setAvailability] = useState([]);
 	const [startTimeUTC, setStartTime] = useState(null);
 	const [endTimeUTC, setEndTime] = useState(null);
-    const [gymSubmit, setGymSubmit] = useState('');
 	const [equipmentMap, setEquipmentMap] = useState(new Map());
 	const [oldGymLoaded, setOldGymLoaded] = useState(false);
 	const equipMap = new Map();
@@ -385,8 +388,7 @@ function UploadTab(props) {
 	// };
 ////////////////////////////////////////////////////////////
 
-	return ( 
-	<div className='UploadTab'>
+	return ( <div className='UploadTab'>
 		<Box sx={{bgcolor: 'background.paper',}}>
 		<AppBar className='UploadTab-AppBar' position="static" color="default">
 			<Tabs
@@ -407,235 +409,234 @@ function UploadTab(props) {
 			index={value}
 			onChangeIndex={handleChangeIndex}
 			style={{width: '87ch', height: '65ch'}}
-// TODO :: FIX THE STYLE HERE ///////////////////////////////
 		>
-			<TabPanel value={value} index={0} dir={theme.direction}>
-				<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
-					<TextField
-						required
-						id="name"
-						label="Gym Name"
-						variant="outlined"
-						defaultValue="Gym Name"
-						value={title} 
-						onChange={(e) => setTitle(e.target.value)}
-						helperText={title === "" ? 'Please enter a gym name.' : ' '}
-					/>
-					<TextField
-						required
-						id="description"
-						label="Description"
-						variant="outlined"
-						defaultValue="Description"
-						value={description} 
-						onChange={(e) => setDescription(e.target.value)}
-						helperText={description === "" ? 'Please enter a description.' : ' '}
-					/>
-					<TextField
-						required
-						id="max-guests"
-						label="Maximum number of guests?"
-						type="number"
-						variant="outlined"
-						placeholder={'1-100'}
-						InputProps={{inputProps: { min: 1 }}}
-						value={numGuestsAllowed} 
-						onChange={(e) => setNumGuestsAllowed(e.target.value)}
-						helperText={numGuestsAllowed === "" || numGuestsAllowed <= 0 ? 'Please enter a number greater than 0' : ' '}
-						error={numGuestsAllowed <= 0 || isNaN(numGuestsAllowed)}
-					/>
-					<TextField
-						required
-						id="notes"
-						label="Access Instructions"
-						variant="outlined"
-						defaultValue="How to access?"
-						value={accessInformation} 
-						onChange={(e) => setAccessInformation(e.target.value)}
-						helperText={accessInformation === "" ? 'Please enter any access instructions.' : ' '}
-					/>
-					<TextField
-						required
-						id="location-street"
-						label="Street"
-						variant="outlined"
-						defaultValue="Street"
-						value={street1} 
-						onChange={(e) => setStreet1(e.target.value)}
-						helperText={street1 === "" ? 'Please enter your street.' : ' '}
-					/>
-					<TextField
-						required
-						id="location-city"
-						label="City"
-						variant="outlined"
-						defaultValue="City"
-						value={city} 
-						onChange={(e) => setCity(e.target.value)}
-						helperText={
-							city === "" ? 'Please enter your city.' : ' ' &&
-							!isNaN(city) ? 'Not a city.' : ' ' 
-						}
-						error={!isNaN(city) && city !== ""}
-					/>
-					<TextField
-						required
-						id="location-state"
-						label="State"
-						variant="outlined"
-						defaultValue="State"
-						value={state} 
-						onChange={(e) => setState(e.target.value)}
-						helperText={
-							state === "" ? 'Please enter your state.' : ' ' &&
-							!isNaN(state) ? 'Not a state.' : ' ' 
-						}
-						error={!isNaN(state) && state !== ""}
-					/>
-					<TextField
-						required
-						id="location-zip"
-						label="Zip"
-						variant="outlined"
-						defaultValue="Zip"
-						value={zip} 
-						onChange={(e) => setZip(e.target.value)}
-						helperText={
-							zip === "" ? 'Please enter your zip.' : ' ' &&
-							isNaN(zip) ? 'Not a zip.' : ' ' 
-						}
-						error={isNaN(zip)}
-					/>
-					<Box sx={{ flexGrow: 1 }}>
-					  <Grid>
-						<Stack direction="row" spacing={2}>
-							<Typography>
-								Will You Be At Home?
-							</Typography>
-							<RadioGroup 
-								row 
-								value={isHostHome}
-								onChange={(e) => setIsHostHome(e.target.value)}
-							>
-								<FormControlLabel value="true" control={<Radio />} label="YES" />
-								<FormControlLabel value="false" control={<Radio />} label="NO" />
-							</RadioGroup>
-						</Stack>
-						<Button variant="contained" component="label" startIcon={<PhotoCamera/>}>
-							Upload<input hidden accept="image/*" multiple type="file" />
-						</Button>	
-					  </Grid>
-					</Box>
-				</Box>
-			</TabPanel>
-			<TabPanel value={value} index={1} dir={theme.direction}>
-				<SelectEquipment/>
-				<Typography variant='h5'>--Added Equipment--</Typography>
-				{GetEquip()}
-			</TabPanel>
-			<TabPanel value={value} index={2} dir={theme.direction}>
-			  <Stack direction="row" spacing={2}>
-			  	<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
-					Wifi Access? 
-					<RadioGroup 
-						row 
-						value={hasWifi}
-						onChange={(e) => setHasWifi(e.target.value)}
-					>
-						<FormControlLabel value="true" control={<Radio />} label="YES" />
-						<FormControlLabel value="false" control={<Radio />} label="NO" />
-					</RadioGroup>
-				</Box>
-				<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
-					Bathroom Access?
-					<RadioGroup 
-						row 
-						value={hasBathroom}
-						onChange={(e) => setHasBathroom(e.target.value)}
-					>
-						<FormControlLabel value="true" control={<Radio />} label="YES" />
-						<FormControlLabel value="false" control={<Radio />} label="NO" />
-					</RadioGroup>
-				</Box>
-				<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
-					Speaker Access?
-					<RadioGroup 
-						row 
-						value={hasSpeakers}
-						onChange={(e) => setHasSpeakers(e.target.value)}
-					>
-						<FormControlLabel value="true" control={<Radio />} label="YES" />
-						<FormControlLabel value="false" control={<Radio />} label="NO" />
-					</RadioGroup>
-				</Box>
-				<Box sx={{ minWidth: 120 }}>
-					<FormControl><InputLabel>TV</InputLabel>
-						<Select
-							value={tvType}
-							label="TV"
-							onChange={(e) => setTvType(e.target.value)}
-							sx={{ width: 135 }}
+		  <TabPanel value={value} index={0} dir={theme.direction}>
+			<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
+				<TextField
+					required
+					id="name"
+					label="Gym Name"
+					variant="outlined"
+					defaultValue="Gym Name"
+					value={title} 
+					onChange={(e) => setTitle(e.target.value)}
+					helperText={title === "" ? 'Please enter a gym name.' : ' '}
+				/>
+				<TextField
+					required
+					id="description"
+					label="Description"
+					variant="outlined"
+					defaultValue="Description"
+					value={description} 
+					onChange={(e) => setDescription(e.target.value)}
+					helperText={description === "" ? 'Please enter a description.' : ' '}
+				/>
+				<TextField
+					required
+					id="max-guests"
+					label="Maximum number of guests?"
+					type="number"
+					variant="outlined"
+					placeholder={'1-100'}
+					InputProps={{inputProps: { min: 1 }}}
+					value={numGuestsAllowed} 
+					onChange={(e) => setNumGuestsAllowed(e.target.value)}
+					helperText={numGuestsAllowed === "" || numGuestsAllowed <= 0 ? 'Please enter a number greater than 0' : ' '}
+					error={numGuestsAllowed <= 0 || isNaN(numGuestsAllowed)}
+				/>
+				<TextField
+					required
+					id="notes"
+					label="Access Instructions"
+					variant="outlined"
+					defaultValue="How to access?"
+					value={accessInformation} 
+					onChange={(e) => setAccessInformation(e.target.value)}
+					helperText={accessInformation === "" ? 'Please enter any access instructions.' : ' '}
+				/>
+				<TextField
+					required
+					id="location-street"
+					label="Street"
+					variant="outlined"
+					defaultValue="Street"
+					value={street1} 
+					onChange={(e) => setStreet1(e.target.value)}
+					helperText={street1 === "" ? 'Please enter your street.' : ' '}
+				/>
+				<TextField
+					required
+					id="location-city"
+					label="City"
+					variant="outlined"
+					defaultValue="City"
+					value={city} 
+					onChange={(e) => setCity(e.target.value)}
+					helperText={
+						city === "" ? 'Please enter your city.' : ' ' &&
+						!isNaN(city) ? 'Not a city.' : ' ' 
+					}
+					error={!isNaN(city) && city !== ""}
+				/>
+				<TextField
+					required
+					id="location-state"
+					label="State"
+					variant="outlined"
+					defaultValue="State"
+					value={state} 
+					onChange={(e) => setState(e.target.value)}
+					helperText={
+						state === "" ? 'Please enter your state.' : ' ' &&
+						!isNaN(state) ? 'Not a state.' : ' ' 
+					}
+					error={!isNaN(state) && state !== ""}
+				/>
+				<TextField
+					required
+					id="location-zip"
+					label="Zip"
+					variant="outlined"
+					defaultValue="Zip"
+					value={zip} 
+					onChange={(e) => setZip(e.target.value)}
+					helperText={
+						zip === "" ? 'Please enter your zip.' : ' ' &&
+						isNaN(zip) ? 'Not a zip.' : ' ' 
+					}
+					error={isNaN(zip)}
+				/>
+				<Box sx={{ flexGrow: 1 }}>
+				  <Grid>
+					<Stack direction="row" spacing={2}>
+						<Typography>
+							Will You Be At Home?
+						</Typography>
+						<RadioGroup 
+							row 
+							value={isHostHome}
+							onChange={(e) => setIsHostHome(e.target.value)}
 						>
-							<MenuItem value={"None"}>None</MenuItem>
-							<MenuItem value={"Traditional"}>Traditional</MenuItem>
-							<MenuItem value={"Smart"}>Smart</MenuItem>
-						</Select>
-					</FormControl>
+							<FormControlLabel value="true" control={<Radio />} label="YES" />
+							<FormControlLabel value="false" control={<Radio />} label="NO" />
+						</RadioGroup>
+					</Stack>
+					<Button variant="contained" component="label" startIcon={<PhotoCamera/>}>
+						Upload<input hidden accept="image/*" multiple type="file" />
+					</Button>	
+				  </Grid>
 				</Box>
-			  </Stack>
-			</TabPanel>
-			<TabPanel value={value} index={3} dir={theme.direction}>
-			  	<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
-					<LocalizationProvider dateAdapter={AdapterDayjs}>
-						<DateTimePicker
-							id="start-day"
-							label="Starting Time?"
-							value={startTimeUTC}
-							onChange={(e) => {setStartTime(e)}}
-							renderInput={(params) => <TextField {...params} />}
-						/>
-						<DateTimePicker
-							id="end-day"
-							label="Ending Time?"
-							value={endTimeUTC}
-							onChange={(e) => {setEndTime(e)}}
-							renderInput={(params) => <TextField {...params} />}
-						/>
-					</LocalizationProvider>
-					<TextField
-						id="hourly-rate"
-						label="Hourly Rate?"
-						type="number"
-						variant="outlined"
-						placeholder={'1-100'}
-						InputProps={{inputProps: { min: 1, max: 100}}}
-						value={cost} 
-						onChange={(e) => setCost(e.target.value)}
-						helperText={cost === "" || cost <= 0 || cost > 100 ? 'Please enter a number from 1-100' : ' '}
-						error={cost <= 0 || cost > 100 || isNaN(cost)}
+			</Box>
+		  </TabPanel>
+		  <TabPanel value={value} index={1} dir={theme.direction}>
+			<SelectEquipment/>
+			<Typography variant='h5'>--Added Equipment--</Typography>
+			{GetEquip()}
+		  </TabPanel>
+		  <TabPanel value={value} index={2} dir={theme.direction}>
+			<Stack direction="row" spacing={2}>
+			<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
+				Wifi Access? 
+				<RadioGroup 
+					row 
+					value={hasWifi}
+					onChange={(e) => setHasWifi(e.target.value)}
+				>
+					<FormControlLabel value="true" control={<Radio />} label="YES" />
+					<FormControlLabel value="false" control={<Radio />} label="NO" />
+				</RadioGroup>
+			</Box>
+			<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
+				Bathroom Access?
+				<RadioGroup 
+					row 
+					value={hasBathroom}
+					onChange={(e) => setHasBathroom(e.target.value)}
+				>
+					<FormControlLabel value="true" control={<Radio />} label="YES" />
+					<FormControlLabel value="false" control={<Radio />} label="NO" />
+				</RadioGroup>
+			</Box>
+			<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
+				Speaker Access?
+				<RadioGroup 
+					row 
+					value={hasSpeakers}
+					onChange={(e) => setHasSpeakers(e.target.value)}
+				>
+					<FormControlLabel value="true" control={<Radio />} label="YES" />
+					<FormControlLabel value="false" control={<Radio />} label="NO" />
+				</RadioGroup>
+			</Box>
+			<Box sx={{ minWidth: 120 }}>
+				<FormControl><InputLabel>TV</InputLabel>
+					<Select
+						value={tvType}
+						label="TV"
+						onChange={(e) => setTvType(e.target.value)}
+						sx={{ width: 135 }}
+					>
+						<MenuItem value={"None"}>None</MenuItem>
+						<MenuItem value={"Traditional"}>Traditional</MenuItem>
+						<MenuItem value={"Smart"}>Smart</MenuItem>
+					</Select>
+				</FormControl>
+			</Box>
+			</Stack>
+		  </TabPanel>
+		  <TabPanel value={value} index={3} dir={theme.direction}>
+			<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
+				<LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DateTimePicker
+						id="start-day"
+						label="Starting Time?"
+						value={startTimeUTC}
+						onChange={(e) => {setStartTime(e)}}
+						renderInput={(params) => <TextField {...params} />}
 					/>
-					<div>
-						<TextField
-							required
-							id="booking-notice"
-							label="Booking Notice? (In hours)"
-							variant="outlined"
-							value={bookingNotice} 
-							onChange={(e) => setBookingNotice(e.target.value)}
-							helperText={bookingNotice === "" ? 'Please enter any booking requirements.' : ' '}
-						/>
-						<TextField
-							required
-							id="cancel-notice"
-							label="Cancelation Notice? (In hours)"
-							variant="outlined"
-							value={cancelationWarning} 
-							onChange={(e) => setCancelationWarning(e.target.value)}
-							helperText={cancelationWarning === "" ? 'Please enter any cancelation requirements.' : ' '}
-						/>
-					</div>
-				</Box>
-			</TabPanel>
+					<DateTimePicker
+						id="end-day"
+						label="Ending Time?"
+						value={endTimeUTC}
+						onChange={(e) => {setEndTime(e)}}
+						renderInput={(params) => <TextField {...params} />}
+					/>
+				</LocalizationProvider>
+				<TextField
+					id="hourly-rate"
+					label="Hourly Rate?"
+					type="number"
+					variant="outlined"
+					placeholder={'1-100'}
+					InputProps={{inputProps: { min: 1, max: 100}}}
+					value={cost} 
+					onChange={(e) => setCost(e.target.value)}
+					helperText={cost === "" || cost <= 0 || cost > 100 ? 'Please enter a number from 1-100' : ' '}
+					error={cost <= 0 || cost > 100 || isNaN(cost)}
+				/>
+				<div>
+					<TextField
+						required
+						id="booking-notice"
+						label="Booking Notice? (In hours)"
+						variant="outlined"
+						value={bookingNotice} 
+						onChange={(e) => setBookingNotice(e.target.value)}
+						helperText={bookingNotice === "" ? 'Please enter any booking requirements.' : ' '}
+					/>
+					<TextField
+						required
+						id="cancel-notice"
+						label="Cancelation Notice? (In hours)"
+						variant="outlined"
+						value={cancelationWarning} 
+						onChange={(e) => setCancelationWarning(e.target.value)}
+						helperText={cancelationWarning === "" ? 'Please enter any cancelation requirements.' : ' '}
+					/>
+				</div>
+			</Box>
+		  </TabPanel>
 		</SwipeableViews>
 		<Button variant="contained" onClick={handleOpen} style={{left: '556px'}}>
 			REVIEW GYM
@@ -684,8 +685,7 @@ function UploadTab(props) {
 				</Button>
 				<Button className="review-submit"
 						variant="contained" 
-						value={gymSubmit} 
-						onClick={(e) => SubmitGym()}
+						onClick={() => SubmitGym()}
 				>
 					SUBMIT GYM
 				</Button>

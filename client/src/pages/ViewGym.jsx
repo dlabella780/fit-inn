@@ -7,7 +7,15 @@ import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
-    let gymID = props.props.location.props._id;
+    let gymID = '';
+
+    // This allows a redirect from GymThubnail
+    if (props.props.location.props !== undefined) 
+        gymID = props.props.location.props._id;
+    
+    // This allows a redirect from Updating/Submiting a Gym
+    else 
+        gymID = props.props.location.state.props;
 
     React.useEffect(() => {
         let gym = 'http://localhost:3001/api/getGym/' + gymID;

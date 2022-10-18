@@ -31,6 +31,7 @@ import Grid from '@mui/material/Grid';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { Link, Redirect, Switch, Route, Routes, useHistory } from "react-router-dom";
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -67,6 +68,7 @@ function UploadTab(props) {
 	const [value, setValue] = React.useState(0);
 	const handleChange = (event, newValue) => { setValue(newValue); };
 	const handleChangeIndex = (index) => { setValue(index); };
+	const history = useHistory();
 
     useEffect(() => {
 		Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
@@ -75,6 +77,10 @@ function UploadTab(props) {
 		setEquipmentMap(equipMap);
 	})},[]);
 	
+	const redirectToGym = (props) => {
+		history.push('/ViewGym',{props: props});
+	}
+
 	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
         const [equipDets, setEquipDets] = useState('');
@@ -130,9 +136,7 @@ function UploadTab(props) {
 		</>);
     }
 
-    const SubmitGym = (e) => {
-        e.preventDefault();
-
+    const SubmitGym = () => {
         if (title === '') {
             alert('Please Set a Gym Name');
             return;
@@ -174,8 +178,7 @@ function UploadTab(props) {
             return;
 		}
         
-        const equipmentObj = []
-
+        const equipmentObj = [];
         for (let i = 0; i < equipment.length; i++) 
             equipmentObj.push({"details": equipmentDetails[i], "equipmentId": equipment[i]});
 
@@ -188,10 +191,9 @@ function UploadTab(props) {
         if (hasWifi === 'true') hasWifiB = true;
         if (hasSpeakers === 'true') hasSpeakersB = true;
         if (hasBathroom === 'true') hasBathroomB = true;
+		//setAvailability();
 
-        setGymSubmit('Loading...');
-        
-		if(!props.gymId) {
+		if(!props.gymId) { try {
 			Axios.post('http://localhost:3001/api/uploadgym', {
 				accessInformation: accessInformation, 
 				address: address, 
@@ -210,15 +212,13 @@ function UploadTab(props) {
 				photos: photos, 
 				title: title, 
 				tvType: tvType, 
-				equipment: equipmentObj}).then((data, loading, error) => {    
-				if(error) 
-					console.log(error);
-				else {
-					alert('Gym Submitted');
-					setGymSubmit('Submit');
-				}
-			})
-		} else {
+				equipment: equipmentObj})
+				.then(
+					setGymSubmit('Gym Submitted!'),
+					redirectToGym(props.gymId)
+				)
+			} catch (error) { console.log(error); }
+		} else { try {
 			Axios.post('http://localhost:3001/api/updateGym', {
 				accessInformation: accessInformation, 
 				address: address, 
@@ -238,14 +238,12 @@ function UploadTab(props) {
 				title: title, 
 				tvType: tvType, 
 				equipment: equipmentObj,
-				id: props.gymId}).then((data, loading, error) => {    
-				if(error) 
-					console.log(error);
-				else {
-					alert('Gym Submitted');
-					setGymSubmit('Submit');
-				}
-			})
+				id: props.gymId})
+				.then(() => 
+					setGymSubmit('Gym Updated!'),
+					redirectToGym(props.gymId)
+				)
+			} catch (error) { console.log(error); }
 		}
     }
 
@@ -303,9 +301,7 @@ function UploadTab(props) {
     const [availability, setAvailability] = useState([]);
 	const [startTimeUTC, setStartTime] = useState(null);
 	const [endTimeUTC, setEndTime] = useState(null);
-	const [lastStartTimeUTC, setLastStartTime] = useState(null);
-	const [lastEndTimeUTC, setLastEndTime] = useState(null);
-    const [gymSubmit, setGymSubmit] = useState('Submit');
+    const [gymSubmit, setGymSubmit] = useState('');
 	const [equipmentMap, setEquipmentMap] = useState(new Map());
 	const [oldGymLoaded, setOldGymLoaded] = useState(false);
 	const equipMap = new Map();
@@ -338,7 +334,6 @@ function UploadTab(props) {
 				setEquipment(prevState => [...prevState, response.data.get_Gym.equipment[i].equipmentId]);
 				setEquipmentDetails(prevState => [...prevState, response.data.get_Gym.equipment[i].details]);
 			}
-			console.log(equipment)
 		})
 		setOldGymLoaded(true);
 	}
@@ -690,7 +685,7 @@ function UploadTab(props) {
 				<Button className="review-submit"
 						variant="contained" 
 						value={gymSubmit} 
-						onClick={(e) => SubmitGym(e)}
+						onClick={(e) => SubmitGym()}
 				>
 					SUBMIT GYM
 				</Button>

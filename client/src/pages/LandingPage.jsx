@@ -36,7 +36,7 @@ import {
 const LandingPage = (props) => {  
         
         return ( <div>
-        <span classNam = "top-nav-bar">
+        <span classnam = "top-nav-bar">
             <NavBarTop userId={props.userId}/>
         </span>
         <span id = "content">

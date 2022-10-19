@@ -343,13 +343,26 @@ Button {
   text-align: left;
 }
 
+.FAQ-page{
+  background-color: white;
+  border-radius: 12px;
+  border: 2px solid black;
+  padding: 25px;
+  width: auto;
+  margin-top: 775px;
+
+}
+
+.FAQ-page-search-bar{
+  width: 500px;
+}
+
 .policy-page-update {
   padding-bottom: 20px;
 }
 
 .terms-page-links {
   text-align: left;
-
 }
 
 .terms-contents {
@@ -552,20 +565,17 @@ Button {
 /*Help Page*/
 
 .help-page-items {
-  margin-top: 300px;
+  margin-top: 350px;
   -ms-flex-align: center;
   /*position: absolute;*/
   padding: 40px;
   background-color: white;
   border-radius: 12px;
   border: 2px solid black;
-  
-  /*
-  background: rgb(255, 255, 255);
-  padding: 475px;
-  border-radius: 12px;
-  border: 2px solid black;
-  */
+}
+
+.help-page-padding {
+  padding-top: 40px;
 }
 
 /*Payment Page*/

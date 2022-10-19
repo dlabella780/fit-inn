@@ -28,6 +28,7 @@ import PaymentPage from "./PaymentPage.jsx";
 import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
 import ReservationsPage from "./ReservationsPage.jsx";
 import ContactUsPage from "./ContactUsPage.jsx";
+import FAQPage from "./FAQPage.jsx";
 import SuccessPaymentPage from "./SuccessPaymentPage.jsx"
 import {
     signOut,
@@ -62,6 +63,9 @@ const LandingPage = (props) => {
                 </Route>
                 <Route path={'/pages/ContactUs'}>
                     <ContactUsPage />
+                </Route>
+                <Route path={'/FAQ'}>
+                    <FAQPage />
                 </Route>
                 <Route path="/ViewGym">
                     <ViewGyms props={props}/>

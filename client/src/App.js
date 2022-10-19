@@ -23,13 +23,7 @@ export default function App() {
 
   useEffect(() => {
     // Create Stripe PaymentIntent as soon as page loads
-      fetch("/create-payment-intent", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ items: [{ id: "test-gym" }] }),
-      })
-          .then((res) => res.json())
-          .then((data) => setClientSecret(data.clientSecret));
+      
     
     firebase.auth().onAuthStateChanged(user => {
       if(!user)
@@ -37,7 +31,7 @@ export default function App() {
       else 
         GetUserId(user)
         
-      console.log('Success')
+      console.log('Success!')
     }) 
       
   }, [])

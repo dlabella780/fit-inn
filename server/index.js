@@ -696,18 +696,27 @@ app.post('/api/AddUser', async (req, res) => {
 
 app.post('/create-payment-intent', async (req, res) => {
 	const { items } = req.body;
+	console.log('Payment intent called!');
 
-	const paymentIntent = await stripe.paymentIntent.create({
-		amount: calculateOrderAmount(items),
-		currency: "usd",
-		automatic_payment_methods: {
-			enabled: true,
-		},
-	});
+	try {
+		const paymentIntent = await stripe.paymentIntents.create({
+			amount: calculateOrderAmount(items),
+			currency: "usd",
+			automatic_payment_methods: {
+				enabled: true,
+			},
+		});
 
-	res.send({
-		clientSecret: paymentIntent.client_secret,
-    })
+		res.send({
+			clientSecret: paymentIntent.client_secret,
+		})
+	} catch (e) {
+		return res.status(400).send({
+			error: {
+				message: e.message,
+			},
+		});
+    }
 });
 
 app.listen(3001, () =>  {

@@ -28,6 +28,7 @@ import PaymentPage from "./PaymentPage.jsx";
 import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
 import ReservationsPage from "./ReservationsPage.jsx";
 import ContactUsPage from "./ContactUsPage.jsx";
+import SuccessPaymentPage from "./SuccessPaymentPage.jsx"
 import {
     signOut,
     getAuth,
@@ -109,7 +110,10 @@ const LandingPage = (props) => {
                 </Route>
                 <Route path={'/Login'}>
                     <Login userId={props.userId} />
-                </Route>
+                    </Route>
+                <Route path={'/PaymentSuccess'}>
+                        <SuccessPaymentPage />
+                 </Route>
                 <Route path="*">
                     <NotFound />
                 </Route>

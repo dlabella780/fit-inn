@@ -76,10 +76,12 @@ export default function PaymentForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("payment submitted");
 
         if (!stripe || !elements) {
-            //Stripe.js has not let loaded.
+            //Stripe.js has not yet loaded.
             //Make sure to disable form submission until Stripe.js has loaded. 
+            console.log("ERROR: stripe or elements is not loaded");
             return;
         }
 
@@ -88,7 +90,7 @@ export default function PaymentForm() {
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: "localhost:3000",
+                return_url: "http://localhost:3000/PaymentSuccess",
             },
         });
 
@@ -107,37 +109,6 @@ export default function PaymentForm() {
 
         };
 
-        /*
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
-            type: "card",
-            card: elements.getElement(CardElement)
-        })
-        
-
-
-
-        if(!error){
-            try {
-                const {id} = paymentMethod
-                const response = await axios.post("http://localhost:3000/payments", {
-                    amount: 1000,
-                    id
-                })
-
-                if(response.data.success){
-                    console.log("Payment successful")
-                    setSuccess(true)
-                }
-
-            } catch (error) {
-                console.log("Error", error)
-            }
-        }else {
-            console.log(error.message)
-        }
-    }
-    */
-
     return (
         <Stack className="payment-items"
         direction="column" spacing={2}
@@ -147,7 +118,7 @@ export default function PaymentForm() {
         <form onSubmit={handleSubmit}>
             <fieldset className="FormGroup">
                 <div className="FormRow">
-                    <CardElement options={CARD_OPTIONS}/>
+                    <PaymentElement />
                 </div>
             </fieldset>
             <Stack padding="5px" direction="row" spacing={25}>
@@ -156,7 +127,9 @@ export default function PaymentForm() {
             </Stack>
             <Stack direction="row" spacing={45}>
                 <Button variant="contained" color="primary" href="/">Cancel</Button>
-                <Button variant="contained" color="primary">Pay {total}</Button>
+                        <Button disabled={isLoading || !stripe || !elements} variant="contained" color="primary" onClick={handleSubmit}>
+                            {isLoading ? <div>Loading...</div> : <div>Pay {total}</div>}
+                        </Button>
                 {message && <div>{message}</div>}
                 </Stack>
         </form>

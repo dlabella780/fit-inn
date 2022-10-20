@@ -47,6 +47,83 @@ app.get('/api/getUserId/:id', async (req,res) => {
 	
 })
 
+const getGymTimes = gql`
+	query MyQuery($id: ID = "") {
+		get_Gym(id: $id) {
+		availability
+		}
+	}
+`;
+
+const updateGymTimes = gql`
+	mutation MyMutation($id: ID = "", $availability: [String] = "") {
+		update_Gym(id: $id, input: {availability: $availability}) {
+		result {
+			_id
+		}
+		transaction {
+			_id
+		}
+		}
+	}
+`;
+
+const reservationAddMutation = gql`
+	mutation MyMutation($duration: Int = 10, 
+			$guestId: String = "", 
+			$guestReview: String = "", 
+			$gymId: String = "", 
+			$numGuests: Int = 10, 
+			$rating: Int = 10, 
+			$timeSlot: String = "") {
+		add_GymReservation(
+		input: {duration: $duration, guestId: $guestId, guestReview: $guestReview, gymId: $gymId, numGuests: $numGuests, rating: $rating, timeSlot: $timeSlot}
+		) {
+		result {
+			_id
+		}
+		transaction {
+			_id
+		}
+		}
+	}  
+`;
+
+app.post('/api/AddReservation', async (req, res) => {
+	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			gymId: req.body.gymId,
+			guestId: req.body.guestID,
+			timeSlot: req.body.timeSlot,
+			duration: req.body.duration,
+			numGuests: req.body.numGuests,
+			guestReview: "",
+			rating: -1
+		}
+		const gymTimes = await graphQLClient.request(getGymTimes, {id: req.body.gymId})
+		if (gymTimes) {
+			var str = new Array();
+			var timeRemoved = false;
+			for (let i = 0; i < gymTimes.get_Gym.availability.length; i++) {
+				if (gymTimes.get_Gym.availability[i] !== req.body.timeSlot) {
+					str.push(gymTimes.get_Gym.availability[i]);
+				}
+				else {
+					timeRemoved = true;
+				}
+			};
+
+			const updateTimes = await graphQLClient.request(updateGymTimes, {id: req.body.gymId, availability: str})
+			if(updateTimes && timeRemoved) {
+				const data = await graphQLClient.request(reservationAddMutation, variables);
+				res.send(data);
+			}
+			else console.log('time not removed')
+		}	  
+	  }
+	  else res.send('Access Denied.');
+});
+
 const userQuery = gql`
 	query MyQuery($id: ID = "") {
 		get_User(id: $id) {
@@ -411,27 +488,6 @@ const queryReservatiosUser = gql`
 	}
 `;
 
-const reservationAddMutation = gql`
-	mutation MyMutation($duration: Int = 10, 
-			$guestId: String = "", 
-			$guestReview: String = "", 
-			$gymId: String = "", 
-			$numGuests: Int = 10, 
-			$rating: Int = 10, 
-			$timeSlot: String = "") {
-		add_GymReservation(
-		input: {duration: $duration, guestId: $guestId, guestReview: $guestReview, gymId: $gymId, numGuests: $numGuests, rating: $rating, timeSlot: $timeSlot}
-		) {
-		result {
-			_id
-		}
-		transaction {
-			_id
-		}
-		}
-	}  
-`;
-
 const reservationUpdateMutation = gql`
 	mutation MyMutation($duration: Int = 10, 
 			$guestReview: String = "", 
@@ -659,24 +715,6 @@ app.post('/api/UpdateReservation', async (req, res) => {
 		}
 	
 		const data = await graphQLClient.request(reservationUpdateMutation, variables)
-		  
-	  }
-	  else res.send('Access Denied.');
-});
-
-app.post('/api/AddReservation', async (req, res) => {
-	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
-		const variables = {
-			gymId: req.body.gymId,
-			guestId: req.body.guestID,
-			timeSlot: req.body.timeSlot,
-			duration: req.body.duration,
-			numGuests: req.body.numGuests,
-			guestReview: req.body.guestReview,
-			rating: req.body.rating
-		}
-	
-		const data = await graphQLClient.request(reservationAddMutation, variables)
 		  
 	  }
 	  else res.send('Access Denied.');

@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
@@ -20,6 +21,7 @@ export const ViewGyms = (props) => {
         let gym = 'http://localhost:3001/api/getGym/' + gymID;
         Axios.get(gym).then((response) => {
         setGymInfo(response.data.get_Gym);
+        console.log(gymInfo);
     })},[]);
 
     return( <div className="row-product" style={{}}>
@@ -71,8 +73,8 @@ export const ViewGyms = (props) => {
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>
                     {gymInfo.equipment.map( equip => <Typography variant="h5" style={{padding: 15, color:"black"}}>{equip.equipmentId} {equip.details}</Typography>)}
                 </Box>
-                <Button>PLACEHOLDER BUTTON 1</Button>
-                <Button>PLACEHOLDER BUTTON 2</Button>
+                
+                <ViewConfirmation gymInfo={gymInfo}/>
             </Box>
         }           
     </div> )

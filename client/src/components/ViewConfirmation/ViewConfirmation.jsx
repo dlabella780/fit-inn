@@ -11,9 +11,11 @@ import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
 
 export default function ViewConfirmation(props){
   
+  // console.log(props);
   const[modal, setModal] = useState(false);
   const toggleModal = () => {
       setModal(!modal)
@@ -52,7 +54,6 @@ export default function ViewConfirmation(props){
   return(
   
       <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <TextField fullWidth id="ReservationName" label="Reservation Name" variant="standard" />
           <Button variant="contained" onClick={toggleModal}>View Confirmation</Button>
           
           
@@ -62,7 +63,7 @@ export default function ViewConfirmation(props){
             onClick={toggleModal} 
             className="overlay"></div>
             <div className="modal-content">
-                <ReviewDialogTitle onClose={toggleModal}>
+                {/* <ReviewDialogTitle onClose={toggleModal}>
                     Review Gym Reservation
                 </ReviewDialogTitle>
                 <DialogContent dividers>
@@ -76,8 +77,69 @@ export default function ViewConfirmation(props){
                         <br/>
                         
                     </Typography>
-                </DialogContent>
-            </div>
+                </DialogContent> */}
+
+                 <div className="confirm-title">
+                    <h1>${props.gymInfo.cost}/hr <StarIcon sx={{ color: yellow[800] }}/>{props.gymInfo.rating}</h1>
+                </div>
+                
+                <h2>When are you coming?</h2>
+                <button
+                  className="close-modal"
+                  onClick={toggleModal}
+                >Close</button>
+                <Box sx={{ '& .MuiTextField-root': { m: 1, width: '40ch'}}}>
+                  <TextField
+                      id="search-bar"
+                      className="text"
+                      label="Gym Name"
+                      defaultValue={props.gymInfo.description}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                  />
+                    <TextField
+                      id="search-bar"
+                      className="text"
+                      label="Address"
+                      defaultValue={props.gymInfo.address.street1 + 
+                        " " + props.gymInfo.address.City +
+                        " " + props.gymInfo.address.State +
+                        " " + props.gymInfo.address.zipcode}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                  />
+                  <TextField
+                      id="search-bar"
+                      className="text"
+                      // Let blank and change it later
+                      label="Add date"
+                      variant="outlined"
+                      placeholder="MM/DD/YYYY"
+                      size="large"
+                  />
+                  <TextField
+                      id="max-guests"
+                      label="# of guests?"
+                      type="number"
+                      variant="outlined"
+                      defaultValue={props.gymInfo.numGuestsAllowed}
+                      InputProps={{inputProps: { min: 1 , max: props.gymInfo.numGuestsAllowed}}}
+                  />
+                  <TextField
+                      id="search-bar"
+                      className="text"
+                      label="Booking Number"
+                      defaultValue={props.gymInfo.bookingNotice}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                  />
+                  <Button component={Link} to="/Payment" variant="contained">Continue</Button>
+                  <p>You won't be charged yet</p>
+              </Box>
+            </div> 
           </div>
           )}
       </Box>

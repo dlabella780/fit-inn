@@ -21,7 +21,7 @@ export const ViewGyms = (props) => {
         let gym = 'http://localhost:3001/api/getGym/' + gymID;
         Axios.get(gym).then((response) => {
         setGymInfo(response.data.get_Gym);
-        console.log(gymInfo);
+        //console.log(gymInfo);
     })},[]);
 
     return( <div className="row-product" style={{}}>
@@ -73,7 +73,7 @@ export const ViewGyms = (props) => {
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>
                     {gymInfo.equipment.map( equip => <Typography variant="h5" style={{padding: 15, color:"black"}}>{equip.equipmentId} {equip.details}</Typography>)}
                 </Box>
-                
+
                 <ViewConfirmation gymInfo={gymInfo}/>
             </Box>
         }           

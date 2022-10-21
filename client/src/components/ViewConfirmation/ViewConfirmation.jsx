@@ -63,22 +63,6 @@ export default function ViewConfirmation(props){
             onClick={toggleModal} 
             className="overlay"></div>
             <div className="modal-content">
-                {/* <ReviewDialogTitle onClose={toggleModal}>
-                    Review Gym Reservation
-                </ReviewDialogTitle>
-                <DialogContent dividers>
-                    --General Info--
-                    <Typography gutterBottom>
-                        Gym Name: {props.gymInfo.title}<br/>
-                        Description: {props.gymInfo.description}<br/>
-                        Rate per hours: ${props.gymInfo.cost}<br/>
-                        Access Instructions: {props.gymInfo.accessInformation}<br/>
-                        Address: {props.gymInfo.address.street1}-{props.gymInfo.address.stree2} {props.gymInfo.address.City}, {props.gymInfo.address.State}-{props.gymInfo.address.zipcode}
-                        <br/>
-                        
-                    </Typography>
-                </DialogContent> */}
-
                  <div className="confirm-title">
                     <h1>${props.gymInfo.cost}/hr <StarIcon sx={{ color: yellow[800] }}/>{props.gymInfo.rating}</h1>
                 </div>

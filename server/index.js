@@ -311,6 +311,7 @@ const gymQuery = gql`
 		street1
 		zipcode
 	  }
+	  _id
 	  availability
 	  bookingNotice
 	  cancelationWarning

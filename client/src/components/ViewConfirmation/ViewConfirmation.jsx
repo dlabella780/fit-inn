@@ -11,12 +11,15 @@ import DialogActions from '@mui/material/DialogActions';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import Axios from 'axios';
 
 export default function ViewConfirmation(props){
   
   // console.log(props);
   const[modal, setModal] = useState(false);
+  const[numGests, setNumGuests] = useState(1);
+  const history = useHistory();
   const toggleModal = () => {
       setModal(!modal)
   }
@@ -50,6 +53,20 @@ export default function ViewConfirmation(props){
       </DialogTitle>
     );
 };
+
+const addReservation = () => {
+
+  Axios.post('http://localhost:3001/api/AddReservation', {
+      gymId: props.gymInfo._id,
+			guestId: props.userId,
+			timeSlot: props.date,
+			duration: 60,
+			numGuests: numGests
+    })
+    .then((response) => {
+      if(response.data) history.push('/PaymentSuccess',{gymInfo: props.gymInfo, date: props.date});
+  })
+}
   
   return(
   
@@ -98,31 +115,25 @@ export default function ViewConfirmation(props){
                       id="search-bar"
                       className="text"
                       // Let blank and change it later
-                      label="Add date"
+                      label="Date"
                       variant="outlined"
                       placeholder="MM/DD/YYYY"
                       size="large"
+                      value={new Date(props.date).toLocaleString()} 
+                      //onChange={(e) => setDate(e.target.value)}
                   />
                   <TextField
                       id="max-guests"
                       label="# of guests?"
                       type="number"
                       variant="outlined"
-                      defaultValue={props.gymInfo.numGuestsAllowed}
+                      value={numGests} 
+                      onChange={(e) => setNumGuests(e.target.value)}
                       InputProps={{inputProps: { min: 1 , max: props.gymInfo.numGuestsAllowed}}}
                   />
-                  <TextField
-                      id="search-bar"
-                      className="text"
-                      label="Booking Number"
-                      defaultValue={props.gymInfo.bookingNotice}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                  />
-                  <Button component={Link} to="/Payment" variant="contained">Continue</Button>
                   <p>You won't be charged yet</p>
               </Box>
+              <Button onClick={() => addReservation()} variant="contained">Continue</Button>
             </div> 
           </div>
           )}

@@ -68,7 +68,7 @@ const LandingPage = (props) => {
                     <FAQPage />
                 </Route>
                 <Route path="/ViewGym">
-                    <ViewGyms props={props}/>
+                    <ViewGyms props={props} userId={props.userId}/>
                 </Route>
                 <Route path="/gyma">
                     <GymA />
@@ -116,7 +116,7 @@ const LandingPage = (props) => {
                     <Login userId={props.userId} />
                     </Route>
                 <Route path={'/PaymentSuccess'}>
-                        <SuccessPaymentPage />
+                        <SuccessPaymentPage/>
                  </Route>
                 <Route path="*">
                     <NotFound />

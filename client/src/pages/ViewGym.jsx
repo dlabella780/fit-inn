@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import { Checkbox, Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,7 +7,9 @@ import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
+    const [date, setDate]=React.useState();
     let gymID = '';
+    const timezoneOffset = ((new Date()).getTimezoneOffset())/60;
 
     // This allows a redirect from GymThubnail
     if (props.props.location.props !== undefined) 
@@ -28,8 +30,8 @@ export const ViewGyms = (props) => {
         {gymInfo.length === 0 ? 
             <Typography variant="h2" 
                 align="left" 
-                style={{padding: 15, margin: 10, color:"red"}}>
-                Invalid Gym Info
+                style={{padding: 15, margin: 10, color:"black"}}>
+                Loading...
             </Typography>
             :
             <Box sx={{}}>
@@ -65,16 +67,16 @@ export const ViewGyms = (props) => {
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Cancel {gymInfo.cancelationWarning} hours in advance</Typography>
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>To access: {gymInfo.accessInformation}</Typography>
                 </Box>
+                {console.log(date)}
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Available Times:</Typography>
-                    {gymInfo.availability.map( date => <Typography variant="h5" style={{padding: 15, color:"black"}}>{date}</Typography>)}
+                    {gymInfo.availability.map( dateM => <><Checkbox onChange={(e) => setDate(dateM)}></Checkbox><Typography variant="h5" style={{padding: 15, color:"black"}}>{(new Date(dateM)).toLocaleString()}</Typography></>)}
                 </Box>
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>
                     {gymInfo.equipment.map( equip => <Typography variant="h5" style={{padding: 15, color:"black"}}>{equip.equipmentId} {equip.details}</Typography>)}
                 </Box>
-
-                <ViewConfirmation gymInfo={gymInfo}/>
+                <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
             </Box>
         }           
     </div> )

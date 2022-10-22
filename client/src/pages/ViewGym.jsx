@@ -67,7 +67,6 @@ export const ViewGyms = (props) => {
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Cancel {gymInfo.cancelationWarning} hours in advance</Typography>
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>To access: {gymInfo.accessInformation}</Typography>
                 </Box>
-                {console.log(date)}
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Available Times:</Typography>
                     {gymInfo.availability.map( dateM => <><Checkbox onChange={(e) => setDate(dateM)}></Checkbox><Typography variant="h5" style={{padding: 15, color:"black"}}>{(new Date(dateM)).toLocaleString()}</Typography></>)}

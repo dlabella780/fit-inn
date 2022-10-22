@@ -61,6 +61,7 @@ export default function BasicTabs(props) {
     str = 'http://localhost:3001/api/getUserGyms/' + props.userId
     Axios.get(str).then((response) => {
       setUserGymData(response.data);
+      console.log(userGymData)
       setUserGymLoading(false);
 	  })
   },[]);
@@ -88,7 +89,7 @@ export default function BasicTabs(props) {
         <UserListings data={userGymData} loading={userGymLoading}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <UserReservations />
+        <UserReservations userId = {props.userId} userGyms={userGymData}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
         <UserPayment />

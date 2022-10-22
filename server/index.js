@@ -25,6 +25,26 @@ headers: {
 },
 });
 
+const getGymName = gql`
+query MyQuery($id: ID = "") {
+	get_Gym(id: $id) {
+	  title
+	}
+  }
+`;
+
+app.get('/api/getGymName/:id', async (req,res) => {
+	if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
+		const variables = {
+			id: req.params.id
+		}
+		const results = await graphQLClient.request(getGymName, variables)
+		res.send(results);
+	}
+	else res.send('Access Denied.');
+	
+})
+
 const getId = gql`
 	query MyQuery($eq: String = "") {
 		list_UserItems(filter: {ssoapitoken: {eq: $eq}}) {
@@ -73,11 +93,12 @@ const reservationAddMutation = gql`
 			$guestId: String = "", 
 			$guestReview: String = "", 
 			$gymId: String = "", 
+			$gymName: String = "", 
 			$numGuests: Int = 10, 
 			$rating: Int = 10, 
 			$timeSlot: String = "") {
 		add_GymReservation(
-		input: {duration: $duration, guestId: $guestId, guestReview: $guestReview, gymId: $gymId, numGuests: $numGuests, rating: $rating, timeSlot: $timeSlot}
+		input: {duration: $duration, guestId: $guestId, guestReview: $guestReview, gymId: $gymId, gymName: $gymName, numGuests: $numGuests, rating: $rating, timeSlot: $timeSlot}
 		) {
 		result {
 			_id
@@ -93,7 +114,8 @@ app.post('/api/AddReservation', async (req, res) => {
 	if(req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
 		const variables = {
 			gymId: req.body.gymId,
-			guestId: req.body.guestID,
+			gymName: req.body.gymName,
+			guestId: req.body.guestId,
 			timeSlot: req.body.timeSlot,
 			duration: req.body.duration,
 			numGuests: req.body.numGuests,
@@ -465,6 +487,9 @@ const queryReservatiosGym = gql`
 	query MyQuery($eq: String = "") {
 		list_GymReservationItems(filter: {gymId: {eq: $eq}}) {
 			_GymReservationItems {
+				gymId
+				gymName
+				guestId
 				duration
 				guestReview
 				numGuests
@@ -479,6 +504,9 @@ const queryReservatiosUser = gql`
 	query MyQuery($eq: String = "") {
 		list_GymReservationItems(filter: {guestId: {eq: $eq}}) {
 			_GymReservationItems {
+				gymId
+				gymName
+				guestId
 				duration
 				guestReview
 				numGuests

@@ -58,6 +58,7 @@ const addReservation = () => {
 
   Axios.post('http://localhost:3001/api/AddReservation', {
       gymId: props.gymInfo._id,
+      gymName: props.gymInfo.title,
 			guestId: props.userId,
 			timeSlot: props.date,
 			duration: 60,

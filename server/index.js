@@ -584,29 +584,26 @@ app.get('/api/getGym/:id', async (req,res) => {
 
 app.get('/api/gymSearch', async (req,res) => {
     if (req.get('origin') === process.env.CLIENT_URL || req.get('origin') === process.env.CLIENT_URL_SECURE) {
-		if (req.query.zipcode != '' && req.query.day != '') {
+		if (req.query.zipcode != '' && req.query.avail != '') {
 			const variables = {
 				eq: req.query.zipcode,
-				eq: req.query.day
+				contains: req.query.avail
 			}
 			const results = await graphQLClient.request(gymSearchZipAvail, variables);
 			res.send(results);
-		} else if (req.query.zipcode != '') {
-			const variables = {
-				eq: req.query.zipcode
-			}
+		} 
+		else if (req.query.zipcode != '') {
+			const variables = { eq: req.query.zipcode }
 			const results = await graphQLClient.request(gymSearchZip, variables);
 			res.send(results);
-		} else if (req.query.day != '') {
-			const variables = {
-				eq: req.query.day
-			}
+		} 
+		else if (req.query.avail != '') {
+			const variables = { eq: req.query.avail }
 			const results = await graphQLClient.request(gymSearchAvail, variables);
 			res.send(results);
 		}
     }
     else res.send('Access Denied.');
-    
 })
 
 app.get('/api/getReservationGym/:id', async (req,res) => {

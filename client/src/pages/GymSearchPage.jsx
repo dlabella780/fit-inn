@@ -9,33 +9,45 @@ import Slider from '@mui/material/Slider';
 import { Grid, Typography } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 function GymSearchPage() {
   const [gymData, setGymData] = useState([]);
   const [gymDataLoading, setgymDataLoading] = useState(false);
   const [searchZip, setSearchZip] = useState('');
-  const [searchAvailability, setSearchAvailability] = useState('');
+  const [searchAvailability, setSearchAvailability] = useState(null);
   const [updateSearch, setUpdateSearch] = useState(0);
   const [filterMaxPrice, setFilterMaxPrice] = useState(0);
+  const [day, setDay] = useState(null);
   const [time, setTime] = useState(null);
   
 	function searchForGym() {
     Axios.get('http://localhost:3001/api/gymSearch', {
-        params: {zipcode: searchZip, day: searchAvailability}}).then((response) => { 
+      params: {zipcode: searchZip, avail: ''}})
+        .then((response) => { 
           setGymData(response.data); 
           setgymDataLoading(true);
     });
   }
-
   useEffect(() => {searchForGym()}, [updateSearch]);
-  //REMOVE WHEN NOT NEEDED
-  //console.log(gymData);
+
+  function handleClick(e) {
+    setUpdateSearch(updateSearch + e);
+    updateTime();
+  }
+
+  function updateTime() {
+    var formatDay = day.$y + '-' + (day.$M + 1) + '-' + day.$D;
+    var formatTime = 'T' + (time.$H < 10 ? ('0' + time.$H) : time.$H) + ':00:00Z';
+    setSearchAvailability(formatDay + formatTime);
+    console.log(searchAvailability);
+  }
 
   return ( <Fragment>
     <div className="gym-searchbar">
       <Box sx={{display: 'flex', '& > *': {m: 1,}, 
-        height: 80, width: 600}}
+        height: 80, width: 700}}
       >
         <Stack direction="row" spacing={1}>
           <TextField
@@ -50,18 +62,26 @@ function GymSearchPage() {
             error={isNaN(searchZip)}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+            <DesktopDatePicker
               id="search-day"
-              label="When?"
-              variant="outlined"
+              label="What day?"
+              inputFormat="MM/DD/YYYY"
+              value={day}
+              onChange={(e) => {setDay(e)}}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <TimePicker
+              id="search-time"
+              label="What time?"
               value={time}
+              minutesStep="60"
               onChange={(e) => {setTime(e)}}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
           <Button 
             variant="contained" 
-            onClick={(e) => {setUpdateSearch(updateSearch + e)}}
+            onClick={(e) => {handleClick(e)}}
             style={{height: '7.1ch'}}
           >
             LETS GO!

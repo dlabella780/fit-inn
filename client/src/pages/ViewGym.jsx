@@ -69,7 +69,11 @@ export const ViewGyms = (props) => {
                 </Box>
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Available Times:</Typography>
-                    {gymInfo.availability.map( dateM => <><Checkbox onChange={(e) => setDate(dateM)}></Checkbox><Typography variant="h5" style={{padding: 15, color:"black"}}>{(new Date(dateM)).toLocaleString()}</Typography></>)}
+                    {gymInfo.availability.map(dateM => <>
+                        <Checkbox onChange={(e) => setDate(dateM)}></Checkbox>
+                        <Typography variant="h5" style={{padding: 15, color:"black"}}>
+                            {(new Date(dateM)).toLocaleString()}
+                        </Typography></>)}
                 </Box>
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>

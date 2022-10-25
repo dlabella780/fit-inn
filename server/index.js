@@ -598,7 +598,7 @@ app.get('/api/gymSearch', async (req,res) => {
 			res.send(results);
 		} 
 		else if (req.query.avail != '') {
-			const variables = { eq: req.query.avail }
+			const variables = { contains: req.query.avail }
 			const results = await graphQLClient.request(gymSearchAvail, variables);
 			res.send(results);
 		}

@@ -16,7 +16,7 @@ function GymSearchPage() {
   const [gymData, setGymData] = useState([]);
   const [gymDataLoading, setgymDataLoading] = useState(false);
   const [searchZip, setSearchZip] = useState('');
-  const [searchAvailability, setSearchAvailability] = useState(null);
+  const [searchAvailability, setSearchAvailability] = useState('');
   const [updateSearch, setUpdateSearch] = useState(0);
   const [filterMaxPrice, setFilterMaxPrice] = useState(0);
   const [day, setDay] = useState(null);
@@ -24,24 +24,30 @@ function GymSearchPage() {
   
 	function searchForGym() {
     Axios.get('http://localhost:3001/api/gymSearch', {
-      params: {zipcode: searchZip, avail: ''}})
+      params: {zipcode: searchZip, avail: searchAvailability}})
         .then((response) => { 
           setGymData(response.data); 
           setgymDataLoading(true);
     });
+    if(day !== null && time !== null) SetDayTime();
   }
   useEffect(() => {searchForGym()}, [updateSearch]);
 
-  function handleClick(e) {
-    setUpdateSearch(updateSearch + e);
-    updateTime();
+  const SetDayTime = () => {
+    // NOTE :: (time.$H + 4) is a manual adjustment from UTC to CA local time
+    var formatDay = day.$y + '-' + (day.$M + 1) + '-' + (day.$D < 10 ? ('0' + day.$D) : day.$D);
+    var formatTime = 'T' + (time.$H < 10 ? ('0' + (time.$H + 4)) : time.$H + 4) + ':00:00Z';
+    setSearchAvailability(formatDay + formatTime);
   }
 
-  function updateTime() {
-    var formatDay = day.$y + '-' + (day.$M + 1) + '-' + day.$D;
-    var formatTime = 'T' + (time.$H < 10 ? ('0' + time.$H) : time.$H) + ':00:00Z';
-    setSearchAvailability(formatDay + formatTime);
-    console.log(searchAvailability);
+  function handleClickDay(e) {
+    setDay(e);
+    setUpdateSearch(updateSearch + e);
+  }
+
+  function handleClickTime(e) {
+    setTime(e);
+    setUpdateSearch(updateSearch + e);
   }
 
   return ( <Fragment>
@@ -67,7 +73,7 @@ function GymSearchPage() {
               label="What day?"
               inputFormat="MM/DD/YYYY"
               value={day}
-              onChange={(e) => {setDay(e)}}
+              onChange={(e) => {handleClickDay(e)}}
               renderInput={(params) => <TextField {...params} />}
             />
             <TimePicker
@@ -75,13 +81,13 @@ function GymSearchPage() {
               label="What time?"
               value={time}
               minutesStep="60"
-              onChange={(e) => {setTime(e)}}
+              onChange={(e) => {handleClickTime(e)}}
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
           <Button 
             variant="contained" 
-            onClick={(e) => {handleClick(e)}}
+            onClick={(e) => {setUpdateSearch(updateSearch + e)}}
             style={{height: '7.1ch'}}
           >
             LETS GO!

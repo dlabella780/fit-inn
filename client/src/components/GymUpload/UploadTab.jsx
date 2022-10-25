@@ -369,25 +369,6 @@ function UploadTab(props) {
 	const handleOpen = () => {setOpen(true);};
 	const handleClose = () => {setOpen(false);};
 
-/// TODO :: UTC TIME STUFF //////////////////////////////////
-	// const updateTimes = (start, end) => {
-	// 	if (lastStartTimeUTC === null) setLastStartTime(startTimeUTC);
-	// 	if (lastEndTimeUTC === null) setLastEndTime(endTimeUTC);
-	// };
-
-	// const getTimezoneOffset = value => value.getTimezoneOffset() * 60000;
-	// const makeLocalAppearUTC = value => {
-	// 	const dateTime = new Date(value);
-	// 	const utcFromLocal = new Date(dateTime.getTime() + getTimezoneOffset(dateTime));
-	// 	return utcFromLocal;
-	// };
-
-	// const localToUTC = (dateTime) => {
-	// 	const utcFromLocal = new Date(dateTime.getTime() - getTimezoneOffset(dateTime));
-	// 	return utcFromLocal;
-	// };
-////////////////////////////////////////////////////////////
-
 	return ( <div className='UploadTab'>
 		<Box sx={{bgcolor: 'background.paper',}}>
 		<AppBar className='UploadTab-AppBar' position="static" color="default">

@@ -32,9 +32,7 @@ const GymThumbnail = (props) => {
            <Grid item container direction="row" spacing={2}>
             <Grid item>
               <Link to={{pathname: "/ViewGym", props: val }}>
-                <ButtonBase 
-                    sx={{ width: 180, height: 180 }}
-                >
+                <ButtonBase sx={{ width: 180, height: 180 }}>
                     <img src={val.photos[0]} width="180" height="180" ></img>
                 </ButtonBase>
               </Link>

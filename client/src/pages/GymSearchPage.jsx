@@ -35,6 +35,7 @@ function GymSearchPage() {
 
   const SetDayTime = () => {
     // NOTE :: (time.$H + 4) is a manual adjustment from UTC to CA local time
+    // For future implementations this would have to be automatic based on user location.
     var formatDay = day.$y + '-' + (day.$M + 1) + '-' + (day.$D < 10 ? ('0' + day.$D) : day.$D);
     var formatTime = 'T' + (time.$H < 10 ? ('0' + (time.$H + 4)) : time.$H + 4) + ':00:00Z';
     setSearchAvailability(formatDay + formatTime);

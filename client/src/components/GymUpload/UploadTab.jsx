@@ -31,7 +31,7 @@ import Grid from '@mui/material/Grid';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { Link, Redirect, Switch, Route, Routes, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -77,13 +77,8 @@ function UploadTab(props) {
 		setEquipmentMap(equipMap);
 	})},[]);
 	
-	const redirectToGym = (props) => {
-		history.push('/ViewGym',{props: props});
-	}
-
-	const redirectToHome = () => {
-		history.push('/', {});
-	}
+	const redirectToGym = (props) => { history.push('/ViewGym',{props: props}); }
+	const redirectToHome = () => { history.push('/', {}); }
 
 	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
@@ -195,7 +190,6 @@ function UploadTab(props) {
         if (hasWifi === 'true') hasWifiB = true;
         if (hasSpeakers === 'true') hasSpeakersB = true;
         if (hasBathroom === 'true') hasBathroomB = true;
-/// TODO :: ///setAvailability();
 
 		if(!props.gymId) { try {
 			Axios.post('http://localhost:3001/api/uploadgym', {

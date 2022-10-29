@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Component,Fragment,useState} from "react";
 import { Checkbox, Typography } from "@material-ui/core";
 import Axios from 'axios';
 import Box from '@mui/material/Box';
@@ -7,6 +7,10 @@ import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 
 export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
+    
+    const equipMap = new Map();
+    const [equipmentMap, setEquipmentMap] = useState(new Map());
+
     const [date, setDate]=React.useState();
     let gymID = '';
     const timezoneOffset = ((new Date()).getTimezoneOffset())/60;
@@ -21,10 +25,13 @@ export const ViewGyms = (props) => {
 
     React.useEffect(() => {
         let gym = 'http://localhost:3001/api/getGym/' + gymID;
-        Axios.get(gym).then((response) => {
-        setGymInfo(response.data.get_Gym);
-        //console.log(gymInfo);
-    })},[]);
+        Axios.get(gym).then((response) => {setGymInfo(response.data.get_Gym);})
+        Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
+            for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
+                equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
+            setEquipmentMap(equipMap);
+            })
+    },[]);
 
     return( <div className="row-product" style={{}}>
         {gymInfo.length === 0 ? 
@@ -76,9 +83,9 @@ export const ViewGyms = (props) => {
                         </Typography></>)}
                 </Box>
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
-                    <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>
-                    {gymInfo.equipment.map( equip => <Typography variant="h5" style={{padding: 15, color:"black"}}>{equip.equipmentId} {equip.details}</Typography>)}
-                </Box>
+                        <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>
+                        {gymInfo.equipment.map( equip => <Typography variant="h5" style={{padding: 15, color:"black"}}>{equipmentMap.get(equip.equipmentId)} {equip.details}</Typography>)}
+                    </Box>
                 <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
             </Box>
         }           

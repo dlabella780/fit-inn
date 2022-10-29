@@ -9,12 +9,11 @@ import Slider from '@mui/material/Slider';
 import { Grid, Typography } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function GymSearchPage() {
   const [gymData, setGymData] = useState([]);
@@ -24,8 +23,7 @@ function GymSearchPage() {
   const [updateSearch, setUpdateSearch] = useState(0);
   const [filterMaxPrice, setFilterMaxPrice] = useState(0);
   const [filterEquip, setFilterEquip] = useState('');
-  const [day, setDay] = useState(null);
-  const [time, setTime] = useState(null);
+  const [dateTime, setDateTime] = useState(null);
 
 	function searchForGym() {
     Axios.get('http://localhost:3001/api/gymSearch', {
@@ -34,31 +32,9 @@ function GymSearchPage() {
           setGymData(response.data); 
           setgymDataLoading(true);
     });
-    
-    if(day !== null && time !== null) SetDayTime();
+    if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
   }
   useEffect(() => {searchForGym()}, [updateSearch]);
-
-  const SetDayTime = () => {
-    //const asdf = new Date().getTimezoneOffset();
-    //console.log(asdf);
-    
-    // NOTE : (time.$H + 4) is a manual adjustment from UTC to CA local time
-    // For future implementations this would have to be automatic based on user location.
-    var formatDay = day.$y + '-' + (day.$M + 1) + '-' + (day.$D < 10 ? ('0' + day.$D) : day.$D);
-    var formatTime = 'T' + (time.$H < 10 ? ('0' + (time.$H + 4)) : time.$H + 4) + ':00:00Z';
-    setSearchAvailability(formatDay + formatTime);
-  }
-
-  function handleClickDay(e) {
-    setDay(e);
-    //setUpdateSearch(updateSearch + e);
-  }
-
-  function handleClickTime(e) {
-    setTime(e);
-    //setUpdateSearch(updateSearch + e);
-  }
 
   return ( <Fragment>
     <div className="gym-searchbar">
@@ -78,21 +54,12 @@ function GymSearchPage() {
             error={isNaN(searchZip)}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-              id="search-day"
-              label="What day?"
-              inputFormat="MM/DD/YYYY"
-              value={day}
-              onChange={(e) => {handleClickDay(e)}}
-              renderInput={(params) => <TextField {...params} />}
-            />
-            <TimePicker
-              id="search-time"
+            <DateTimePicker
+              renderInput={(props) => <TextField {...props} />}
               label="What time?"
-              value={time}
+              value={dateTime}
               minutesStep="60"
-              onChange={(e) => {handleClickTime(e)}}
-              renderInput={(params) => <TextField {...params} />}
+              onChange={(e) => {setDateTime(e)}}
             />
           </LocalizationProvider>
           <Button 

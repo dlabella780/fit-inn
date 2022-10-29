@@ -11,7 +11,6 @@ function BasicInfo(props) {
             Name: {props.data.get_User.fname} {props.data.get_User.lname} <br />
             Phone Number: {props.data.get_User.phoneNumber} <br />
             E-mail: {props.data.get_User.email} <br />
-            Address: <br/>
             Street1: {props.data.get_User.address.street1} <br/>
             Street2: {props.data.get_User.address.stree2} <br/>
             City: {props.data.get_User.address.City} <br/>

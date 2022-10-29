@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Pagination from '@mui/material/Pagination';
 import PaginationComponent from "../components/FAQSearch/PaginationComponent.jsx";
-import { Typography } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
+import TextField from "@mui/material/TextField";
 
 let questions = [
   {
@@ -73,14 +73,16 @@ export default function FAQPage() {
         >
           <div>
             <h1>Help Center Search Results</h1>
-            <Typography variant="subtitle1">If you write a whole question, you must start the question with a capital letter. Otherwise you can search the question by using keywords.</Typography>
-            <input
-              type="text"
-              className="FAQ-page-search-bar"
+            <TextField
               value={search}
-              maxLength={75}
               onChange={(e) => setSearch(e.target.value)}
+              label="Search a question"
+              variant="outlined"
+              placeholder="Search by a keyword or a question starting with a capital letter"
+              size="small"
+              style ={{width: '100%'}}
             />
+
             {filteredQuestions.length > 0 ? (
               <>
                 {pageData().map((prompt, key) => (

@@ -641,7 +641,7 @@ body{
 
 .profile-page {
   position: absolute;
-  top: 100px;
+  top: 75px;
   width: 58%;
 }
 
@@ -670,6 +670,11 @@ body{
   border: 2px solid black;
   padding: 10px;
   font-size: 20px;
+
+  height: 700px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
 
 .edit-profile input {
@@ -679,6 +684,11 @@ body{
 
 .edit-profile input[type='submit'] {
   margin-top: 40px;
+}
+
+.edit-profile-box-padding {
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .user-listings {

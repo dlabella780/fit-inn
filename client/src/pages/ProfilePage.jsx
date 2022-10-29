@@ -53,18 +53,19 @@ export default function BasicTabs(props) {
   const [userGymLoading, setUserGymLoading] = useState(true);
 
   useEffect(() => {
-		let str = 'http://localhost:3001/api/getUser/' + props.userId
-    Axios.get(str).then((response) => {
-      setUserData(response.data);
-      setUserLoading(false);
-	  })
-    str = 'http://localhost:3001/api/getUserGyms/' + props.userId
-    Axios.get(str).then((response) => {
-      setUserGymData(response.data);
-      console.log(userGymData)
-      setUserGymLoading(false);
-	  })
-  },[]);
+    if (props.userId) {
+      let str = 'http://localhost:3001/api/getUser/' + props.userId
+      Axios.get(str).then((response) => {
+        setUserData(response.data);
+        setUserLoading(false);
+      })
+      str = 'http://localhost:3001/api/getUserGyms/' + props.userId
+      Axios.get(str).then((response) => {
+        setUserGymData(response.data);
+        console.log(userGymData)
+        setUserGymLoading(false);
+    })}
+  },[props]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

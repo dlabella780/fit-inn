@@ -22,6 +22,7 @@ const UserListings = (props) => {
                     Country: {val.address.Country} <br/>
                     Zipcode: {val.address.zipcode} <br/>
                     Rating: {val.rating} Stars<br/>
+                    
                     <NavLink to={{pathname: '/GymUpload',
                         state:{ gymId: val._id}}}>
                         Update

@@ -15,12 +15,12 @@ export const ViewGyms = (props) => {
     let gymID = '';
     const timezoneOffset = ((new Date()).getTimezoneOffset())/60;
 
-    // This allows a redirect from GymThubnail
+    // This allows a redirect from GymThubnail and Reservations 
     if (props.props.location.props !== undefined) 
-        gymID = props.props.location.props._id;
+        gymID = props.props.location.props._id || props.props.location.props;
     
     // This allows a redirect from Updating/Submiting a Gym
-    else 
+    else if (props.props.location.state.props !== undefined)
         gymID = props.props.location.state.props;
 
     React.useEffect(() => {

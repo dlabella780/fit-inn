@@ -83,7 +83,7 @@ function UploadTab(props) {
 	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
         const [equipDets, setEquipDets] = useState('');
-        const equipmentObj = []
+        const equipmentObj = [];
 
 		equipmentMap.forEach((value, key) => equipmentObj.push({key: key, value: value}));
 

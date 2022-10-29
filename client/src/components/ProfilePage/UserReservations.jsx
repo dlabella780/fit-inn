@@ -259,12 +259,13 @@ const UserReservations = (props) => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
+                                            {console.log(guestReservations)}
                                             {guestReservations.map((gresv) => (
                                                 <TableRow
                                                     key={(new Date(gresv.timeSlot)).toLocaleString()}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
-                                                    <Link to={{pathnam: "/ViewGym", props: gresv.gymName}}>
+                                                    <Link to={{pathname: "/ViewGym", props: gresv.gymId}}>
                                                         <TableCell style={fontStyle} component="th" scope="row">
                                                             {gresv.gymName}
                                                         </TableCell>
@@ -305,7 +306,7 @@ const UserReservations = (props) => {
                                             key={(new Date(hresv.timeSlot)).toLocaleString()}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
-                                            <Link to={{pathnam: "/ViewGym", props: hresv.gymName}}>
+                                            <Link to={{pathname: "/ViewGym", props: hresv.gymId}}>
                                                 <TableCell style={fontStyle} component="th" scope="row">
                                                     {hresv.gymName}
                                                 </TableCell>

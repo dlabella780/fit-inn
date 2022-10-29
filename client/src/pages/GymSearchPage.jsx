@@ -33,9 +33,14 @@ function GymSearchPage() {
           setgymDataLoading(true);
     });
     if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
-    console.log(searchAvailability);
   }
   useEffect(() => {searchForGym()}, [updateSearch]);
+
+  function calcTime(e) {
+    let offset = new Date().getTimezoneOffset()/60;
+    setDateTime(e);
+    dateTime.$H += offset;
+  }
 
   return ( <Fragment>
     <div className="gym-searchbar">
@@ -60,7 +65,7 @@ function GymSearchPage() {
               label="What time?"
               value={dateTime}
               minutesStep="60"
-              onChange={(e) => {setDateTime(e)}}
+              onChange={(e) => {calcTime(e)}}
             />
           </LocalizationProvider>
           <Button 

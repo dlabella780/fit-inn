@@ -53,7 +53,7 @@ const GymThumbnail = (props) => {
                   <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
                   ${val.cost}/hour<br/>
                   {val.availability.map(dateM => 
-                    <>{(new Date(dateM)).toJSON()}<br/></>)}
+                    <>{(new Date(dateM)).toLocaleString()}<br/></>)}
               </Typography>
             </Grid>
           </Grid>

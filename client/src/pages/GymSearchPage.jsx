@@ -33,6 +33,7 @@ function GymSearchPage() {
           setgymDataLoading(true);
     });
     if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
+    console.log(searchAvailability);
   }
   useEffect(() => {searchForGym()}, [updateSearch]);
 

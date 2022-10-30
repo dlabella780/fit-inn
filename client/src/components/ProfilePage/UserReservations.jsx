@@ -28,6 +28,7 @@ import { Link, Redirect, Switch, Route } from "react-router-dom";
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import NavigationIcon from '@mui/icons-material/Navigation';
+import { render } from "enzyme";
 
 
 // const GUEST_RESERVATIONS = [
@@ -172,18 +173,6 @@ const UserReservations = (props) => {
 		color: theme.palette.text.secondary,
 	}));
 
-    // Sorting Date Fucntion
-
-    const[order, setOrder] = useState("ASC")
-    // const sorting = (col) =>{
-    //     if(order === "ASC"){
-    //         const sorted = [...hostReservations.map( hresv => <>{hresv.timeSlot}</>)].sort((a,b) =>
-    //         a.timeSlot < b.timeSlot 
-    //         );
-    //         setOrder("DSC");
-    //     }
-    // }
-
     // Calling API data from Backend
     useEffect(() => {
 		let str = 'http://localhost:3001/api/getReservationUser/' + props.userId
@@ -270,15 +259,22 @@ const UserReservations = (props) => {
                                                             {gresv.gymName}
                                                         </TableCell>
                                                     </Link>
-                                                    <TableCell style={fontStyle} align="right">{(new Date(gresv.timeSlot)).toLocaleString()}</TableCell>
+                                                    <TableCell style={fontStyle} align="right">
+                                                       {(new Date(gresv.timeSlot)).toLocaleString()} 
+                                                    </TableCell>
+                                                    
                                                     {/*------------ Adding button  ------------ */}
-                                                    <Fab color="primary" aria-label="edit">
-                                                        <EditIcon />
-                                                    </Fab>
-                                                    <Fab variant="extended">
+                                                    {
+                                                    (gresv.timeSlot < new Date().toJSON()) ? 
+                                                        <Fab color="primary" aria-label="edit">
+                                                            <EditIcon />
+                                                        </Fab>
+                                                        : <Fab variant="extended">
                                                         <NavigationIcon sx={{ mr: 1 }} />
                                                         Navigate
-                                                    </Fab>
+                                                        </Fab>
+                                                    }
+                                                   
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -314,13 +310,16 @@ const UserReservations = (props) => {
                                             
                                             <TableCell style={fontStyle} align="right">{(new Date(hresv.timeSlot)).toLocaleString()}</TableCell>
                                             {/*------------ Adding button  ------------ */}
-                                            <Fab color="primary" aria-label="edit">
-                                                <EditIcon />
-                                            </Fab>
-                                            <Fab variant="extended">
-                                                <NavigationIcon sx={{ mr: 1 }} />
-                                                Navigate
-                                            </Fab>
+                                            {
+                                                (hresv.timeSlot < new Date().toJSON()) ? 
+                                                    <Fab color="primary" aria-label="edit">
+                                                        <EditIcon />
+                                                    </Fab>
+                                                    : <Fab variant="extended">
+                                                    <NavigationIcon sx={{ mr: 1 }} />
+                                                        Navigate
+                                                    </Fab>
+                                            }
                                         </TableRow>
                                     ))}
                                 </TableBody>

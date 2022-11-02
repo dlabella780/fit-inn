@@ -32,6 +32,27 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useHistory } from "react-router-dom";
+import { uploadFile } from "react-s3";
+import AWS from 'aws-sdk';
+
+
+const S3_BUCKET = "fit-inn";
+const REGION = "us-west-1";
+const ACCESS_KEY = "AKIAQOR3AGQZFTFG3X4B";
+const SECRET_ACCESS_KEY = "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";
+
+window.Buffer = window.Buffer || require("buffer").Buffer;
+
+
+AWS.config.update({
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_ACCESS_KEY,
+})
+
+const myBucket = new AWS.S3({
+    params: { Bucket: S3_BUCKET},
+    region: REGION,
+})
 
 function TabPanel(props) {
 	const { children, value, index, ...other } = props;
@@ -363,6 +384,30 @@ function UploadTab(props) {
 	const handleOpen = () => {setOpen(true);};
 	const handleClose = () => {setOpen(false);};
 
+	const [progress , setProgress] = useState(0);
+    const [selectedFile, setSelectedFile] = useState(null);
+	const handleFileInput = (e) => {
+        setSelectedFile(e.target.files[0]);
+    }
+	
+	const uploadFile = (file) => {
+
+        const params = {
+            ACL: 'public-read',
+            Body: file,
+            Bucket: S3_BUCKET,
+            Key: file.name
+        };
+
+        myBucket.putObject(params)
+            .on('httpUploadProgress', (evt) => {
+                setProgress(Math.round((evt.loaded / evt.total) * 100))
+            })
+            .send((err) => {
+                if (err) console.log(err)
+            })
+    }
+
 	return ( <div className='UploadTab'>
 		<Box sx={{bgcolor: 'background.paper',}}>
 		<AppBar className='UploadTab-AppBar' position="static" color="default">
@@ -497,9 +542,11 @@ function UploadTab(props) {
 							<FormControlLabel value="false" control={<Radio />} label="NO" />
 						</RadioGroup>
 					</Stack>
-					<Button variant="contained" component="label" startIcon={<PhotoCamera/>}>
-						Upload<input hidden accept="image/*" multiple type="file" />
-					</Button>	
+					<input accept="image/*" type="file" onChange={handleFileInput} />
+					<br />
+					<br />
+					<Button onClick={() => uploadFile(selectedFile)} variant="contained" component="label" startIcon={<PhotoCamera/>}>Upload Picture
+					</Button>						
 				  </Grid>
 				</Box>
 			</Box>

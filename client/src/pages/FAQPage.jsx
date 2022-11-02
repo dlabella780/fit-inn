@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Pagination from '@mui/material/Pagination';
-import PaginationComponent from "../components/FAQSearch/PaginationComponent.jsx";
+import PaginationComponent from "../components/Pagination/PaginationComponent.jsx";
 import { NavLink } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 

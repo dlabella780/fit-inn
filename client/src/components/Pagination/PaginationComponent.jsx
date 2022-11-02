@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
 
-export default function PaginationComponent(allQuestions, perPage) {
+export default function PaginationComponent(allItems, perPage) {
   const [page, setPage] = useState(1);
 
-  const maxPage = Math.ceil(allQuestions.length / perPage);
+  const maxPage = Math.ceil(allItems.length / perPage);
 
   function pageData() {
     const start = (page - 1) * perPage;
     const end = start + perPage;
 
-    return allQuestions.slice(start, end);
+    return allItems.slice(start, end);
   }
 
   function nextPage() {

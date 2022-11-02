@@ -96,6 +96,7 @@ function UploadTab(props) {
 		for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
 			equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
 		setEquipmentMap(equipMap);
+		return () => { setState({}); };
 	})},[]);
 	
 	const redirectToGym = (props) => { history.push('/ViewGym',{props: props}); }

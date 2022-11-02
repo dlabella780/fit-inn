@@ -35,9 +35,8 @@ import {
     getAuth,
   } from "firebase/auth";
 
-const LandingPage = (props) => {  
-        
-        return ( <div>
+const LandingPage = (props) => {   
+    return ( <div>
         <span classnam = "top-nav-bar">
             <NavBarTop userId={props.userId}/>
         </span>
@@ -126,6 +125,7 @@ const LandingPage = (props) => {
         <span className = "bottom-nav-bar">
             <NavBarBottom />
         </span>
-    </div>);}
-//}
+    </div>);
+}
+
 export default withRouter(LandingPage);

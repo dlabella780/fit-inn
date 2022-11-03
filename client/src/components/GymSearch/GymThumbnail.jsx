@@ -34,8 +34,8 @@ const GymThumbnail = (props) => {
     justifyContent="space-between"
     alignItems="flex-start"
   > 
-    {props.gymData.list_GymItems._GymItems.map((val) => (
-    <Grid item xs={"flexGrow"} key={val}> {
+    {props.gymData.list_GymItems._GymItems.map((val, index) => (
+    <Grid item xs={"flexGrow"} key={index}> {
       // GYM FILTERING BY COST & EQUIPMENT //
       (
         (val.cost <= props.filterMaxPrice || props.filterMaxPrice === 0) 
@@ -56,7 +56,7 @@ const GymThumbnail = (props) => {
           <Typography variant="h4">
               {val.title}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography variant="subtitle1" gutterBottom key={val.address.street1}>
               {' ' + val.address.street1} 
               {val.address.street2 === '' ? ' ' + val.address.street2 : ''}<br/>
               {' ' + val.address.City}
@@ -67,8 +67,11 @@ const GymThumbnail = (props) => {
               {val.description}<br/>
               <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
               ${val.cost}/hour<br/>
-              {val.availability.map(dateM => 
-                <>{(new Date(dateM)).toLocaleString()}<br/></>)}
+              {val.availability.map((dateM, index) => 
+                <Typography variant="body1" key={index}>
+                  {(new Date(dateM)).toLocaleString()}<br/>
+                </Typography>
+              )}
               {/* {val.equipment.map(equip => 
                 <Typography>
                   {equip.equipmentId = "0183a535-9d09-3f43-1df7-32a86713e03f" ? '' : 'Wahoo Trainer'}

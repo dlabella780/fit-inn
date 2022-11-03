@@ -4,6 +4,7 @@ import Axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
+import AvailableTimes from "../components/ViewGym/AvailableTimes";
 
 export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
@@ -76,11 +77,7 @@ export const ViewGyms = (props) => {
                 </Box>
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Available Times:</Typography>
-                    {gymInfo.availability.map(dateM => <>
-                        <Checkbox onChange={(e) => setDate(dateM)}></Checkbox>
-                        <Typography variant="h5" style={{padding: 15, color:"black"}}>
-                            {(new Date(dateM)).toLocaleString()}
-                        </Typography></>)}
+                        <AvailableTimes setDate = {setDate} times={gymInfo.availability}></AvailableTimes>
                 </Box>
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>

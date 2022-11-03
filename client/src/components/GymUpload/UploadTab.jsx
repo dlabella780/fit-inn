@@ -34,6 +34,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useHistory } from "react-router-dom";
 import { uploadFile } from "react-s3";
 import AWS from 'aws-sdk';
+import AvailabilitySelector from './AvailabilitySelector';
 
 
 const S3_BUCKET = "fit-inn";
@@ -192,6 +193,10 @@ function UploadTab(props) {
         }
         if (equipment.length < 1) {
             alert('Please Select at Least One Piece of Equipment');
+            return;
+        }
+		if (availability.length < 1) {
+            alert('Please Select available Times');
             return;
         }
 		if (cost <= 0 || cost > 100 || isNaN(cost)) {
@@ -610,22 +615,7 @@ function UploadTab(props) {
 		  </TabPanel>
 		  <TabPanel value={value} index={3} dir={theme.direction}>
 			<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
-				<LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DateTimePicker
-						id="start-day"
-						label="Starting Time?"
-						value={startTimeUTC}
-						onChange={(e) => {setStartTime(e)}}
-						renderInput={(params) => <TextField {...params} />}
-					/>
-					<DateTimePicker
-						id="end-day"
-						label="Ending Time?"
-						value={endTimeUTC}
-						onChange={(e) => {setEndTime(e)}}
-						renderInput={(params) => <TextField {...params} />}
-					/>
-				</LocalizationProvider>
+				<AvailabilitySelector setAvailability={setAvailability}/>
 				<TextField
 					id="hourly-rate"
 					label="Hourly Rate?"

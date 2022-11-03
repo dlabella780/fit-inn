@@ -660,6 +660,11 @@ body{
   font-size: 20px;
 }
 
+.basic-info-text-padding {
+  padding: 5px;
+  border-radius: 5px;
+}
+
 .user-basic-info img{
   margin-bottom: 40px;
 }

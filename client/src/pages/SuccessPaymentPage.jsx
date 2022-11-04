@@ -4,10 +4,28 @@ import { Checkbox, Typography } from "@material-ui/core";
 import Box from '@mui/material/Box';
 import { Link, NavLink } from "react-router-dom";
 import Button from '@mui/material/Button';
-
+import Axios from 'axios';
 
 export default function SuccessPaymentPage(props) {
     const location = useLocation();
+
+    useEffect(() => {
+        if (location.state.gymInfo !== undefined) {
+            Axios.post('http://localhost:3001/api/AddReservation', {
+                gymId: location.state.gymInfo._id,
+                gymName: location.state.gymInfo.title,
+                guestId: location.state.userId,
+                timeSlot: location.state.date,
+                duration: 60, //hard coded value, change if we allow for dynamically setting # of hours
+                numGuests: location.state.numGuests
+            })
+                .then((response) => {
+                    if (!response.data) {
+                        console.log("ERROR found in Payment Success Page!");
+                    }
+                })
+        }
+    });
     return (
         <div className="row-product">
             <Box>

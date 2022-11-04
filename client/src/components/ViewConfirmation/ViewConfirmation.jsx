@@ -68,6 +68,10 @@ const addReservation = () => {
       if(response.data) history.push('/PaymentSuccess',{gymInfo: props.gymInfo, date: props.date});
   })
 }
+
+    const redirectToPayment = () => {
+        history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
+    }
   
   return(
   
@@ -135,6 +139,7 @@ const addReservation = () => {
                   <p>You won't be charged yet</p>
               </Box>
               <Button onClick={() => addReservation()} variant="contained">Continue</Button>
+              <Button onClick={() => redirectToPayment()} variant="contained">(TESTING) GO TO PAYMENT</Button>
             </div> 
           </div>
           )}

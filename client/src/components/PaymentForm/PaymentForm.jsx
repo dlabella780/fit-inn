@@ -1,4 +1,5 @@
 import { PaymentElement, CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import { Typography, Box, Button } from "@material-ui/core";
@@ -34,10 +35,11 @@ const CARD_OPTIONS = {
 	}
 }
 
-export default function PaymentForm() {
-    const [success, setSuccess ] = useState(false)
-    const stripe = useStripe()
-    const elements = useElements()
+export default function PaymentForm(props) {
+    const [success, setSuccess] = useState(false);
+    const stripe = useStripe();
+    const elements = useElements();
+    const history = useHistory();
 
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +94,10 @@ export default function PaymentForm() {
             confirmParams: {
                 return_url: "http://localhost:3000/PaymentSuccess",
             },
+            redirect: "if_required"
         });
+
+        if (!error) history.push('/PaymentSuccess', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: props.numGuests });
 
         // This point will only be reached if there is an immediate error when
         // confirming the payment. Otherwise, your customer will be redirected to
@@ -128,7 +133,7 @@ export default function PaymentForm() {
             <Stack direction="row" spacing={45}>
                 <Button variant="contained" color="primary" href="/">Cancel</Button>
                         <Button disabled={isLoading || !stripe || !elements} variant="contained" color="primary" onClick={handleSubmit}>
-                            {isLoading ? <div>Loading...</div> : <div>Pay {total}</div>}
+                            {isLoading ? <div>Loading...</div> : <div>Pay {'$' + (props.gymInfo.cost).toFixed(2)}</div>}
                         </Button>
                 {message && <div>{message}</div>}
                 </Stack>

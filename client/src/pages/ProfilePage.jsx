@@ -90,7 +90,7 @@ export default function BasicTabs(props) {
         <UserListings data={userGymData} loading={userGymLoading}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <UserReservations userId = {props.userId} userGyms={userGymData}/>
+        <UserReservations userId = {props.userId} userGyms={userGymData} data={userGymData} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <UserPayment />

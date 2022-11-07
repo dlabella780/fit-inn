@@ -22,13 +22,22 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Link, Redirect, Switch, Route } from "react-router-dom";
+import { Link, Redirect, Switch, Route, useNavigate } from "react-router-dom";
 
 // import Button 
 import Fab from '@mui/material/Fab';
 import EditIcon from '@mui/icons-material/Edit';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import { render } from "enzyme";
+
+// import Popup
+import TextField from '@mui/material/TextField';
+import Rating from '@mui/material/Rating';
+import Overlay from "react-overlay-component";
+import { borderRadius } from "@mui/system";
+
+
+
 
 
 // const GUEST_RESERVATIONS = [
@@ -173,8 +182,51 @@ const UserReservations = (props) => {
 		color: theme.palette.text.secondary,
 	}));
 
+    // Creating Pop Up for Review
+    const [isOpen, setOverlay] = useState(false);
+
+    const closeOverlay = () => setOverlay(false);
+
+    // Creating Pop Up for Map
+    const [isOpen2, setOverlay2] = useState(false);
+
+    const closeOverlay2 = () => setOverlay2(false);
+
+    const configs = {
+        animate: true,
+        // clickDismiss: false,
+        // escapeDismiss: false,
+        // focusOutline: false,
+    };
+    // Rating
+    const [review, setReview] = React.useState(2);
+
+    // Redirect to direction map
+    const navigateToMap = () => {
+        
+        //<Link to="https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819" />
+    //    <a href="https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819"></a>
+        const link = `https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819`
+        window.open(link, "_blank");
+      };
+    
+      const getDirections = (gymId) => {
+        let gym = 'http://localhost:3001/api/getGym/' + gymId;
+        Axios.get(gym).then((response) => {
+            var directionsString = '';
+            directionsString += response.data.get_Gym.address.street1 +'+'+ response.data.get_Gym.address.State + '+' + response.data.get_Gym.address.zipcode ;
+            //redirect with the directions string here
+            var link = `https://www.google.com/maps/dir//`+ directionsString
+            window.open(link, "_blank");
+
+            console.log(directionsString)
+            console.log(link)
+        })
+        }
+
     // Calling API data from Backend
     useEffect(() => {
+
 		let str = 'http://localhost:3001/api/getReservationUser/' + props.userId
         Axios.get(str).then((response) => {
             setGuestReservations(response.data.list_GymReservationItems._GymReservationItems);
@@ -191,6 +243,7 @@ const UserReservations = (props) => {
         }
 
     },[]);
+    
     
     return (
         // <div className="reservation-area">
@@ -211,11 +264,35 @@ const UserReservations = (props) => {
                 </>
             : <>loading...</>} */}
             
+
+            {/* --------Popup Review-------- */}
+            <Overlay configs={configs} isOpen={isOpen} closeOverlay={closeOverlay}>
+                    <Box
+                        sx={{
+                            '& > legend': { mt: 2 },
+                            bgcolor: 'background.paper',
+                        }}
+                    >
+                    <Typography component="legend">Rating</Typography>
+                    <Rating
+                        name="simple-controlled"
+                        value={review}
+                        onChange={(event, newValue) => {
+                        setReview(newValue);
+                        }}
+                    />                             
+                    <br></br>
+                    <textarea placeholder="What's your feedback?"/>
+                    <br></br>
+                    <Button variant="contained" >Submit</Button>                  
+                    </Box>
+            </Overlay>            
+
             {/*------------ Tab -----------*/}
-                <div className='helpsection'>
+            <div className='helpsection'> 
             <Box sx={{
                 bgcolor: 'background.paper',
-            }}>
+            }}>  
             <h1 className='title-helpsection'>Reservation</h1>
             <AppBar position="static" color="default">
                 <Tabs
@@ -230,14 +307,13 @@ const UserReservations = (props) => {
                     <Tab label="For Hosts" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
-            <SwipeableViews
+            <SwipeableViews 
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={value}
                 onChangeIndex={handleChangeIndex}>
                 <TabPanel value={value} index={0} dir={theme.direction}>
                     <Box sx={{ flexGrow: 1 }}><Grid container spacing={3}>
                         <Grid item xs>
-
                             {/*---------- Guest Reservation ----------*/}
                                 <TableContainer component={Paper}>
                                     <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -254,7 +330,7 @@ const UserReservations = (props) => {
                                                     key={(new Date(gresv.timeSlot)).toLocaleString()}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
-                                                    <Link to={{pathname: "/ViewGym", props: gresv.gymId}}>
+                                                   <Link to={{pathname: "/ViewGym", props: gresv.gymId}}>
                                                         <TableCell style={fontStyle} component="th" scope="row">
                                                             {gresv.gymName}
                                                         </TableCell>
@@ -267,14 +343,18 @@ const UserReservations = (props) => {
                                                     {
                                                     (gresv.timeSlot < new Date().toJSON()) ? 
                                                         <Fab color="primary" aria-label="edit">
-                                                            <EditIcon />
+                                                            <EditIcon onClick={ event => {
+                                                                setOverlay(true);
+
+                                                            }} />
                                                         </Fab>
+                                                        
                                                         : <Fab variant="extended">
-                                                        <NavigationIcon sx={{ mr: 1 }} />
+                                                        <NavigationIcon onClick={() => getDirections(gresv.gymId)} sx={{ mr: 1 }} />
                                                         Navigate
                                                         </Fab>
                                                     }
-                                                   
+                                                    
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -310,7 +390,7 @@ const UserReservations = (props) => {
                                             
                                             <TableCell style={fontStyle} align="right">{(new Date(hresv.timeSlot)).toLocaleString()}</TableCell>
                                             {/*------------ Adding button  ------------ */}
-                                            {
+                                            {/* {
                                                 (hresv.timeSlot < new Date().toJSON()) ? 
                                                     <Fab color="primary" aria-label="edit">
                                                         <EditIcon />
@@ -319,7 +399,7 @@ const UserReservations = (props) => {
                                                     <NavigationIcon sx={{ mr: 1 }} />
                                                         Navigate
                                                     </Fab>
-                                            }
+                                            } */}
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -330,8 +410,10 @@ const UserReservations = (props) => {
                 </TabPanel>
             </SwipeableViews>
             </Box>
+            </div> 
         </div>
-        </div>
+
+            
     )
 }
 export default UserReservations;

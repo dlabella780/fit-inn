@@ -27,6 +27,7 @@ export const ViewGyms = (props) => {
     React.useEffect(() => {
         let gym = 'http://localhost:3001/api/getGym/' + gymID;
         Axios.get(gym).then((response) => {setGymInfo(response.data.get_Gym);})
+        console.log(gymInfo)
         Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
             for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
                 equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);

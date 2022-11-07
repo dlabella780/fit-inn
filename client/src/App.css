@@ -944,6 +944,19 @@ body.active-modal {
   max-width: 400px;
   min-width: 300px;
 }
+.modal-content2 {
+  position: absolute;
+  border-radius: 10px;
+  top: 32%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #ffffff;
+  padding: 14px 28px;
+  border-radius: 10px;
+  max-width: 400px;
+  min-width: 300px;
+}
 
 .confirm-title {
   top: 10px;

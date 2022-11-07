@@ -6,8 +6,8 @@ class PrivacyPage extends Component {
     render() { return (
         <Box>
             <div className="policy-page-items">
-                <Typography variant="h3">Privacy Policy</Typography>
-                <Typography className = "policy-page-update" variant="h5">Last Update: 9/30/2022</Typography>
+                <Typography variant="h3">Privacy Policy [EXAMPLE ONLY]</Typography>
+                <Typography className = "policy-page-update" variant="h5">Last Update: 11/7/2022</Typography>
 
                 <span className="terms-page-links">
                     <Typography variant="h6"><NavLink to="/pages/PolicyForHosts" style={{ textDecoration: 'none' }}>Policy for Hosts</NavLink></Typography>

@@ -6,8 +6,8 @@ class TermsPage extends Component {
     render() { return (
         <Box>
             <div className="help-center-link-pages-items">
-                <Typography variant="h3">Terms of Use and Service</Typography>
-                <Typography className = "policy-page-update" variant="h5">Last Update: 9/30/2022</Typography>
+                <Typography variant="h3">Terms of Use and Service [EXAMPLE ONLY]</Typography>
+                <Typography className = "policy-page-update" variant="h5">Last Update: 11/7/2022</Typography>
                 
                 <span className="terms-page-links">
                     <Typography variant="h6"><NavLink to="/pages/PolicyForHosts" style={{ textDecoration: 'none' }}>Policy for Hosts</NavLink></Typography>

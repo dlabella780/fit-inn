@@ -63,7 +63,7 @@ function GymSearchPage() {
                 renderInput={(props) => <TextField {...props} />}
                 label="What time?"
                 value={dateTime}
-                minutesStep={60}
+                views={['day','hours']}
                 onChange={(e) => {calcTime(e)}}
               />
             </LocalizationProvider>

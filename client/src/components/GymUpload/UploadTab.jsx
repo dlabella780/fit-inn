@@ -35,6 +35,7 @@ import { useHistory } from "react-router-dom";
 import { uploadFile } from "react-s3";
 import AWS from 'aws-sdk';
 import AvailabilitySelector from './AvailabilitySelector';
+import dayjs from 'dayjs';
 
 
 const S3_BUCKET = "fit-inn";
@@ -100,8 +101,9 @@ function UploadTab(props) {
 		return () => { setState({}); };
 	})},[]);
 	
-	const redirectToGym = (props) => { history.push('/ViewGym',{props: props}); }
-	const redirectToHome = () => { history.push('/', {}); }
+	const redirectToGym = (gymId) => { 
+		history.push('/ViewGym',{gymId: gymId, isActive: isActive}); 	
+	}
 
 	const SelectEquipment = () => {
         const [equip, setEquip] = useState('');
@@ -140,7 +142,6 @@ function UploadTab(props) {
 					id="equip-details"
 					label="Equipment Details"
 					variant="outlined"
-					defaultValue="Description"
 					value={equipDets} 
 					onChange={(e) => setEquipDets(e.target.value)}
 					helperText={equipDets === "" ? 'Please enter equipment details.' : ' '}
@@ -159,7 +160,7 @@ function UploadTab(props) {
     }
 
     const SubmitGym = () => {
-        if (title === '') {
+		if (title === '') {
             alert('Please Set a Gym Name');
             return;
         }
@@ -229,18 +230,20 @@ function UploadTab(props) {
 				description: description, 
 				hasBathroom: hasBathroomB, 
 				hasSpeakers: hasSpeakersB, 
-				isActive: isActive, 
 				hasWifi: hasWifiB, 
 				isHostHome: isHostHomeB, 
 				numGuestsAllowed: Number(numGuestsAllowed), 
 				ownerId: ownerId, 
 				photos: photos, 
+				startingDate: startingDate.toJSON(),
+				startingHours: startingHours.toJSON(),
+				endingHours: endingHours.toJSON(),
+				days: days,
 				title: title, 
 				tvType: tvType, 
 				equipment: equipmentObj})
-				.then(
-					alert("Gym Submitted!"),
-					redirectToHome()
+				.then((response) =>
+					redirectToGym(response.data)
 				)
 			} catch (error) { console.log(error); }
 		} else { try {
@@ -254,18 +257,20 @@ function UploadTab(props) {
 				description: description, 
 				hasBathroom: hasBathroomB, 
 				hasSpeakers: hasSpeakersB, 
-				isActive: isActive, 
 				hasWifi: hasWifiB, 
 				isHostHome: isHostHomeB, 
 				numGuestsAllowed: Number(numGuestsAllowed), 
 				ownerId: ownerId, 
 				photos: photos, 
+				startingDate: startingDate.toJSON(),
+				startingHours: startingHours.toJSON(),
+				endingHours: endingHours.toJSON(),
+				days: days,
 				title: title, 
 				tvType: tvType, 
 				equipment: equipmentObj,
 				id: props.gymId})
-				.then(() => 
-					alert("Gym Updated!"),
+				.then(
 					redirectToGym(props.gymId)
 				)
 			} catch (error) { console.log(error); }
@@ -301,8 +306,8 @@ function UploadTab(props) {
 		return (equip);
 	}
 
-    const [isActive, setIsActive] = useState(false);
     const [ownerId, setOwnerId] = useState(props.userId);
+	const [isActive, setIsActive] = useState(false);
     const [title, setTitle] = useState("");
     const [street1, setStreet1] = useState("");
 	const [street2, setStreet2] = useState("");
@@ -328,11 +333,20 @@ function UploadTab(props) {
 	const [endTimeUTC, setEndTime] = useState(null);
 	const [equipmentMap, setEquipmentMap] = useState(new Map());
 	const [oldGymLoaded, setOldGymLoaded] = useState(false);
+	const [days, setDays] = useState([]);
+    const [startingDate, setStartingDate] = useState(null);
+    const [startingHours, setStartingHours] = useState(null);
+    const [endingHours, setEndingHours] = useState(null);
 	const equipMap = new Map();
 
 	if(props.gymId && !oldGymLoaded) {
 		let str = 'http://localhost:3001/api/getGym/' + props.gymId
 		Axios.get(str).then((response) => {
+			if (response.data.get_Gym.isActive) setIsActive(response.data.get_Gym.isActive);
+			setDays(response.data.get_Gym.days);
+			setStartingDate(dayjs(response.data.get_Gym.startingDate));
+			setStartingHours(dayjs(response.data.get_Gym.startingHours));
+			setEndingHours(dayjs(response.data.get_Gym.endingHours));
 			setTitle(response.data.get_Gym.title);
 			setStreet1(response.data.get_Gym.address.street1);
 			setStreet2(response.data.get_Gym.address.stree2);
@@ -443,8 +457,7 @@ function UploadTab(props) {
 					id="name"
 					label="Gym Name"
 					variant="outlined"
-					defaultValue="Gym Name"
-					value={title} 
+					value={(title)}
 					onChange={(e) => setTitle(e.target.value)}
 					helperText={title === "" ? 'Please enter a gym name.' : ' '}
 				/>
@@ -453,7 +466,6 @@ function UploadTab(props) {
 					id="description"
 					label="Description"
 					variant="outlined"
-					defaultValue="Description"
 					value={description} 
 					onChange={(e) => setDescription(e.target.value)}
 					helperText={description === "" ? 'Please enter a description.' : ' '}
@@ -476,55 +488,104 @@ function UploadTab(props) {
 					id="notes"
 					label="Access Instructions"
 					variant="outlined"
-					defaultValue="How to access?"
 					value={accessInformation} 
 					onChange={(e) => setAccessInformation(e.target.value)}
 					helperText={accessInformation === "" ? 'Please enter any access instructions.' : ' '}
 				/>
+				{props.gymId  && isActive ? 
 				<TextField
+				required
+				id="location-street"
+				label="Street"
+				variant="outlined"
+				value={street1} 
+				disabled
+				helperText={street1 === "" ? 'Please enter your street.' : ' '}
+				/>
+				: <TextField
 					required
 					id="location-street"
 					label="Street"
 					variant="outlined"
-					defaultValue="Street"
 					value={street1} 
 					onChange={(e) => setStreet1(e.target.value)}
 					helperText={street1 === "" ? 'Please enter your street.' : ' '}
-				/>
+				/>}
+				{props.gymId && isActive ?
 				<TextField
 					required
 					id="location-city"
 					label="City"
 					variant="outlined"
-					defaultValue="City"
 					value={city} 
-					onChange={(e) => setCity(e.target.value)}
+					disabled
 					helperText={
 						city === "" ? 'Please enter your city.' : ' ' &&
 						!isNaN(city) ? 'Not a city.' : ' ' 
 					}
 					error={!isNaN(city) && city !== ""}
 				/>
+				: <TextField
+				required
+				id="location-city"
+				label="City"
+				variant="outlined"
+				value={city} 
+				onChange={(e) => setCity(e.target.value)}
+				helperText={
+					city === "" ? 'Please enter your city.' : ' ' &&
+					!isNaN(city) ? 'Not a city.' : ' ' 
+				}
+				error={!isNaN(city) && city !== ""}
+				/>}
+				{props.gymId && isActive ? 
 				<TextField
 					required
 					id="location-state"
 					label="State"
 					variant="outlined"
-					defaultValue="State"
 					value={state} 
-					onChange={(e) => setState(e.target.value)}
+					disabled
 					helperText={
 						state === "" ? 'Please enter your state.' : ' ' &&
 						!isNaN(state) ? 'Not a state.' : ' ' 
 					}
 					error={!isNaN(state) && state !== ""}
 				/>
+				:
+				<TextField
+				required
+				id="location-state"
+				label="State"
+				variant="outlined"
+				value={state} 
+				onChange={(e) => setState(e.target.value)}
+				helperText={
+					state === "" ? 'Please enter your state.' : ' ' &&
+					!isNaN(state) ? 'Not a state.' : ' ' 
+				}
+				error={!isNaN(state) && state !== ""}
+				/>}
+				{props.gymId && isActive ? 
 				<TextField
 					required
 					id="location-zip"
 					label="Zip"
 					variant="outlined"
-					defaultValue="Zip"
+					value={zip} 
+					disabled
+					helperText={
+						zip === "" ? 'Please enter your zip.' : ' ' &&
+						isNaN(zip) ? 'Not a zip.' : ' ' 
+					}
+					error={isNaN(zip)}
+				/>
+				:
+				<TextField
+					required
+					id="location-zip"
+					label="Zip"
+					variant="outlined"
 					value={zip} 
 					onChange={(e) => setZip(e.target.value)}
 					helperText={
@@ -532,7 +593,7 @@ function UploadTab(props) {
 						isNaN(zip) ? 'Not a zip.' : ' ' 
 					}
 					error={isNaN(zip)}
-				/>
+				/>}
 				<Box sx={{ flexGrow: 1 }}>
 				  <Grid>
 					<Stack direction="row" spacing={2}>
@@ -615,7 +676,17 @@ function UploadTab(props) {
 		  </TabPanel>
 		  <TabPanel value={value} index={3} dir={theme.direction}>
 			<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
-				<AvailabilitySelector setAvailability={setAvailability}/>
+				<AvailabilitySelector 
+					gymId={props.gymId}
+					days={days}
+					setDays={setDays}
+					startingDate={startingDate}
+					setStartingDate={setStartingDate}
+					startingHours={startingHours}
+					setStartingHours={setStartingHours}
+					endingHours={endingHours}
+					setEndingHours={setEndingHours}
+					setAvailability={setAvailability}/>
 				<TextField
 					id="hourly-rate"
 					label="Hourly Rate?"
@@ -651,7 +722,7 @@ function UploadTab(props) {
 			</Box>
 		  </TabPanel>
 		</SwipeableViews>
-		<Button variant="contained" onClick={handleOpen} style={{left: '556px'}}>
+		<Button variant="contained" onClick={() => SubmitGym()} style={{left: '556px'}}>
 			REVIEW GYM
 		</Button>
 		<ReviewDialog onClose={handleClose} open={open}>

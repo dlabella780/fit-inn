@@ -61,6 +61,27 @@ export default function Reservation(app, graphQLClient) {
 
     })
 
+    const getTakenTimes = gql`
+        query MyQuery($eq: String = "0184561c-1254-577e-0f67-6c8df90a9300") {
+            list_GymReservationItems(filter: {gymId: {eq: $eq}}) {
+            _GymReservationItems {
+                timeSlot
+            }
+            }
+        }`;
+
+    app.get('/api/getTakenTimes/:id', async (req, res) => {
+        if (VerifyRequest(req)) {
+            const variables = {
+                eq: req.params.id
+            }
+            const results = await graphQLClient.request(getTakenTimes, variables);
+            res.send(results);
+        }
+        else res.send('Access Denied.');
+
+    })
+
     const reservationAddMutation = gql`
 	mutation MyMutation($duration: Int = 60,
         $guestId: String = "",
@@ -183,13 +204,13 @@ export default function Reservation(app, graphQLClient) {
                 id: req.body.id
             }
 
-            const gymInfo = await graphQLClient.request(getGymRating, {id: req.body.gymId})
+            const gymInfo = await graphQLClient.request(getGymRating, { id: req.body.gymId })
             if (gymInfo) {
                 var newRating;
-                if (gymInfo.get_Gym.numReviews === 0) 
+                if (gymInfo.get_Gym.numReviews === 0)
                     newRating = req.body.rating;
                 else
-                    newRating = ((gymInfo.get_Gym.rating * gymInfo.get_Gym.numReviews) + req.body.rating)/(gymInfo.get_Gym.numReviews + 1);
+                    newRating = ((gymInfo.get_Gym.rating * gymInfo.get_Gym.numReviews) + req.body.rating) / (gymInfo.get_Gym.numReviews + 1);
 
                 const gymVariables = {
                     id: req.body.gymId,
@@ -197,7 +218,7 @@ export default function Reservation(app, graphQLClient) {
                     rating: newRating
                 }
                 const gymRating = await graphQLClient.request(setGymRating, gymVariables)
-                if(gymRating) {
+                if (gymRating) {
                     const gymReview = await graphQLClient.request(reservationReview, variables)
                 }
             }
@@ -238,17 +259,17 @@ export default function Reservation(app, graphQLClient) {
     //need to pass the reservation id as id, the reservation time slot as timeSlot, and the gym id for the reservation as gymId
     app.post('/api/CancelReservation', async (req, res) => {
         if (VerifyRequest(req)) {
-            
-            const cancelWarning = await graphQLClient.request(getCancelWarning, {id: req.body.gymId})
+
+            const cancelWarning = await graphQLClient.request(getCancelWarning, { id: req.body.gymId })
             if (cancelWarning) {
                 var d = new Date();
                 d.setHours(d.getHours() + cancelWarning.get_Gym.cancelationWarning);
                 if (d < (new Date(req.body.timeSlot))) {
-                    const data = await graphQLClient.request(deleteReservation, {id: req.body.id})
+                    const data = await graphQLClient.request(deleteReservation, { id: req.body.id })
                     if (data) {
                         var avail = cancelWarning.get_Gym.availability;
                         avail.push(req.body.timeSlot);
-                        const addResv = await graphQLClient.request(addReservationBack, {id: req.body.gymId, availability: avail})
+                        const addResv = await graphQLClient.request(addReservationBack, { id: req.body.gymId, availability: avail })
                     }
                 }
                 else {

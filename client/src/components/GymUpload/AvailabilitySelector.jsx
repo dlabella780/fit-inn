@@ -9,108 +9,136 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import Button from '@mui/material/Button';
+import Axios from 'axios'
 
 const AvailabilitySelector = (props) => {
-    const [avail,setAvail] = useState([]);
-    const [days, setDays] = useState([]);
+    const [avail, setAvail] = useState([]);
     const [times, setTimes] = useState([]);
-    const [value, setValue] = React.useState(dayjs('2022-11-03'));
-    const [startingHours, setStartingHours] = useState(0);
-    const [endingHours, setEndingHours] = useState(23);
+    const [takenTimes, setTakenTimes] = useState([]);
+    const [timesLoaded, setTimesLoaded] = useState([]);
 
     const handleChange = (newValue) => {
-        setValue(newValue);
+        props.setStartingDate(newValue);
     };
     const handleDays = (event, newDays) => {
-        setDays(newDays);
+        props.setDays(newDays);
     };
 
+    useEffect(() => {
+        if (props.startingDate && props.startingHours && props.endingHours && props.days && timesLoaded)
+            setA();
+    }, [props.startingDate, props.startingHours, props.endingHours, props.days, timesLoaded]);
+
+    useEffect(() => {
+        if (props.gymId) {
+            let str = 'http://localhost:3001/api/getTakenTimes/' + props.gymId;
+            Axios.get(str).then((response) => {
+                setTakenTimes(response.data.list_GymReservationItems._GymReservationItems)
+                setTimesLoaded(true)
+            })
+        }
+    }, []);
+
+    const addTime = (time) => {
+        let taken = false;
+
+        for (let i = 0; i < takenTimes.length; i++) {
+            if (takenTimes[i].timeSlot === time) {
+                taken = true;
+                break;
+            }
+        }
+        if (!taken)
+            avail.push(time);
+    }
+
     const setA = () => {
-        let d = new Date(value);
+        let d = new Date(props.startingDate);
         setTimes([]);
         setAvail([]);
 
-        for (let i=0; i<(endingHours.$H-startingHours.$H+1); i++) {
-            times.push(startingHours.$H+i);
+        for (let i = 0; i < (props.endingHours.$H - props.startingHours.$H + 1); i++) {
+            times.push(props.startingHours.$H + i);
         }
 
-        for (let i=0; i<4; i++) {
-            for (let j=0; j<days.length; j++) {
-                d.setDate(d.getDate() + (days[j] + 7 - d.getDay()) % 7);
-                for (let k=0; k<=times.length; k++) {
-                    if (k===0) d.setHours(times[0]-1)
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < props.days.length; j++) {
+                d.setDate(d.getDate() + (props.days[j] + 7 - d.getDay()) % 7);
+                for (let k = 0; k <= times.length; k++) {
+                    if (k === 0) d.setHours(times[0] - 1)
                     else {
                         d.setHours(d.getHours() + 1);
-                        avail.push(d.toJSON());
+                        addTime(d.toJSON())
                     }
                 }
-                if (days.length===1) d.setDate(d.getDate() + 7);
+                if (props.days.length === 1) d.setDate(d.getDate() + 7);
             }
         }
         props.setAvailability(avail);
     }
- 
+
     return (
         <>
-        <Stack spacing={3}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
-            label="Starting Day"
-            inputFormat="MM/DD/YYYY"
-            value={value}
-            onChange={handleChange}
-            renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
-        <ToggleButtonGroup
-            value={days}
-            onChange={handleDays}
-            aria-label="text formatting"
-        >
-            <ToggleButton value={0} aria-label="bold">
-                Sunday
-            </ToggleButton>
-            <ToggleButton value={1} aria-label="bold">
-                Monday
-            </ToggleButton>
-            <ToggleButton value={2} aria-label="bold">
-                Tuesday
-            </ToggleButton>
-            <ToggleButton value={3} aria-label="bold">
-                Wednesday
-            </ToggleButton>
-            <ToggleButton value={4} aria-label="bold">
-                Thursday
-            </ToggleButton>
-            <ToggleButton value={5} aria-label="bold">
-                Friday
-            </ToggleButton>
-            <ToggleButton value={6} aria-label="bold">
-                Saturday
-            </ToggleButton>
-        </ToggleButtonGroup>
-        </Stack>
-        <Stack>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <TimePicker
-                label="Basic example"
-                value={startingHours}
-                onChange={(newValue) => {
-                setStartingHours(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-            <TimePicker
-                label="Basic example"
-                value={endingHours}
-                onChange={(newValue) => {
-                setEndingHours(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
-        <Button variant="contained" onClick={() => setA()}>set avail</Button>
-        </Stack>
+            <Stack spacing={3}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DesktopDatePicker
+                        label="Starting Day"
+                        inputFormat="MM/DD/YYYY"
+                        value={props.startingDate}
+                        onChange={handleChange}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+                <ToggleButtonGroup
+                    value={props.days}
+                    onChange={handleDays}
+                    aria-label="text formatting"
+                >
+                    <ToggleButton value={0} aria-label="bold">
+                        Sunday
+                    </ToggleButton>
+                    <ToggleButton value={1} aria-label="bold">
+                        Monday
+                    </ToggleButton>
+                    <ToggleButton value={2} aria-label="bold">
+                        Tuesday
+                    </ToggleButton>
+                    <ToggleButton value={3} aria-label="bold">
+                        Wednesday
+                    </ToggleButton>
+                    <ToggleButton value={4} aria-label="bold">
+                        Thursday
+                    </ToggleButton>
+                    <ToggleButton value={5} aria-label="bold">
+                        Friday
+                    </ToggleButton>
+                    <ToggleButton value={6} aria-label="bold">
+                        Saturday
+                    </ToggleButton>
+                </ToggleButtonGroup>
+            </Stack>
+            <Stack>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <TimePicker
+                        views={['hours']}
+                        label="Staring Time"
+                        value={props.startingHours}
+                        onChange={(newValue) => {
+                            props.setStartingHours(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                    <TimePicker
+                        views={['hours']}
+                        label="Ending Time"
+                        value={props.endingHours}
+                        onChange={(newValue) => {
+                            props.setEndingHours(newValue);
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </LocalizationProvider>
+            </Stack>
         </>
     );
 };

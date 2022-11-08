@@ -78,8 +78,7 @@ export default function BasicTabs(props) {
           <Tab label="Basic Info" {...a11yProps(0)} />
           <Tab label="User Listings" {...a11yProps(1)} />
           <Tab label="User Reservations" {...a11yProps(2)} />
-          <Tab label="User Payment" {...a11yProps(3)} />
-          <Tab label="Edit Profile" {...a11yProps(4)} />
+          <Tab label="Edit Profile" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <div>
@@ -93,9 +92,6 @@ export default function BasicTabs(props) {
         <UserReservations userId = {props.userId} userGyms={userGymData} data={userGymData} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <UserPayment />
-      </TabPanel>
-      <TabPanel value={value} index={4}>
         <EditProfileInfo userId = {props.userId} data={userData} loading={userLoading}/>
       </TabPanel>
       </div>

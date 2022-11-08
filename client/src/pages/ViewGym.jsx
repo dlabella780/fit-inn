@@ -1,13 +1,26 @@
 import React, {Component,Fragment,useState} from "react";
 import { Checkbox, Typography } from "@material-ui/core";
 import Axios from 'axios';
+import { useLocation, NavLink, useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
 import AvailableTimes from "../components/ViewGym/AvailableTimes";
+import { useEffect } from "react";
 
 export const ViewGyms = (props) => {
+    const location = useLocation();
+    const history = useHistory();
+    
     const [gymInfo, setGymInfo] = React.useState([]);
+    const [notActive, setNotActive] = useState(false);
+    
+
+    useEffect(() => {
+        if (location.state) {
+            if (!location.state.isActive) setNotActive(true);
+        }
+    },[])
     
     const equipMap = new Map();
     const [equipmentMap, setEquipmentMap] = useState(new Map());
@@ -17,23 +30,36 @@ export const ViewGyms = (props) => {
     const timezoneOffset = ((new Date()).getTimezoneOffset())/60;
 
     // This allows a redirect from GymThubnail and Reservations 
-    if (props.props.location.props !== undefined) 
+    if (location.state)
+        gymID = location.state.gymId
+    
+    else if (props.props.location.props) 
         gymID = props.props.location.props._id || props.props.location.props;
     
     // This allows a redirect from Updating/Submiting a Gym
-    else if (props.props.location.state.props !== undefined)
+    else if (props.props.location.state.props)
         gymID = props.props.location.state.props;
 
     React.useEffect(() => {
         let gym = 'http://localhost:3001/api/getGym/' + gymID;
         Axios.get(gym).then((response) => {setGymInfo(response.data.get_Gym);})
-        console.log(gymInfo)
         Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
             for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
                 equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
             setEquipmentMap(equipMap);
             })
     },[]);
+
+    
+    const submitGym = () => {
+        Axios.post('http://localhost:3001/api/showGym', {
+            id: location.state.gymId
+        }).then(   
+            alert('Gym Submitted'),
+            history.push('/', {})
+        )
+    }
+    
 
     return( <div className="row-product" style={{}}>
         {gymInfo.length === 0 ? 
@@ -44,6 +70,10 @@ export const ViewGyms = (props) => {
             </Typography>
             :
             <Box sx={{}}>
+                {notActive ? 
+                <><Button onClick={() => submitGym()}>Submit Gym</Button>
+                <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>Go Back</NavLink></>
+                : <></>}
                 <Typography variant="h4" align="left" style={{padding: 15, color:"black"}}>{gymInfo.title}</Typography>
                 <Typography variant="h5" align="left" style={{padding: 5, color:"black"}}>{gymInfo.description}</Typography>
                 <Box display="flex" justifyContent="space-between">

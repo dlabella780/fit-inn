@@ -53,10 +53,14 @@ export default function Gym(app, graphQLClient) {
 	  isHostHome
 	  numGuestsAllowed
 	  photos
+    startingDate
+    startingHours
+    endingHours
+    days
 	  rating
 	  title
 	  tvType
-      numReviews
+    numReviews
 	}
     }`;
 
@@ -75,7 +79,7 @@ export default function Gym(app, graphQLClient) {
     const gymSearchZipAvail = gql`
     query MyQuery($eq: String = "", $contains: String = "") {
         list_GymItems(
-        filter: {address: {zipcode: {eq: $eq}}, availability: {contains: $contains}}
+        filter: {address: {zipcode: {eq: $eq}}, availability: {contains: $contains}, isActive: {eq: true}}
         ) {
         _GymItems {
             _id
@@ -114,7 +118,7 @@ export default function Gym(app, graphQLClient) {
     const gymSearchAvail = gql`
     query MyQuery($contains: String = "") {
         list_GymItems(
-        filter: {availability: {contains: $contains}}
+        filter: {availability: {contains: $contains}, isActive: {eq: true}}
         ) {
         _GymItems {
             _id
@@ -153,7 +157,7 @@ export default function Gym(app, graphQLClient) {
     const gymSearchZip = gql`
     query MyQuery($eq: String = "") {
         list_GymItems(
-        filter: {address: {zipcode: {eq: $eq}}}
+        filter: {address: {zipcode: {eq: $eq}}, isActive: {eq: true}}
         ) {
         _GymItems {
             _id
@@ -213,6 +217,22 @@ export default function Gym(app, graphQLClient) {
         else res.send('Access Denied.');
     })
 
+    const getActive = gql`
+        query MyQuery($id: ID = "") {
+            get_Gym(id: $id) {
+            isActive
+            }
+        }`;
+
+    app.get('/api/getGymActive/:id', async (req, res) => {
+        if (VerifyRequest(req)) {
+            const results = await graphQLClient.request(getActive, {id: req.body.id});
+            res.send(results);
+        }
+        else res.send('Access Denied.');
+    })
+
+
     const gymAddMutation = gql`
 	mutation MyMutation($accessInformation: String = "", 
 		$address: Self_Gym_address_Input_ = {},
@@ -221,6 +241,10 @@ export default function Gym(app, graphQLClient) {
 		$cancelationWarning: Int = 24, 
 		$cost: Int = 10, 
 		$description: String = "", 
+    $startingDate: String = "", 
+    $startingHours: String = "", 
+    $endingHours: String = "", 
+    $days: [Int] = 0,
 		$equipment: [Self_Gym_equipment_equipmentItem_Input_] = {}, 
 		$hasBathroom: Boolean = false, 
 		$hasSpeakers: Boolean = false, 
@@ -235,7 +259,7 @@ export default function Gym(app, graphQLClient) {
 		$title: String = "",
 		$numReviews: Int = 0) {
 	add_Gym(
-	  input: {accessInformation: $accessInformation, address: $address, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, isActive: $isActive, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, ownerId: $ownerId, photos: $photos, rating: $rating, tvType: $tvType, title: $title, numReviews: $numReviews}
+	  input: {startingDate: $startingDate, startingHours: $startingHours, endingHours: $endingHours, days: $days, accessInformation: $accessInformation, address: $address, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, isActive: $isActive, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, ownerId: $ownerId, photos: $photos, rating: $rating, tvType: $tvType, title: $title, numReviews: $numReviews}
 	) {
 	  result {
 		_id
@@ -254,12 +278,16 @@ export default function Gym(app, graphQLClient) {
                 address: req.body.address,
                 availability: req.body.availability,
                 bookingNotice: req.body.bookingNotice,
+                startingDate: req.body.startingDate,
+                startingHours: req.body.startingHours,
+                endingHours: req.body.endingHours,
+                days: req.body.days,
                 cancelationWarning: req.body.cancelationWarning,
                 cost: req.body.cost,
                 description: req.body.description,
                 hasBathroom: req.body.hasBathroom,
                 hasSpeakers: req.body.hasSpeakers,
-                isActive: true,
+                isActive: false,
                 hasWifi: req.body.hasWifi,
                 isHostHome: req.body.isHostHome,
                 numGuestsAllowed: req.body.numGuestsAllowed,
@@ -272,6 +300,7 @@ export default function Gym(app, graphQLClient) {
                 numReviews: 0
             }
             const data = await graphQLClient.request(gymAddMutation, variables)
+            res.send(data.add_Gym.result._id)
         }
         else res.send('Access Denied.');
     });
@@ -283,7 +312,11 @@ export default function Gym(app, graphQLClient) {
         $bookingNotice: Int = 24, 
         $cancelationWarning: Int = 24, 
         $cost: Int = 10, 
-        $description: String = "", 
+        $description: String = "",
+        $startingDate: String = "", 
+        $startingHours: String = "", 
+        $endingHours: String = "", 
+        $days: [Int] = 0, 
         $equipment: [Self_Gym_equipment_equipmentItem_UpdateInput_] = {}, 
         $hasBathroom: Boolean = false, 
         $hasSpeakers: Boolean = false, 
@@ -295,7 +328,7 @@ export default function Gym(app, graphQLClient) {
         $tvType: String = "") {
         update_Gym(
           id: $id
-          input: {accessInformation: $accessInformation, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, photos: $photos, title: $title, tvType: $tvType}
+          input: {startingDate: $startingDate, startingHours: $startingHours, endingHours: $endingHours, days: $days, accessInformation: $accessInformation, availability: $availability, bookingNotice: $bookingNotice, cancelationWarning: $cancelationWarning, cost: $cost, description: $description, equipment: $equipment, hasBathroom: $hasBathroom, hasSpeakers: $hasSpeakers, hasWifi: $hasWifi, isHostHome: $isHostHome, numGuestsAllowed: $numGuestsAllowed, photos: $photos, title: $title, tvType: $tvType}
         ) {
           result {
             _id
@@ -313,6 +346,10 @@ export default function Gym(app, graphQLClient) {
                 accessInformation: req.body.accessInformation,
                 availability: req.body.availability,
                 bookingNotice: req.body.bookingNotice,
+                startingDate: req.body.startingDate,
+                startingHours: req.body.startingHours,
+                endingHours: req.body.endingHours,
+                days: req.body.days,
                 cancelationWarning: req.body.cancelationWarning,
                 cost: req.body.cost,
                 description: req.body.description,
@@ -335,6 +372,28 @@ export default function Gym(app, graphQLClient) {
         else res.send('Access Denied.');
     });
 
+    const showGym = gql`
+    mutation MyMutation($id: ID = "") {
+        update_Gym(id: $id, input: {isActive: true}) {
+          result {
+            _id
+          }
+          transaction {
+            _id
+          }
+        }
+      }`;
+
+    app.post('/api/showGym', async (req, res) => {
+
+        if (VerifyRequest(req)) {
+
+            const data = await graphQLClient.request(showGym, { id: req.body.id })
+
+        }
+        else res.send('Access Denied.');
+    });
+
     const hideGym = gql`
     mutation MyMutation($id: ID = "") {
         update_Gym(id: $id, input: {isActive: false}) {
@@ -352,7 +411,7 @@ export default function Gym(app, graphQLClient) {
 
         if (VerifyRequest(req)) {
 
-            const data = await graphQLClient.request(hideGym, {id: req.body.id})
+            const data = await graphQLClient.request(hideGym, { id: req.body.id })
 
         }
         else res.send('Access Denied.');

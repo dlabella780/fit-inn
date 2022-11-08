@@ -38,7 +38,7 @@ const GymThumbnail = (props) => {
     <Grid item xs={"flexGrow"} key={index}> {
       // GYM FILTERING BY COST & EQUIPMENT //
       (
-        (val.cost <= props.filterMaxPrice || props.filterMaxPrice === 0) 
+        (val.cost <= props.filterMaxPrice || (props.filterMaxPrice === 0 || props.filterMaxPrice === '')) 
         && 
         (checkEquip(val, props) || props.filterEquipment === 'Any')
       )

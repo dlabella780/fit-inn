@@ -242,11 +242,11 @@ export default function Reservation(app, graphQLClient) {
             const cancelWarning = await graphQLClient.request(getCancelWarning, {id: req.body.gymId})
             if (cancelWarning) {
                 var d = new Date();
-                d.setHours(d.getHours() + cancelWarning.get_Gym.getCancelationWarning);
+                d.setHours(d.getHours() + cancelWarning.get_Gym.cancelationWarning);
                 if (d < (new Date(req.body.timeSlot))) {
                     const data = await graphQLClient.request(deleteReservation, {id: req.body.id})
                     if (data) {
-                        avail = cancelWarning.get_Gym.availability;
+                        var avail = cancelWarning.get_Gym.availability;
                         avail.push(req.body.timeSlot);
                         const addResv = await graphQLClient.request(addReservationBack, {id: req.body.gymId, availability: avail})
                     }

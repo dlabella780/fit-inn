@@ -272,7 +272,6 @@ export default function Gym(app, graphQLClient) {
                 numReviews: 0
             }
             const data = await graphQLClient.request(gymAddMutation, variables)
-
         }
         else res.send('Access Denied.');
     });

@@ -5,8 +5,6 @@ import GymThumbnail from "../components/GymSearch/GymThumbnail";
 import Stack from '@mui/material/Stack';
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Slider from '@mui/material/Slider';
-import { Grid, Typography } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import InputLabel from '@mui/material/InputLabel';
@@ -26,20 +24,28 @@ function GymSearchPage() {
   const [dateTime, setDateTime] = useState(null);
 
 	function searchForGym() {
+    // Axios.get('http://localhost:3001/api/gymSearch', {
+    //   params: {zipcode: searchZip, avail: searchAvailability}})
+    //     .then((response) => { setGymData(response.data) }, setgymDataLoading(true))
+    //     .finally(setgymDataLoading(false));
     Axios.get('http://localhost:3001/api/gymSearch', {
       params: {zipcode: searchZip, avail: searchAvailability}})
-        .then((response) => { 
-          setGymData(response.data); 
-          setgymDataLoading(true);
-    });
+        .then((response) => { setGymData(response.data) })
+        .catch((error) => { console.log(error)} );
     if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
   }
   useEffect(() => {searchForGym()}, [updateSearch]);
 
   function calcTime(e) {
-    let offset = new Date().getTimezoneOffset()/60;
-    setDateTime(e);
-    dateTime.$H += offset;
+    try {
+      if (e !== null) {
+        let offset = new Date().getTimezoneOffset()/60;
+        setDateTime(e);
+        dateTime.$H += offset;
+        setSearchAvailability(dateTime.toJSON());
+      }
+      else setSearchAvailability('');
+    } catch (error) {}
   }
 
   return ( <Fragment>
@@ -60,11 +66,13 @@ function GymSearchPage() {
             />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DateTimePicker
+                defaultValue={null}
                 renderInput={(props) => <TextField {...props} />}
                 label="What time?"
                 value={dateTime}
                 views={['day','hours']}
                 onChange={(e) => {calcTime(e)}}
+                closeOnSelect
               />
             </LocalizationProvider>
           </Stack>

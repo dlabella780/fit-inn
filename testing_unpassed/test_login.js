@@ -23,21 +23,24 @@ describe('Login SSO', function() {
     throw new Error("New window did not appear before timeout")
   }
   it('Login SSO', async function() {
-    // Test name: Login SSO
-    // Step # | name | target | value
-    // 1 | open | / | 
     await driver.get("http://localhost:3000/")
-    // 2 | setWindowSize | 1630x1320 | 
     await driver.manage().window().setRect({ width: 1630, height: 1320 })
-    // 3 | click | css=.MuiSvgIcon-fontSizeLarge | 
     await driver.findElement(By.css(".MuiSvgIcon-fontSizeLarge")).click()
-    // 4 | click | xpath=//div[@id='menu-appbar']/div[3]/ul/li/a | 
-    await driver.findElement(By.xpath("//div[@id=\'menu-appbar\']/div[3]/ul/li/a")).click()
-    // 5 | click | css=div > svg | 
+    await driver.findElement(By.css(".makeStyles-sublink-4")).click()
     vars["windowHandles"] = await driver.getAllWindowHandles()
-    // 6 | storeWindowHandle | root | 
-    await driver.findElement(By.css("div > svg")).click()
-    // 7 | selectWindow | handle=${win6585} | 
-    vars["win6585"] = await waitForWindow(2000)
+    await driver.findElement(By.css(".active span")).click()
+    vars["win9691"] = await waitForWindow(2000)
+    vars["root"] = await driver.getWindowHandle()
+    await driver.switchTo().window(vars["win9691"])
+    await driver.manage().window().setRect({ width: 900, height: 900 })
+    await driver.findElement(By.id("identifierId")).click()
+    await driver.findElement(By.id("identifierId")).sendKeys("fitinncsus@gmail.com")
+    await driver.findElement(By.css(".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d")).click()
+    await driver.wait(until.elementLocated(By.id("password")), 30000)
+    await driver.findElement(By.name("password")).click()
+    await driver.findElement(By.name("password")).sendKeys("fitinnpassword")
+    //await driver.findElement(By.css(".WEQkZc")).click()
+    await driver.findElement(By.css(".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d")).click()
+    await driver.switchTo().window(vars["root"])
   })
 })

@@ -39,7 +39,6 @@ describe('Login SSO', function() {
     await driver.wait(until.elementLocated(By.id("password")), 30000)
     await driver.findElement(By.name("password")).click()
     await driver.findElement(By.name("password")).sendKeys("fitinnpassword")
-    //await driver.findElement(By.css(".WEQkZc")).click()
     await driver.findElement(By.css(".VfPpkd-LgbsSe-OWXEXe-k8QpJ > .VfPpkd-vQzf8d")).click()
     await driver.switchTo().window(vars["root"])
   })

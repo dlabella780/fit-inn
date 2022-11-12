@@ -31,8 +31,8 @@ const GymThumbnail = (props) => {
     direction="row"
     spacing={{ xs: 2, md: 3 }} 
     columns={{ xs: 4, sm: 8, md: 12 }}
-    justifyContent="space-between"
-    alignItems="center"
+    justifyContent="center"
+    alignItems="baseline"
   > 
     {props.gymData.list_GymItems._GymItems.map((val, index) => (
     <Grid item key={index}> {
@@ -41,11 +41,11 @@ const GymThumbnail = (props) => {
         (checkEquip(val, props) || props.filterEquipment === 'Any')
       ) && 
       <Item className="gym-thumbnail-indiv">
-        <Grid container direction="row" spacing={2}>
+        <Grid container direction="row" spacing={2} sx={{ width: 'flex', height: 'flex' }}>
           <Grid item>
             <Link to={{pathname: "/ViewGym", props: val }}>
-              <ButtonBase sx={{ width: 180, height: 180 }}>
-                  <img src={val.photos[0]} width="180" height="180" ></img>
+              <ButtonBase sx={{ width: 200, height: 200 }}>
+                  <img src={val.photos[0]} width="200" height="200" ></img>
               </ButtonBase>
             </Link>
           </Grid>

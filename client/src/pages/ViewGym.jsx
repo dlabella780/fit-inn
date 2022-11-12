@@ -15,7 +15,6 @@ export const ViewGyms = (props) => {
     const [gymInfo, setGymInfo] = React.useState([]);
     const [notActive, setNotActive] = useState(false);
     
-
     useEffect(() => {
         if (location.state) {
             if (!location.state.isActive) setNotActive(true);
@@ -110,6 +109,7 @@ export const ViewGyms = (props) => {
                     <Typography variant="h5" style={{padding: 15, color:"black"}}>Available Times:</Typography>
                         <AvailableTimes setDate = {setDate} times={gymInfo.availability}></AvailableTimes>
                 </Box>
+                {console.log(gymInfo.availability)}
                 <Box display="flex" border="solid" borderRadius="10px" margin="10px" justifyContent="left">
                         <Typography variant="h5" style={{padding: 15, color:"black"}}>Equipment Available:</Typography>
                         {gymInfo.equipment.map( equip => <Typography variant="h5" style={{padding: 15, color:"black"}}>{equipmentMap.get(equip.equipmentId)} {equip.details}</Typography>)}

@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import ButtonBase from '@mui/material/ButtonBase';
 import { Link } from "react-router-dom";
-import CircularProgress from '@mui/material/CircularProgress';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -62,12 +61,8 @@ const GymThumbnail = (props) => {
             <Typography variant="body1">
                 {val.description}<br/>
                 <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
+                {val.numReviews === 0 ? val.numReviews : 0}{' Reviews'}<br/>
                 ${val.cost}/hour<br/>
-                {/* {val.availability.map((dateM, index) => 
-                  <Typography variant="body1" key={index}>
-                    {(new Date(dateM)).toLocaleString()}<br/>
-                  </Typography>
-                )} */}
             </Typography>
           </Grid>
         </Grid>

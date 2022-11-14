@@ -36,10 +36,11 @@ const GymThumbnail = (props) => {
   > 
     {props.gymData.list_GymItems._GymItems.map((val, index) => (
     <Grid item key={index}> {
-      ((val.cost <= props.filterMaxPrice || (props.filterMaxPrice === 0 || props.filterMaxPrice === '')) 
-        && // GYM FILTERING BY COST & EQUIPMENT //
-        (checkEquip(val, props) || props.filterEquipment === 'Any')
-      ) && 
+      // GYM FILTERING BY ISACTIVE, COST, AND EQUIPMENT //
+      (val.isActive && 
+      (checkEquip(val, props) || props.filterEquipment === 'Any') &&
+      (val.cost <= props.filterMaxPrice || (props.filterMaxPrice === 0 || props.filterMaxPrice === '')) 
+      )&& 
       <Item className="gym-thumbnail-indiv">
         <Grid container direction="row" spacing={2} sx={{ width: 'flex', height: 'flex' }}>
           <Grid item>

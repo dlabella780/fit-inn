@@ -95,19 +95,19 @@ function GymSearchPage() {
                 onChange={(e) => setFilterEquip(e.target.value)}
               >
                 <MenuItem value={"Any"}>Any</MenuItem>
-                <MenuItem value={"0183a535-9d09-3f43-1df7-32a86713e03f"}>Wahoo Trainer</MenuItem>
-                <MenuItem value={"0183a535-c37c-4853-491d-7d93354e3852"}>Yoga Mat</MenuItem>
-                <MenuItem value={"0183a535-d802-4844-dffe-73516837ab65"}>Safety Straps</MenuItem>
-                <MenuItem value={"0183a535-fe85-a5db-fd29-e194fdb6893b"}>Landmine</MenuItem>
-                <MenuItem value={"0183a536-1908-f2cc-6b35-bbbbf1920859"}>Dip Bar</MenuItem>
-                <MenuItem value={"0183a536-327e-8f92-4a3e-f10704ca6ce3"}>Bench</MenuItem>
-                <MenuItem value={"0183a536-4af4-2ac0-7201-38b46bf3b43d"}>Power Rack</MenuItem>
-                <MenuItem value={"0183a536-66da-27b7-1022-c7a98e580a73"}>Dumbbells</MenuItem>
-                <MenuItem value={"0183a536-85c8-ac9b-4c5f-c0ad4cd25232"}>Pullup Bar</MenuItem>
-                <MenuItem value={"0183a536-9e7f-79f2-3c2a-67e0a38907ed"}>Iron Plates</MenuItem>
-                <MenuItem value={"0183a536-b898-d087-da21-4e948ea65140"}>Rubber Plates</MenuItem>
-                <MenuItem value={"0183a536-cf77-81d0-263f-35e62a3f18ac"}>Curl Bar</MenuItem>
-                <MenuItem value={"0183a536-e562-66c8-6da7-4e844b391060"}>Barbell</MenuItem>
+                <MenuItem value={"01845614-f1da-27e9-71b2-86150da41680"}>Wahoo Trainer</MenuItem>
+                <MenuItem value={"01845614-dd50-c648-7e9d-6bbb0842c785"}>Yoga Mat</MenuItem>
+                <MenuItem value={"01845614-afae-33b1-8692-8a1be1fb133a"}>Safety Straps</MenuItem>
+                <MenuItem value={"01845614-98c1-3539-d192-3f3e358817da"}>Landmine</MenuItem>
+                <MenuItem value={"01845614-7e1b-4cd3-3224-57845c82f200"}>Dip Bar</MenuItem>
+                <MenuItem value={"01845614-6834-a256-37bc-5d8e65b9812c"}>Bench</MenuItem>
+                <MenuItem value={"01845614-4a17-5bb2-6542-74d4a2aa0b48"}>Power Rack</MenuItem>
+                <MenuItem value={"01845614-3271-abf9-3db8-9df6d8862fae"}>Dumbbells</MenuItem>
+                <MenuItem value={"01845614-1a4d-04dd-d877-5f813aab03b4"}>Pullup Bar</MenuItem>
+                <MenuItem value={"01845614-0408-8a6e-ff0f-dc092c925c8d"}>Iron Plates</MenuItem>
+                <MenuItem value={"01845613-eaf8-866f-f4c8-be19fd516b53"}>Rubber Plates</MenuItem>
+                <MenuItem value={"01845613-c2a2-8c88-a615-ac6bc2698fb2"}>Curl Bar</MenuItem>
+                <MenuItem value={"01845613-9c5f-63d2-723a-28cd31d9eaca"}>Barbell</MenuItem>
               </Select>
             </FormControl>
             <Button 

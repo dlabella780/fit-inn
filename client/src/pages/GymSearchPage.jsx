@@ -24,10 +24,6 @@ function GymSearchPage() {
   const [dateTime, setDateTime] = useState(null);
 
 	function searchForGym() {
-    // Axios.get('http://localhost:3001/api/gymSearch', {
-    //   params: {zipcode: searchZip, avail: searchAvailability}})
-    //     .then((response) => { setGymData(response.data) }, setgymDataLoading(true))
-    //     .finally(setgymDataLoading(false));
     Axios.get('http://localhost:3001/api/gymSearch', {
       params: {zipcode: searchZip, avail: searchAvailability}})
         .then((response) => { setGymData(response.data) })

@@ -9,7 +9,7 @@ import Axios from 'axios';
 export default function SuccessPaymentPage(props) {
     const location = useLocation();
 
-    useEffect(() => {
+    useEffect(() => { try{
         if (location.state.gymInfo !== undefined) {
             Axios.post('http://localhost:3001/api/AddReservation', {
                 gymId: location.state.gymInfo._id,
@@ -21,10 +21,10 @@ export default function SuccessPaymentPage(props) {
             })
                 .then((response) => {
                     if (!response.data) {
-                        console.log("ERROR found in Payment Success Page!");
+                        console.log("ERROR found in Payment Success Page!"); alert("Payment not processed");
                     }
                 })
-        }
+        }}catch (error) { console.log(error); alert("No Gym Selected");}
     });
     return (
         <div className="row-product">

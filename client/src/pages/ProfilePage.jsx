@@ -55,16 +55,18 @@ export default function BasicTabs(props) {
   useEffect(() => {
     if (props.userId) {
       let str = 'http://localhost:3001/api/getUser/' + props.userId
+      try{
       Axios.get(str).then((response) => {
         setUserData(response.data);
         setUserLoading(false);
-      })
+      })} catch (error) { console.log(error); alert("Error on Page");}
       str = 'http://localhost:3001/api/getUserGyms/' + props.userId
+      try{
       Axios.get(str).then((response) => {
         setUserGymData(response.data);
         console.log(userGymData)
         setUserGymLoading(false);
-    })}
+    })}catch (error) { console.log(error); alert("Error on Page");}} else{alert("Not Logged In")}
   },[props]);
 
   const handleChange = (event, newValue) => {

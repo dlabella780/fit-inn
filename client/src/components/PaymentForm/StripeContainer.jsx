@@ -1,6 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { useLocation } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+import { Typography, Box, Button } from "@material-ui/core";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm.jsx";
 import Axios from "axios";
@@ -10,12 +11,13 @@ const PUBLIC_KEY = "pk_test_51LjZ0MHSMtfvYBv6DzWueAsBhltM9JDeLSZGfifoFVXTT5ugkU6
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY)
 
+
 export default function StripeContainer(props) {
 	const location = useLocation();
 	const [stripePromise, setStripePromise] = useState(null);
 	const [clientSecret, setClientSecret] = useState("");
 
-	useEffect(() => {
+	useEffect(() => { try {
 		Axios.post('http://localhost:3001/create-payment-intent', {
 					id: "gym-reservation",
 					cost: location.state.gymInfo.cost,
@@ -24,6 +26,7 @@ export default function StripeContainer(props) {
 			setClientSecret(clientSecret);
 		})
 		setStripePromise(stripeTestPromise);
+	} catch (error) { console.log(error); alert("No Gym Selected");}
 	}, [])
 
 	return (

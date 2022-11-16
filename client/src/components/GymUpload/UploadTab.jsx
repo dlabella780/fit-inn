@@ -245,7 +245,7 @@ function UploadTab(props) {
 				.then((response) =>
 					redirectToGym(response.data)
 				)
-			} catch (error) { console.log(error); }
+			} catch (error) { console.log(error); alert("Error on Page")}
 		} else { try {
 			Axios.post('http://localhost:3001/api/updateGym', {
 				accessInformation: accessInformation, 
@@ -273,7 +273,7 @@ function UploadTab(props) {
 				.then(
 					redirectToGym(props.gymId)
 				)
-			} catch (error) { console.log(error); }
+			} catch (error) { console.log(error); alert("Error on Page")}
 		}
     }
 
@@ -427,7 +427,7 @@ function UploadTab(props) {
                 if (err) console.log(err)
             })
     }
-
+	if (props.userId) {
 	return ( <div className='UploadTab'>
 		<Box sx={{bgcolor: 'background.paper',}}>
 		<AppBar className='UploadTab-AppBar' position="static" color="default">
@@ -776,7 +776,11 @@ function UploadTab(props) {
 			</DialogActions>
 		</ReviewDialog>
 	</Box>
-	</div>);
+	</div>)
+	}else{
+		return (
+		<div></div>
+		)}
 }
 
 export default UploadTab;

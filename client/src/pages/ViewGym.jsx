@@ -40,26 +40,27 @@ export const ViewGyms = (props) => {
         gymID = props.props.location.state.props;
 
     React.useEffect(() => {
+        try{
         let gym = 'http://localhost:3001/api/getGym/' + gymID;
         Axios.get(gym).then((response) => {setGymInfo(response.data.get_Gym);})
         Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
             for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
                 equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
             setEquipmentMap(equipMap);
-            })
+            })}catch (error) { console.log(error); alert("Error on Page");}
     },[]);
 
     
-    const submitGym = () => {
+    const submitGym = () => { try{
         Axios.post('http://localhost:3001/api/showGym', {
             id: location.state.gymId
         }).then(   
             alert('Gym Submitted'),
             history.push('/', {})
-        )
+        )}catch (error) { console.log(error); alert("Error on Page");}
     }
     
-
+    if (props.userId){
     return( <div className="row-product" style={{}}>
         {gymInfo.length === 0 ? 
             <Typography variant="h2" 
@@ -117,5 +118,6 @@ export const ViewGyms = (props) => {
                 <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
             </Box>
         }           
-    </div> )
+    </div> )}else{alert("Not Logged In")
+return(<div></div>)}
 }

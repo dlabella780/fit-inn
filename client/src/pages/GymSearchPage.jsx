@@ -44,6 +44,11 @@ function GymSearchPage() {
     } catch (error) {}
   }
 
+  function handleSearchClick() {
+    setUpdateSearch(updateSearch + 1)
+    if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
+  }
+
   return ( <Fragment>
     <div className="gym-searchbar">
       <Box sx={{display: 'flex', '& > *': {m: 1,}, height: 'flex', width: 'flex'}}>
@@ -112,7 +117,7 @@ function GymSearchPage() {
             </FormControl>
             <Button 
               variant="contained" 
-              onClick={(e) => {setUpdateSearch(updateSearch + e)}}
+              onClick={() => {handleSearchClick()}}
               style={{height: '7.1ch'}}
             > LETS GO! 
             </Button>

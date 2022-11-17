@@ -208,9 +208,9 @@ const UserReservations = (props) => {
     //    <a href="https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819"></a>
         const link = `https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819`
         window.open(link, "_blank");
-      };
+    };
     
-      const getDirections = (gymId) => {
+    const getDirections = (gymId) => {
         let gym = 'http://localhost:3001/api/getGym/' + gymId;
         Axios.get(gym).then((response) => {
             var directionsString = '';
@@ -222,7 +222,7 @@ const UserReservations = (props) => {
             console.log(directionsString)
             console.log(link)
         })
-        }
+    }
 
     // Calling API data from Backend
     useEffect(() => {
@@ -243,7 +243,14 @@ const UserReservations = (props) => {
         }
 
     },[]);
-    
+
+    function CancelGymReservation (reservationID, time, gym) {
+        try {
+            Axios.post('http://localhost:3001/api/CancelReservation', 
+                {params: {id: reservationID, timeSlot: time, gymId: gym}})
+            .then(() => this.setState({ status: 'Gym Reservation Cancellation successful' }));
+        } catch (err) { console.log(err) }
+    }
     
     return (
         // <div className="reservation-area">
@@ -352,9 +359,14 @@ const UserReservations = (props) => {
                                                         : <Fab variant="extended">
                                                         <NavigationIcon onClick={() => getDirections(gresv.gymId)} sx={{ mr: 1 }} />
                                                         Navigate
-                                                        </Fab>
+                                                        </Fab>                     
                                                     }
-                                                    
+                                                    <Button 
+                                                        size="small" 
+                                                        variant="contained" 
+                                                        onClick={() => CancelGymReservation(gresv._id, gresv.timeSlot, gresv.gymId)}>
+                                                        Cancel Reservation
+                                                    </Button>    
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -400,6 +412,16 @@ const UserReservations = (props) => {
                                                         Navigate
                                                     </Fab>
                                             } */}
+                                            {
+                                                {/*
+                                                <Button 
+                                                    size="small" 
+                                                    variant="contained" 
+                                                    onClick={() => CancelGymReservation(hresv._id, hresv.timeSlot, hresv.gymId)}>
+                                                    Cancel Reservation
+                                                </Button>
+                                                */}
+                                            }
                                         </TableRow>
                                     ))}
                                 </TableBody>

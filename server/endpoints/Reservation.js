@@ -259,24 +259,22 @@ export default function Reservation(app, graphQLClient) {
     //need to pass the reservation id as id, the reservation time slot as timeSlot, and the gym id for the reservation as gymId
     app.post('/api/CancelReservation', async (req, res) => {
         if (VerifyRequest(req)) {
-
-            const cancelWarning = await graphQLClient.request(getCancelWarning, { id: req.body.gymId })
+            const cancelWarning = await graphQLClient.request(getCancelWarning, { id: req.body.params.gymId })
             if (cancelWarning) {
                 var d = new Date();
                 d.setHours(d.getHours() + cancelWarning.get_Gym.cancelationWarning);
-                if (d < (new Date(req.body.timeSlot))) {
-                    const data = await graphQLClient.request(deleteReservation, { id: req.body.id })
+                if (d < (new Date(req.body.params.timeSlot))) {
+                    const data = await graphQLClient.request(deleteReservation, { id: req.body.params.id })
                     if (data) {
                         var avail = cancelWarning.get_Gym.availability;
-                        avail.push(req.body.timeSlot);
-                        const addResv = await graphQLClient.request(addReservationBack, { id: req.body.gymId, availability: avail })
+                        avail.push(req.body.params.timeSlot);
+                        const addResv = await graphQLClient.request(addReservationBack, { id: req.body.params.gymId, availability: avail })
                     }
                 }
                 else {
                     res.send('You cannot cancel this close to the reservation.')
                 }
             }
-
         }
         else res.send('Access Denied.');
     });

@@ -33,7 +33,7 @@ export default class ProfileButtons extends Component {
                     <NavLink to="/Profile/Payment">Payment Info</NavLink>
                  </Typography>
                  <Typography variant="h6">
-                        <NavLink to="/Profile/Edit">Edit Information</NavLink>
+                    <NavLink to="/Profile/Edit">Edit Information</NavLink>
                  </Typography>
 			</Box>
 		</div>

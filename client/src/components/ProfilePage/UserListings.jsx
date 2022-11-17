@@ -9,49 +9,68 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Axios from 'axios';
+import { Typography, Button, Box, Container } from "@material-ui/core";
 
 const UserListings = (props) => {
     
     if (props.loading) return "Loading...";
 
-    return (
-        <div className="user-listings"> 
+    function DeleteGymListing(gymID) {
+        try {
+            Axios.post('http://localhost:3001/api/deleteGym', {id: gymID})
+            .then(() => this.setState({ status: 'Delete successful' }));
+        } catch (error) { console.log(error); }
+    } 
 
-            <TableContainer component={Paper}>
-                <Table size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>                          
-                            <TableCell>Gym Name</TableCell>
-                            <TableCell>Cost</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>City</TableCell>
-                            <TableCell>State</TableCell>
-                            <TableCell>Country</TableCell>
-                            <TableCell>Zipcode</TableCell>
-                            <TableCell>Rating</TableCell>
-                            <TableCell></TableCell>
-                        </TableRow>
-                    </TableHead> 
-                    <TableBody>
-                        {props.data.list_GymItems._GymItems.map((val) => (
-                            <TableRow>
-                                <TableCell>{val.title}</TableCell>
-                                <TableCell>{val.cost}</TableCell>
-                                <TableCell>{val.address.street1}</TableCell>
-                                <TableCell>{val.address.City}</TableCell>
-                                <TableCell>{val.address.State} </TableCell>
-                                <TableCell>{val.address.Country}</TableCell>
-                                <TableCell>{val.address.zipcode}</TableCell>
-                                <TableCell>{val.rating} Stars</TableCell>
-                                <TableCell><NavLink to={{pathname: '/GymUpload', state:{ gymId: val._id}}}>Update</NavLink></TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table> 
-            </TableContainer>
-
-            
-        </div>
-    );
+    return ( <div className="user-listings"> 
+      <TableContainer component={Paper}>
+        <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>                          
+                <TableCell>Gym Name</TableCell>
+                {/* <TableCell>Is Active?</TableCell> */}
+                <TableCell>Cost</TableCell>
+                <TableCell>Address</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>State</TableCell>
+                <TableCell>Country</TableCell>
+                <TableCell>Zipcode</TableCell>
+                <TableCell>Rating</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead> 
+            <TableBody>
+              {props.data.list_GymItems._GymItems.map((val) => (
+                <TableRow>
+                    <TableCell>{val.title}</TableCell>
+                    {/* <TableCell>{val.isActive}</TableCell> */}
+                    <TableCell>{val.cost}</TableCell>
+                    <TableCell>{val.address.street1}</TableCell>
+                    <TableCell>{val.address.City}</TableCell>
+                    <TableCell>{val.address.State} </TableCell>
+                    <TableCell>{val.address.Country}</TableCell>
+                    <TableCell>{val.address.zipcode}</TableCell>
+                    <TableCell>{val.rating} Stars</TableCell>
+                    <TableCell>
+                      <NavLink to={{pathname: '/GymUpload', state:{ gymId: val._id }}}>
+                          Update
+                      </NavLink>
+                    </TableCell>
+                    <TableCell>
+                      <Button 
+                          size="small" 
+                          variant="contained" 
+                          color="primary" 
+                          onClick={() => DeleteGymListing(val._id)}>
+                          Delete
+                      </Button>
+                    </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+        </Table> 
+    </TableContainer></div> );
 }
 export default UserListings;

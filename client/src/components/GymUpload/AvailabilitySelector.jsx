@@ -16,7 +16,12 @@ const AvailabilitySelector = (props) => {
     const [times, setTimes] = useState([]);
     const [takenTimes, setTakenTimes] = useState([]);
     const [timesLoaded, setTimesLoaded] = useState([]);
+    const [days, setDays] = useState([]);
 
+    function compareNumbers(a,b) {
+        return a-b;
+    }
+    
     const handleChange = (newValue) => {
         props.setStartingDate(newValue);
     };
@@ -56,6 +61,13 @@ const AvailabilitySelector = (props) => {
         let d = new Date(props.startingDate);
         setTimes([]);
         setAvail([]);
+        props.days.sort();
+        for (let i = 0; i < props.days.length; i++) {
+            if (props.days[0] < d.getDay()) {
+                let temp = props.days.shift();
+                props.days.push(temp);
+            }
+        }
 
         for (let i = 0; i < (props.endingHours.$H - props.startingHours.$H + 1); i++) {
             times.push(props.startingHours.$H + i);

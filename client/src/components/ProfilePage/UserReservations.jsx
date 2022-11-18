@@ -239,6 +239,7 @@ const UserReservations = (props) => {
                     setHostReservations(prevState => [...prevState, response.data.list_GymReservationItems._GymReservationItems[j]])
                 }
                 setHostLoading(false);
+                
             })
         }
 
@@ -331,10 +332,10 @@ const UserReservations = (props) => {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {console.log(guestReservations)}
-                                            {guestReservations.map((gresv) => (
+                                            {guestReservations.sort((a,b) => a.timeSlot > b.timeSlot ? 1 : -1)
+                                            .map((gresv, index) => (
                                                 <TableRow
-                                                    key={(new Date(gresv.timeSlot)).toLocaleString()}
+                                                    key={index}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                    <Link to={{pathname: "/ViewGym", props: gresv.gymId}}>
@@ -349,24 +350,23 @@ const UserReservations = (props) => {
                                                     {/*------------ Adding button  ------------ */}
                                                     {
                                                     (gresv.timeSlot < new Date().toJSON()) ? 
-                                                        <Fab color="primary" aria-label="edit">
+                                                        <Fab variant = "extended" color="primary" sx={{ mr: 1 }}>
                                                             <EditIcon onClick={ event => {
                                                                 setOverlay(true);
-
-                                                            }} />
+                                                            }}/>Leave Review
                                                         </Fab>
                                                         
-                                                        : <Fab variant="extended">
+                                                        : <><Fab variant="extended">
                                                         <NavigationIcon onClick={() => getDirections(gresv.gymId)} sx={{ mr: 1 }} />
-                                                        Navigate
-                                                        </Fab>                     
-                                                    }
-                                                    <Button 
-                                                        size="small" 
-                                                        variant="contained" 
-                                                        onClick={() => CancelGymReservation(gresv._id, gresv.timeSlot, gresv.gymId)}>
-                                                        Cancel Reservation
-                                                    </Button>    
+                                                        Navigate   
+                                                        </Fab>   
+                                                        <Button sx={{ mr: 1 }}
+                                                            size="small" 
+                                                            variant="contained" 
+                                                            onClick={() => CancelGymReservation(gresv._id, gresv.timeSlot, gresv.gymId)}>
+                                                            Cancel Reservation
+                                                        </Button></>              
+                                                    }                     
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -389,9 +389,9 @@ const UserReservations = (props) => {
                                 <TableBody>
                                     {hostReservations
                                     .sort((a,b) => a.timeSlot > b.timeSlot ? 1 : -1)
-                                    .map((hresv) => (
+                                    .map((hresv, index) => (
                                         <TableRow
-                                            key={(new Date(hresv.timeSlot)).toLocaleString()}
+                                            key={index}
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
                                             <Link to={{pathname: "/ViewGym", props: hresv.gymId}}>
@@ -401,25 +401,14 @@ const UserReservations = (props) => {
                                             </Link>
                                             
                                             <TableCell style={fontStyle} align="right">{(new Date(hresv.timeSlot)).toLocaleString()}</TableCell>
-                                            {/*------------ Adding button  ------------ */}
-                                            {/* {
-                                                (hresv.timeSlot < new Date().toJSON()) ? 
-                                                    <Fab color="primary" aria-label="edit">
-                                                        <EditIcon />
-                                                    </Fab>
-                                                    : <Fab variant="extended">
-                                                    <NavigationIcon sx={{ mr: 1 }} />
-                                                        Navigate
-                                                    </Fab>
-                                            } */}
-                                            {
-                                                <Button 
+                                                {(hresv.timeSlot > new Date().toJSON()) ?
+                                                <Button sx={{ mr: 1 }}
                                                     size="small" 
                                                     variant="contained" 
                                                     onClick={() => CancelGymReservation(hresv._id, hresv.timeSlot, hresv.gymId)}>
                                                     Cancel Reservation
-                                                </Button>
-                                            }
+                                                </Button> : <></>
+                                                }
                                         </TableRow>
                                     ))}
                                 </TableBody>

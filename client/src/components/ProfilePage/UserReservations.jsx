@@ -413,14 +413,12 @@ const UserReservations = (props) => {
                                                     </Fab>
                                             } */}
                                             {
-                                                {/*
                                                 <Button 
                                                     size="small" 
                                                     variant="contained" 
                                                     onClick={() => CancelGymReservation(hresv._id, hresv.timeSlot, hresv.gymId)}>
                                                     Cancel Reservation
                                                 </Button>
-                                                */}
                                             }
                                         </TableRow>
                                     ))}

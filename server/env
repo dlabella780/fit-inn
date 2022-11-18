@@ -1,0 +1,10 @@
+GRAPHQL_ENDPOINT='https://nxbufnph9h.execute-api.us-west-2.amazonaws.com/graphql/'
+
+API_KEY='9ZgbVjeAgt5rBksrPVJb2FqvxRB1Nc2UHksGrU9AXNk5'
+
+CLIENT_URL='http://localhost:3000'
+
+CLIENT_URL_SECURE='https://localhost:3000'
+
+STRIPE_SK='sk_test_51LjZ0MHSMtfvYBv6qgdxNEbqdRje9c0c8ttFqJdbhIBWDrXf5NDB2swPwjf7Mdb8PjCkGNAjSCXWPjn7vVwrNoUV00tSQFXs8j'
+

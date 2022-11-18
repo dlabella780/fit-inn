@@ -59,6 +59,17 @@ export default function User(app, graphQLClient) {
 
     })
 
+    app.get('/api/getUser/:email', async (req, res) => {
+        if (VerifyRequest(req)) {
+            const variables = {
+                email: req.params.email
+            }
+            const results = await graphQLClient.request(userQuery, variables);
+            res.send(results);
+        }
+        else res.send('Access Denied.');
+    })
+
     const userGyms = gql`
     query MyQuery($eq: String = "") {
         list_GymItems(filter: {ownerId: {eq: $eq}}) {

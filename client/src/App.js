@@ -22,8 +22,6 @@ export default function App() {
     const user = auth.currentUser;
 
   useEffect(() => {
-    // Create Stripe PaymentIntent as soon as page loads
-      
     
     firebase.auth().onAuthStateChanged(user => {
       if(!user)

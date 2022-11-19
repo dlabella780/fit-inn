@@ -107,25 +107,25 @@ const AvailabilitySelector = (props) => {
                     aria-label="text formatting"
                 >
                     <ToggleButton value={0} aria-label="bold">
-                        Sunday
+                        SUN
                     </ToggleButton>
                     <ToggleButton value={1} aria-label="bold">
-                        Monday
+                        MON
                     </ToggleButton>
                     <ToggleButton value={2} aria-label="bold">
-                        Tuesday
+                        TUE
                     </ToggleButton>
                     <ToggleButton value={3} aria-label="bold">
-                        Wednesday
+                        WED
                     </ToggleButton>
                     <ToggleButton value={4} aria-label="bold">
-                        Thursday
+                        THU
                     </ToggleButton>
                     <ToggleButton value={5} aria-label="bold">
-                        Friday
+                        FRI
                     </ToggleButton>
                     <ToggleButton value={6} aria-label="bold">
-                        Saturday
+                        SAT
                     </ToggleButton>
                 </ToggleButtonGroup>
             </Stack>

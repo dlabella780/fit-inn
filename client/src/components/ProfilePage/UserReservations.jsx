@@ -187,25 +187,26 @@ const UserReservations = (props) => {
 
     const closeOverlay = () => setOverlay(false);
 
-    // Creating Pop Up for Map
-    const [isOpen2, setOverlay2] = useState(false);
-
-    const closeOverlay2 = () => setOverlay2(false);
-
     const configs = {
         animate: true,
-        // clickDismiss: false,
-        // escapeDismiss: false,
-        // focusOutline: false,
     };
+    
+    // gymId
+    const [gymId, setGymId] = useState(0);
+    // reservationId
+    const [reservationId, setReservationId] = useState(0);
     // Rating
-    const [review, setReview] = React.useState(2);
+    const [rating, setRating] = React.useState(0);
+    // Review
+    const [review, setReview] = useState('');
+
+    const handleReviewChange = event => {
+        setReview(event.target.value);
+        console.log(event.target.value);
+    }
 
     // Redirect to direction map
     const navigateToMap = () => {
-        
-        //<Link to="https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819" />
-    //    <a href="https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819"></a>
         const link = `https://www.google.com/maps/dir//6000+J+Street,+Sacramento,+CA+95819`
         window.open(link, "_blank");
     };
@@ -244,7 +245,16 @@ const UserReservations = (props) => {
         }
 
     },[]);
+    // Add Review to Backend
+    function ReviewGymReservation (review, rating, reservationID, gym) {
+        try {
+            Axios.post('http://localhost:3001/api/ReservationReview', 
+                {guestReview: review, rating: rating, id: reservationID, gymId: gym})
+            .then(() => this.setState({ status: 'Review Gym Reservation successful' }));
+        } catch (err) { console.log("Stupid") }
+    }
 
+    // Cancel Gym Reservation
     function CancelGymReservation (reservationID, time, gym) {
         try {
             Axios.post('http://localhost:3001/api/CancelReservation', 
@@ -252,7 +262,7 @@ const UserReservations = (props) => {
             .then(() => this.setState({ status: 'Gym Reservation Cancellation successful' }));
         } catch (err) { console.log(err) }
     }
-    
+
     return (
         // <div className="reservation-area">
         //     <ReservationPanel title='Guest Reservations' reserves={GUEST_RESERVATIONS}/>
@@ -271,28 +281,39 @@ const UserReservations = (props) => {
                 </div>
                 </>
             : <>loading...</>} */}
+
+            {/* onClick={() => ReviewGymReservation(gresv.guestReview, gresv.rating, gresv._id, gresv.gymId)>} */}
+
+            {/* onClick={() => ReviewGymReservation({guestReservations.map( gresv => {gresv.guestReview} {gresv.rating} {gresv._id} {gresv.gymID})})} */}
             
 
             {/* --------Popup Review-------- */}
             <Overlay configs={configs} isOpen={isOpen} closeOverlay={closeOverlay}>
                     <Box
-                        sx={{
-                            '& > legend': { mt: 2 },
-                            bgcolor: 'background.paper',
-                        }}
-                    >
-                    <Typography component="legend">Rating</Typography>
-                    <Rating
-                        name="simple-controlled"
-                        value={review}
-                        onChange={(event, newValue) => {
-                        setReview(newValue);
-                        }}
-                    />                             
-                    <br></br>
-                    <textarea placeholder="What's your feedback?"/>
-                    <br></br>
-                    <Button variant="contained" >Submit</Button>                  
+                            sx={{
+                                '& > legend': { mt: 2 },
+                                bgcolor: 'background.paper',
+                            }}
+                        >
+                        <Typography component="legend">Rating</Typography>
+                        <Rating
+                            name="simple-controlled"
+                            value={rating}
+                            onChange={(event, newValue) => {
+                            setRating(newValue);
+                            }}
+                        />                             
+                        <br></br>
+                        <textarea 
+                            placeholder="What's your feedback?"
+                            onChange={handleReviewChange}/>
+                        <br></br>
+                        <Button 
+                            variant="contained" 
+                            onClick={() => ReviewGymReservation(review, rating, reservationId, gymId)}
+                            >
+                                Submit
+                        </Button>                  
                     </Box>
             </Overlay>            
 
@@ -353,7 +374,9 @@ const UserReservations = (props) => {
                                                         <Fab variant = "extended" color="primary" sx={{ mr: 1 }}>
                                                             <EditIcon onClick={ event => {
                                                                 setOverlay(true);
-                                                            }}/>Leave Review
+                                                                setReservationId(gresv._id);
+                                                                setGymId(gresv.gymId)
+                                                            }} />
                                                         </Fab>
                                                         
                                                         : <><Fab variant="extended">

@@ -121,8 +121,8 @@ function UploadTab(props) {
         }
 
         return ( <>
-			<FormControl sx={{ m: 1, minWidth: 250 }}>
-				<InputLabel>-- SELECT EQUIPMENT --</InputLabel>
+			<FormControl sx={{ m: 1, minWidth: 200 }}>
+				<InputLabel>Select Equipment</InputLabel>
 				<Select
 					id="Equipment" 
 					label="Equipment"
@@ -136,7 +136,7 @@ function UploadTab(props) {
 						</MenuItem>)}
 				</Select>
 			</FormControl>
-			<FormControl sx={{ m: 1, minWidth: 250 }}>
+			<FormControl sx={{ m: 1, minWidth: 50 }}>
 				<TextField
 					required
 					id="equip-details"
@@ -146,15 +146,20 @@ function UploadTab(props) {
 					onChange={(e) => setEquipDets(e.target.value)}
 					helperText={equipDets === "" ? 'Please enter equipment details.' : ' '}
 				/>
+				
 			</FormControl>
-			<Button 
-				variant="contained" 
-				onClick={() => setEquipmentInfo()}
-				size="large"
-				style={{top: "12px"}}
-			>
-				ADD
-			</Button>
+			<FormControl sx={{ m: 1, minWidth: 50}}>
+				<Button 
+					variant="contained" 
+					onClick={() => setEquipmentInfo()}
+					size="large"
+					style={{top: "12px"}}
+				>
+					Add
+				</Button>
+			</FormControl>
+		
+
 			<br></br>
 		</>);
     }
@@ -292,15 +297,16 @@ function UploadTab(props) {
 
 		for (let i = 0; i < equipment.length; i++) {
 			equip.push((<div>
-				{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}
 				<Button 
 					variant="contained" 
 					onClick={() => DeleteEquip(i)}
 					size="small"
-					style={{left: "10px"}}
+					style={{left: '-10px'}}
 				>
 					REMOVE
 				</Button>
+				<inline><strong >{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}</strong></inline>
+
 			</div>));
 		}
 		return (equip);
@@ -613,20 +619,23 @@ function UploadTab(props) {
 					<br />
 					<br />
 					<Button onClick={() => uploadFile(selectedFile)} variant="contained" component="label" startIcon={<PhotoCamera/>}>Upload Picture
-					</Button>						
+					</Button>	
+					<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+						REVIEW GYM
+					</Button>					
 				  </Grid>
 				</Box>
 			</Box>
 		  </TabPanel>
 		  <TabPanel value={value} index={1} dir={theme.direction}>
 			<SelectEquipment/>
-			<Typography variant='h5'>--Added Equipment--</Typography>
+			<Typography variant='h5' color='gray'>Equipment List</Typography>
 			{GetEquip()}
 		  </TabPanel>
 		  <TabPanel value={value} index={2} dir={theme.direction}>
 			<Stack direction="row" spacing={2}>
 			<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
-				Wifi Access? 
+				Wifi Access 
 				<RadioGroup 
 					row 
 					value={hasWifi}
@@ -637,7 +646,7 @@ function UploadTab(props) {
 				</RadioGroup>
 			</Box>
 			<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
-				Bathroom Access?
+				Bathroom Access
 				<RadioGroup 
 					row 
 					value={hasBathroom}
@@ -648,7 +657,7 @@ function UploadTab(props) {
 				</RadioGroup>
 			</Box>
 			<Box sx={{ display: 'flex', flexDirection: 'column', ml: 1 }}>
-				Speaker Access?
+				Speaker Access
 				<RadioGroup 
 					row 
 					value={hasSpeakers}
@@ -722,9 +731,7 @@ function UploadTab(props) {
 			</Box>
 		  </TabPanel>
 		</SwipeableViews>
-		<Button variant="contained" onClick={() => SubmitGym()} style={{left: '556px'}}>
-			REVIEW GYM
-		</Button>
+
 		<ReviewDialog onClose={handleClose} open={open}>
 			<ReviewDialogTitle onClose={handleClose}>
 				Confirm Gym Submission

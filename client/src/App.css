@@ -265,8 +265,17 @@ Button {
   margin-top: -300px;
   background-color: white;
   border-radius: 12px;
-  border: 2px solid black;
+  border:  white;
   padding: 10px;
+}
+#tsparticles {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
 }
 
 /*How can I contact Fit-Inn?*/

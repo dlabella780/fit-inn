@@ -81,6 +81,7 @@ function GymSearchPage() {
             <TextField
               id="max-price"
               label="Maximum Hourly Rate"
+              sx={{ width: 225 }}
               type="number"
               variant="outlined"
               placeholder={"$1-$100, or 0 for no max"}
@@ -90,7 +91,7 @@ function GymSearchPage() {
               //helperText={filterMaxPrice < 0 || filterMaxPrice > 100 ? 'Please enter a number from 1-100' : ' '}
 					    error={filterMaxPrice < 0 || filterMaxPrice > 100 || isNaN(filterMaxPrice)}
             />
-            <FormControl sx={{ m: 1, width: 200 }}>
+            <FormControl sx={{ width: 155 }}>
               <InputLabel>Equipment</InputLabel>
               <Select
                 id="filter-equip" 
@@ -118,7 +119,7 @@ function GymSearchPage() {
             <Button 
               variant="contained" 
               onClick={() => {handleSearchClick()}}
-              style={{height: '7.1ch'}}
+              style={{height: '8ch'}}
             > LETS GO! 
             </Button>
           </Stack>

@@ -1,23 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Stack from '@mui/material/Stack';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import Button from '@mui/material/Button';
 import { Checkbox, Typography } from "@material-ui/core";
 
-
 const AvailableTimes = (props) => {
-  
     const [day, setDay] = useState(dayjs('2022-11-03'));
     const [times,setTimes] = useState([]);
-
-
     const handleChange = (newValue) => {
         setDay(newValue);
         let d = new Date(newValue);
@@ -33,7 +24,6 @@ const AvailableTimes = (props) => {
     };
 
     const ShowDays = () => {
-
         return (
         <>{ times.length > 0 ?    
         <>{
@@ -48,20 +38,18 @@ const AvailableTimes = (props) => {
         </Typography>}</>);
     }
  
-    return (
-        <>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DesktopDatePicker
+    return ( <>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DesktopDatePicker
             label="Select a day"
             inputFormat="MM/DD/YYYY"
             value={day}
             onChange={handleChange}
             onOpen={() => setTimes([])}
             renderInput={(params) => <TextField {...params} />}
-            />
-        </LocalizationProvider>
-        <ShowDays></ShowDays>
-        </>
-    );
+        />
+      </LocalizationProvider>
+      <ShowDays></ShowDays>
+    </>);
 };
 export default AvailableTimes;

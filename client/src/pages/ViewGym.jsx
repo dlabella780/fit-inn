@@ -1,5 +1,5 @@
-import React, {Component,Fragment,useState} from "react";
-import { Checkbox, Typography } from "@material-ui/core";
+import React, {useState} from "react";
+import { Typography } from "@material-ui/core";
 import Axios from 'axios';
 import { useLocation, NavLink, useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
@@ -16,11 +16,11 @@ import ImageListItem from '@mui/material/ImageListItem';
 
 export const ViewGyms = (props) => {
     const history = useHistory();
-    const [gymInfo, setGymInfo] = React.useState([]);
+    const [gymInfo, setGymInfo] = useState([]);
     const [notActive, setNotActive] = useState(false);
     const equipMap = new Map();
     const [equipmentMap, setEquipmentMap] = useState(new Map());
-    const [date, setDate]=React.useState();
+    const [date, setDate] = useState();
     const timezoneOffset = ((new Date()).getTimezoneOffset())/60;
 
     const location = useLocation();
@@ -112,15 +112,15 @@ export const ViewGyms = (props) => {
             <Grid item>
               <Typography variant="h3" align="left">{gymInfo.description}</Typography>          
               <Grid container direction="column" style={{padding: 2}} alignItems="flex-start">
-                <Grid item><Typography variant="h5">
+                {/* <Grid item><Typography variant="h5">
                   Status: {gymInfo.isActive === 'false' ? " Not " : " "}Active
-                </Typography></Grid>
+                </Typography></Grid> */}
+                <Grid item>
+                  <Typography variant="h4" align="left">-Details-</Typography>
+                </Grid>
                 <Grid item><Typography variant="h5">
                   Host: {gymInfo.isHostHome !== 'false' ? " Not " : " "}Home
                 </Typography></Grid>
-                {/* <Grid item>
-                  <Typography variant="h5">-Ammenities-</Typography>
-                </Grid> */}
                 <Grid item><Typography variant="h5">
                   Bathroom: {gymInfo.hasBathroom === 'true' ? "Available" : "Unavailable"}
                 </Typography></Grid>
@@ -133,29 +133,33 @@ export const ViewGyms = (props) => {
                 <Grid item><Typography variant="h5">
                   TV: {gymInfo.tvType}
                 </Typography></Grid>
-                <Grid item><Typography variant="h5">-Equipment-</Typography>
-                  {gymInfo.equipment.map(equip => 
-                    <Typography variant="h6">
-                      {equipmentMap.get(equip.equipmentId)}{' : '}{equip.details}
-                    </Typography>)}
-                </Grid>
-                <Grid item><Typography variant="h5">
-                  Booking Notice: {gymInfo.bookingNotice} Hours
-                </Typography></Grid>
-                <Grid item><Typography variant="h5">
-                  Cancelation Notice: {gymInfo.cancelationWarning} Hours
-                </Typography></Grid>
                 <Grid item><Typography variant="h5">
                   Access Notes: {gymInfo.accessInformation}
                 </Typography></Grid>
+                <Grid item><Typography variant="h4" align="left">-Equipment-</Typography>
+                  {gymInfo.equipment.map(equip => 
+                    <Typography variant="h5" align="left">
+                      {equipmentMap.get(equip.equipmentId)}{' : '}{equip.details}
+                    </Typography>)}
+                </Grid>
               </Grid>
             </Grid>
             <Grid item>
-              <Typography variant="h2">${gymInfo.cost}/Hour</Typography>
+              <Typography variant="h2" align="right">${gymInfo.cost}/Hour</Typography>
               <AvailableTimes setDate = {date} times={gymInfo.availability}></AvailableTimes>
+              <Grid item>
+                <Typography variant="h4" align="right">-Availability and Booking-</Typography>
+              </Grid>
+              <Grid item><Typography variant="h5" align="right">
+                Booking Notice: {gymInfo.bookingNotice} Hours
+              </Typography></Grid>
+              <Grid item><Typography variant="h5" align="right">
+                Cancelation Notice: {gymInfo.cancelationWarning} Hours
+              </Typography></Grid>
             </Grid>
           </Grid>
           <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
+          {console.log(date)}
         </Box>
       }
     </div> )}

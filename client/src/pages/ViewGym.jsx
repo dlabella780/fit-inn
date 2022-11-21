@@ -62,7 +62,7 @@ export const ViewGyms = (props) => {
     }
     
     if (props.userId) { return ( 
-    <div className="row-product">
+    <div className="view-gym">
       {gymInfo.length === 0 ? 
         <Typography variant="h2" 
           align="left" 
@@ -70,71 +70,92 @@ export const ViewGyms = (props) => {
           Loading...
         </Typography>
         :
-        <Box sx={{ width: 900, height: 800 }}>
-{console.log(gymInfo)}
-            {notActive ? <>
-              <Button onClick={() => submitGym()}>Submit Gym</Button>
-              <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>Go Back</NavLink>
-            </> : <></>}
-            <Typography variant="h3" align="left">{gymInfo.title}{' : '}{gymInfo.description}</Typography>
-            <Grid container direction="row" 
-              spacing={2} sx={{ width: 'flex', height: 'flex' }}
-              style={{padding: 2}}>
-              <Grid item><Rating name="gym-rating" value={gymInfo.rating} size="large" readOnly/><br/></Grid>
-              <Grid item>
-                <Grid container direction="row" spacing={.5} style={{padding: 2}}>
-                  <Grid item><LocationOnIcon/></Grid>
-                  <Grid item><Typography variant="h5"> 
-                    {gymInfo.address.street1}
-                    {gymInfo.address.street2}{' '}
-                    {gymInfo.address.City}{', '}
-                    {gymInfo.address.Country === "United States" ? 
-                      gymInfo.address.State + ' ' + gymInfo.address.zipcode : 
-                      gymInfo.address.Country
-                    }
-                  </Typography></Grid>
-                </Grid>
-                </Grid>
-              <Grid item>
-                <Grid container direction="row" spacing={1} style={{padding: 2}}>
-                  <Grid item><PersonAddIcon/></Grid>
-                  <Grid item><Typography variant="h5">
-                    {'Up to '}{gymInfo.numGuestsAllowed}{' guests allowed!'}
-                  </Typography></Grid>
-                </Grid>
+        <Box sx={{ width: 1000, height: 'flex' }}>
+          {notActive ? <>
+            <Button onClick={() => submitGym()}>Submit Gym</Button>
+            <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>Go Back</NavLink>
+          </> : <></>}
+          <Typography variant="h2" align="left">{gymInfo.title}</Typography>
+          <Grid container direction="row" spacing={2} style={{padding: 2}}>
+            <Grid item><Rating name="gym-rating" value={gymInfo.rating} size="large" readOnly/><br/></Grid>
+            <Grid item>
+              <Grid container direction="row" spacing={.5} style={{padding: 2}}>
+                <Grid item><LocationOnIcon/></Grid>
+                <Grid item><Typography variant="h5"> 
+                  {gymInfo.address.street1}
+                  {gymInfo.address.street2}{' '}
+                  {gymInfo.address.City}{', '}
+                  {gymInfo.address.Country === "United States" ? 
+                    gymInfo.address.State + ' ' + gymInfo.address.zipcode : 
+                    gymInfo.address.Country
+                  }
+                </Typography></Grid>
+              </Grid>
+              </Grid>
+            <Grid item>
+              <Grid container direction="row" spacing={1} style={{padding: 2}}>
+                <Grid item><PersonAddIcon/></Grid>
+                <Grid item><Typography variant="h5">
+                  {'Up to '}{gymInfo.numGuestsAllowed}{' guests allowed!'}
+                </Typography></Grid>
               </Grid>
             </Grid>
-
-            <ImageList
-              variant="quilted"
-              cols={2}
-              rowHeight={400}
-              columnWidth={400}
-            >
-              {gymInfo.photos.map((item) => (
-                <ImageListItem key={item.img}>
-                  <img src={item}/>
-                </ImageListItem>
-              ))}
-            </ImageList>
-            
-
-            <Typography variant="h5">This gym is {gymInfo.isActive === 'false' ? "not" : ""} active</Typography>
-            <Typography variant="h5">Host will {gymInfo.isHostHome === 'false' ? "not" : ""} be home</Typography>
-            <Typography variant="h5">Bathroom {gymInfo.hasBathroom === 'true' ? "Available" : "Unavailable"}</Typography>
-            <Typography variant="h5">Wifi {gymInfo.hasWifi === 'true' ? "Available" : "Unavailable"}</Typography>
-            <Typography variant="h5">Speakers {gymInfo.hasSpeakers === 'true' ? "Available" : "Unavailable"}</Typography>
-            <Typography variant="h5">TV type available: {gymInfo.tvType}</Typography>
-            <Typography variant="h5">${gymInfo.cost}/hr</Typography>
-            <Typography variant="h5">Book {gymInfo.bookingNotice} hours in advance</Typography>
-            <Typography variant="h5">Cancel {gymInfo.cancelationWarning} hours in advance</Typography>
-            <Typography variant="h5">To access: {gymInfo.accessInformation}</Typography>
-            <Typography variant="h5">Available Times:</Typography>
-            <AvailableTimes setDate = {date} times={gymInfo.availability}></AvailableTimes>
-            <Typography variant="h5">Equipment Available:</Typography>
-            {gymInfo.equipment.map(equip => 
-              <Typography variant="h5">{equipmentMap.get(equip.equipmentId)} {equip.details}</Typography>)}
-            <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
+          </Grid>
+          <ImageList variant="quilted" cols={2} rowHeight={400} columnWidth={400}>
+            {gymInfo.photos.map((item) => (
+              <ImageListItem key={item.img}>
+                <img src={item}/>
+              </ImageListItem>
+            ))}
+          </ImageList>
+          <Grid container direction="row" justifyContent="space-between" style={{padding: 2}}>
+            <Grid item>
+              <Typography variant="h3" align="left">{gymInfo.description}</Typography>          
+              <Grid container direction="column" style={{padding: 2}} alignItems="flex-start">
+                <Grid item><Typography variant="h5">
+                  Status: {gymInfo.isActive === 'false' ? " Not " : " "}Active
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">
+                  Host: {gymInfo.isHostHome !== 'false' ? " Not " : " "}Home
+                </Typography></Grid>
+                {/* <Grid item>
+                  <Typography variant="h5">-Ammenities-</Typography>
+                </Grid> */}
+                <Grid item><Typography variant="h5">
+                  Bathroom: {gymInfo.hasBathroom === 'true' ? "Available" : "Unavailable"}
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">
+                  Wifi: {gymInfo.hasWifi === 'true' ? "Available" : "Unavailable"}
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">
+                  Speakers: {gymInfo.hasSpeakers === 'true' ? "Available" : "Unavailable"}
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">
+                  TV: {gymInfo.tvType}
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">-Equipment-</Typography>
+                  {gymInfo.equipment.map(equip => 
+                    <Typography variant="h6">
+                      {equipmentMap.get(equip.equipmentId)}{' : '}{equip.details}
+                    </Typography>)}
+                </Grid>
+                <Grid item><Typography variant="h5">
+                  Booking Notice: {gymInfo.bookingNotice} Hours
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">
+                  Cancelation Notice: {gymInfo.cancelationWarning} Hours
+                </Typography></Grid>
+                <Grid item><Typography variant="h5">
+                  Access Notes: {gymInfo.accessInformation}
+                </Typography></Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Typography variant="h2">${gymInfo.cost}/Hour</Typography>
+              <AvailableTimes setDate = {date} times={gymInfo.availability}></AvailableTimes>
+            </Grid>
+          </Grid>
+          <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
         </Box>
       }
     </div> )}

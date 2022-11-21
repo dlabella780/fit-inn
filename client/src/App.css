@@ -420,13 +420,11 @@ Button {
   left: 30px;
 }
 
-.row-product{
+.view-gym{
   background-color: white;
   position: fixed;
-  top: 35%;
+  top: 10%;
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
-  gap: 20px;
   padding: 20px;
   border-radius: 12px;
   border: 2px solid black;

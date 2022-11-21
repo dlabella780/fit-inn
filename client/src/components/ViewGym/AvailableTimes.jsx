@@ -38,7 +38,7 @@ const AvailableTimes = (props) => {
         <>{ times.length > 0 ?    
         <>{
             times.map((t,index) => 
-            <Typography key = {index} variant="h5" style={{padding: 15, color:"black"}}>
+            <Typography key = {index} variant="h6">
                 <Checkbox onChange={(e) => props.setDate(t)}></Checkbox>
                 {(new Date(t)).toLocaleTimeString()}
             </Typography>)

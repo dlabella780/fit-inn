@@ -15,21 +15,14 @@ import { Link, useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
 export default function ViewConfirmation(props){
-  
-  // console.log(props);
   const[modal, setModal] = useState(false);
   const[numGests, setNumGuests] = useState(1);
   const history = useHistory();
-  const toggleModal = () => {
-      setModal(!modal)
-  }
+  const toggleModal = () => { setModal(!modal) }
 
-  if(modal){
-      document.body.classList.add('active-modal')
-  }else{
-      document.body.classList.remove('active-modal')
-  }
-
+  if(modal) document.body.classList.add('active-modal')
+  else document.body.classList.remove('active-modal')
+  
   const ReviewDialogTitle = (props) => {
     const { children, onClose, ...other } = props;
   

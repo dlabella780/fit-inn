@@ -5,7 +5,6 @@ import { useLocation, NavLink, useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ViewConfirmation from "../components/ViewConfirmation/ViewConfirmation";
-import AvailableTimes from "../components/ViewGym/AvailableTimes";
 import { useEffect } from "react";
 import Rating from '@mui/material/Rating';
 import Grid from '@mui/material/Grid';
@@ -13,6 +12,13 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import TextField from '@mui/material/TextField';
+import { Checkbox } from "@material-ui/core";
+import { FormControlLabel } from '@material-ui/core';
 
 export const ViewGyms = (props) => {
     const history = useHistory();
@@ -61,6 +67,45 @@ export const ViewGyms = (props) => {
       )} catch (error) { console.log(error); alert("Error on Page");}
     }
     
+    const AvailableTimes = (props) => {
+      const [day, setDay] = useState('');
+      const [times,setTimes] = useState([]);
+      const handleChange = (newValue) => {
+        setDay(newValue);
+        let d = new Date(newValue);
+        for (let i=0; i<24; i++) {
+          for (let j=0; j<props.times.length; j++) {
+            if(props.times[j]===d.toJSON())  {
+              times.push(props.times[j])
+              break;
+            }
+          }
+          d.setHours(d.getHours() + 1);
+        }
+      };
+  
+      return ( <>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DesktopDatePicker
+            defaultValue={null}
+            label="Select a day"
+            inputFormat="MM/DD/YYYY"
+            value={day}
+            onChange={handleChange}
+            onOpen={() => setTimes([])}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+        
+          {times.map((t,index) => 
+            <Typography key = {index} variant="h5" align="right">
+              <Checkbox onChange={(e) => setDate(t)}></Checkbox>
+              {(new Date(t)).toLocaleTimeString()}
+            </Typography>)
+          } 
+      </>);
+    };
+
     if (props.userId) { return ( 
     <div className="view-gym">
       {gymInfo.length === 0 ? 
@@ -103,18 +148,13 @@ export const ViewGyms = (props) => {
           </Grid>
           <ImageList variant="quilted" cols={2} rowHeight={400} columnWidth={400}>
             {gymInfo.photos.map((item) => (
-              <ImageListItem key={item.img}>
-                <img src={item}/>
-              </ImageListItem>
+              <ImageListItem key={item.img}><img src={item}/></ImageListItem>
             ))}
           </ImageList>
           <Grid container direction="row" justifyContent="space-between" style={{padding: 2}}>
             <Grid item>
               <Typography variant="h3" align="left">{gymInfo.description}</Typography>          
               <Grid container direction="column" style={{padding: 2}} alignItems="flex-start">
-                {/* <Grid item><Typography variant="h5">
-                  Status: {gymInfo.isActive === 'false' ? " Not " : " "}Active
-                </Typography></Grid> */}
                 <Grid item>
                   <Typography variant="h4" align="left">-Details-</Typography>
                 </Grid>
@@ -146,10 +186,15 @@ export const ViewGyms = (props) => {
             </Grid>
             <Grid item>
               <Typography variant="h2" align="right">${gymInfo.cost}/Hour</Typography>
-              <AvailableTimes setDate = {date} times={gymInfo.availability}></AvailableTimes>
               <Grid item>
                 <Typography variant="h4" align="right">-Availability and Booking-</Typography>
               </Grid>
+              <Grid item align="right">
+
+                <AvailableTimes date={date} times={gymInfo.availability}></AvailableTimes>
+              
+              </Grid>
+
               <Grid item><Typography variant="h5" align="right">
                 Booking Notice: {gymInfo.bookingNotice} Hours
               </Typography></Grid>
@@ -159,7 +204,6 @@ export const ViewGyms = (props) => {
             </Grid>
           </Grid>
           <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
-          {console.log(date)}
         </Box>
       }
     </div> )}

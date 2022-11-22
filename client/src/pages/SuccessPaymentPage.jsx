@@ -16,24 +16,24 @@ export default function SuccessPaymentPage(props) {
     // If you add anything to this list, be sure to account for it in the EmailJS template.
     const [emailParam, setEmailParam] = useState('');
 
-    useEffect(() => {
-        try {
-        if (location.state.gymInfo !== undefined) {
-            Axios.post('http://localhost:3001/api/AddReservation', {
-                gymId: location.state.gymInfo._id,
-                gymName: location.state.gymInfo.title,
-                guestId: location.state.userId,
-                timeSlot: location.state.date,
-                duration: 60, //hard coded value, change if we allow for dynamically setting # of hours
-                numGuests: location.state.numGuests
-            })
-                .then((response) => {
-                    if (!response.data) {
-                        console.log("ERROR found in Payment Success Page!"); alert("Payment not processed");
-                    }
-                })
-        }}catch (error) { console.log(error); alert("No Gym Selected");}
-    }, []);
+    // useEffect(() => {
+    //     try {
+    //     if (location.state.gymInfo !== undefined) {
+    //         Axios.post('http://localhost:3001/api/AddReservation', {
+    //             gymId: location.state.gymInfo._id,
+    //             gymName: location.state.gymInfo.title,
+    //             guestId: location.state.userId,
+    //             timeSlot: location.state.date,
+    //             duration: 60, //hard coded value, change if we allow for dynamically setting # of hours
+    //             numGuests: location.state.numGuests
+    //         })
+    //             .then((response) => {
+    //                 if (!response.data) {
+    //                     console.log("ERROR found in Payment Success Page!"); alert("Payment not processed");
+    //                 }
+    //             })
+    //     }}catch (error) { console.log(error); alert("No Gym Selected");}
+    // }, []);
 
     const onSubmit = (e) => {
         e.preventDefault();

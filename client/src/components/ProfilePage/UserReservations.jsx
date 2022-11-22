@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import { styled } from '@mui/material/styles';
 import Paper from "@mui/material/Paper";
 import { Stack } from '@mui/material';
+import swal from '@sweetalert/with-react';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -36,94 +37,6 @@ import Rating from '@mui/material/Rating';
 import Overlay from "react-overlay-component";
 import { borderRadius } from "@mui/system";
 
-
-
-
-
-// const GUEST_RESERVATIONS = [
-//     {
-//         id: 0,
-//         name: "Arnold Schwarzenegger",
-//         date: "January 1, 2023, 5:00pm",
-//     },
-//     {
-//         id: 1,
-//         name: "Dwayne Johnson",
-//         date: "March 5, 2022, 8:00am",
-//     },
-//     {
-//         id: 2,
-//         name: "Michael Tyson",
-//         date: "December 25, 2025, 9:30am",
-//     },
-//     {
-//         id: 3,
-//         name: "Alex Louis Armstrong",
-//         date: "June 30, 2022, 12:00pm",
-//     },
-
-// ]
-
-// const HOST_RESERVATIONS = [
-//     {
-//         id: 0,
-//         name: "Average Joes",
-//         date: "January 30, 2023, 5:00pm",
-//     },
-//     {
-//         id: 1,
-//         name: "Major Gains",
-//         date: "October 5, 2022, 8:00am",
-//     },
-//     {
-//         id: 2,
-//         name: "Jims Gym",
-//         date: "April 25, 2025, 9:30am",
-//     },
-//     {
-//         id: 3,
-//         name: "Heavy Iron",
-//         date: "January 30, 2022, 12:00pm",
-//     },
-// ]
-
-// function ReservationCard(props){
-//     return <div>
-//         <div className="ReservationCard">
-//             <div className="ReserveComps">
-//                 <h2>{props.name}</h2>
-//                 <h2>{props.date}</h2>    
-//             </div>
-//             <div className="ReserveComps">
-//                 <button className="Button">View Gym</button>
-//                 <button className="Button">Directions</button>
-//                 <button className="Button">Manage Reservation</button>
-//             </div>
-//         </div>
-//     </div>
-// }
-
-// function ReservationList(props){
-//     return <div>
-//         {props.reserves.map(reserves =>(
-//             <ReservationCard 
-//             key={reserves.id}
-//             name={reserves.name}
-//             date={reserves.date}
-//             />
-//         ))}
-//     </div>
-// }
-
-
-// function ReservationPanel(props){
-//     return(
-//     <div className="ReservationListPanel">  
-//         <h1 className='CenterText'>{props.title}</h1>
-//         <ReservationList reserves={props.reserves}/>
-//     </div> 
-//     )      
-// }
 
 function TabPanel(props2) {
 	const { children, value, index, ...other } = props2;
@@ -250,7 +163,9 @@ const UserReservations = (props) => {
         try {
             Axios.post('http://localhost:3001/api/ReservationReview', 
                 {guestReview: review, rating: rating, id: reservationID, gymId: gym})
-            .then(() => this.setState({ status: 'Review Gym Reservation successful' }));
+            .then((response) => {    
+                swal({title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})
+            });
         } catch (err) { console.log("Stupid") }
     }
 
@@ -259,7 +174,9 @@ const UserReservations = (props) => {
         try {
             Axios.post('http://localhost:3001/api/CancelReservation', 
                 {params: {id: reservationID, timeSlot: time, gymId: gym}})
-            .then(() => this.setState({ status: 'Gym Reservation Cancellation successful' }));
+            .then((response) => {    
+                swal({title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})
+            });
         } catch (err) { console.log(err) }
     }
 
@@ -376,7 +293,7 @@ const UserReservations = (props) => {
                                                                 setOverlay(true);
                                                                 setReservationId(gresv._id);
                                                                 setGymId(gresv.gymId)
-                                                            }} />
+                                                            }} />Leave Review
                                                         </Fab>
                                                         
                                                         : <><Fab variant="extended">

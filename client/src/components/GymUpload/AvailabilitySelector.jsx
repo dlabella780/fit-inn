@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,7 +7,6 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Stack from '@mui/material/Stack';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import Button from '@mui/material/Button';
 import Axios from 'axios'
 
 const AvailabilitySelector = (props) => {
@@ -16,11 +14,6 @@ const AvailabilitySelector = (props) => {
     const [times, setTimes] = useState([]);
     const [takenTimes, setTakenTimes] = useState([]);
     const [timesLoaded, setTimesLoaded] = useState([]);
-    const [days, setDays] = useState([]);
-
-    function compareNumbers(a,b) {
-        return a-b;
-    }
     
     const handleChange = (newValue) => {
         props.setStartingDate(newValue);

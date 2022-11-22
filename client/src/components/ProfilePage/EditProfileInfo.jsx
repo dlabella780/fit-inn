@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Axios from 'axios';
 import TextField from '@mui/material/TextField';
 import { Button, Box } from "@material-ui/core";
@@ -10,9 +11,11 @@ import LanguageSharpIcon from '@mui/icons-material/LanguageSharp';
 import EmailSharpIcon from '@mui/icons-material/EmailSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import ContactPhoneSharpIcon from '@mui/icons-material/ContactPhoneSharp';
+import swal from '@sweetalert/with-react';
 
 function EditProfileInfo (props) {
 
+    const history = useHistory();
     const SubmitUser = (e) => {
         e.preventDefault();
             Axios.post('http://localhost:3001/api/updateProfile', {
@@ -27,12 +30,8 @@ function EditProfileInfo (props) {
                 lname: lname,  
                 phoneNumber: phoneNumber,
                 id: props.userId 
-            }).then((data, loading, error) => {    
-			if(error) 
-				console.log(error);
-			else {
-				alert('Profile Updated');
-			}
+            }).then((response) => {    
+            swal({title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})
         })
     }
 

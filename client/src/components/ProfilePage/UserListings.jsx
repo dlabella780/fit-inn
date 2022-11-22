@@ -11,6 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Axios from 'axios';
 import { Typography, Button, Box, Container } from "@material-ui/core";
+import swal from '@sweetalert/with-react';
 
 const UserListings = (props) => {
     
@@ -19,7 +20,8 @@ const UserListings = (props) => {
     function DeleteGymListing(gymID) {
         try {
             Axios.post('http://localhost:3001/api/deleteGym', {id: gymID})
-            .then(() => this.setState({ status: 'Delete successful' }));
+            .then((response) => {
+              swal({title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})});
         } catch (error) { console.log(error); }
     } 
 

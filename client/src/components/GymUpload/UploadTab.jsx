@@ -36,6 +36,7 @@ import { uploadFile } from "react-s3";
 import AWS from 'aws-sdk';
 import AvailabilitySelector from './AvailabilitySelector';
 import dayjs from 'dayjs';
+import swal from '@sweetalert/with-react';
 
 
 const S3_BUCKET = "fit-inn";
@@ -275,9 +276,9 @@ function UploadTab(props) {
 				tvType: tvType, 
 				equipment: equipmentObj,
 				id: props.gymId})
-				.then(
-					redirectToGym(props.gymId)
-				)
+				.then((response) => {    
+					swal({title: response.data}).then(okay => {redirectToGym(props.gymId)})
+				});
 			} catch (error) { console.log(error); alert("Error on Page")}
 		}
     }
@@ -620,9 +621,13 @@ function UploadTab(props) {
 					<br />
 					<Button onClick={() => uploadFile(selectedFile)} variant="contained" component="label" startIcon={<PhotoCamera/>}>Upload Picture
 					</Button>	
+					{isActive ? 
 					<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+						UPDATE GYM
+					</Button>
+					: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
 						REVIEW GYM
-					</Button>					
+					</Button>}					
 				  </Grid>
 				</Box>
 			</Box>

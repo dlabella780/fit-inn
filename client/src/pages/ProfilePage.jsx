@@ -51,6 +51,7 @@ export default function BasicTabs(props) {
   const [userLoading, setUserLoading] = useState(true);
   const [userGymData, setUserGymData] = useState([]);
   const [userGymLoading, setUserGymLoading] = useState(true);
+  const [profileUpdated, setProfileUpdated] = useState(0);
 
   useEffect(() => {
     if (props.userId) {
@@ -67,7 +68,7 @@ export default function BasicTabs(props) {
         console.log(userGymData)
         setUserGymLoading(false);
     })}catch (error) { console.log(error); alert("Error on Page");}} else{alert("Not Logged In")}
-  },[props]);
+  },[props,profileUpdated]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -88,13 +89,13 @@ export default function BasicTabs(props) {
         <BasicInfo data={userData} loading={userLoading}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <UserListings data={userGymData} loading={userGymLoading}/>
+        <UserListings data={userGymData} loading={userGymLoading} setValue={setValue} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <UserReservations userId = {props.userId} userGyms={userGymData} data={userGymData} />
+        <UserReservations userId = {props.userId} userGyms={userGymData} data={userGymData} setValue={setValue} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated}/>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <EditProfileInfo userId = {props.userId} data={userData} loading={userLoading}/>
+        <EditProfileInfo userId = {props.userId} data={userData} loading={userLoading} setValue={setValue} profileUpdated={profileUpdated} setProfileUpdated={setProfileUpdated}/>
       </TabPanel>
       </div>
     </Box>

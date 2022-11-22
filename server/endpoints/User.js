@@ -72,7 +72,7 @@ export default function User(app, graphQLClient) {
 
     const userGyms = gql`
     query MyQuery($eq: String = "") {
-        list_GymItems(filter: {ownerId: {eq: $eq}}) {
+        list_GymItems(filter: {ownerId: {eq: $eq}, isActive: {eq: true}}) {
           _GymItems {
             address {
               City
@@ -135,6 +135,8 @@ export default function User(app, graphQLClient) {
         if (VerifyRequest(req)) {
             const variables = {
                 ssoapitoken: req.body.uid,
+                //profilePicture: req.body.profilePicture,
+                //email: req.body.email
             }
 
             const data = await graphQLClient.request(userAddMutation, variables)
@@ -183,18 +185,23 @@ export default function User(app, graphQLClient) {
                 zipcode: req.body.zipcode,
                 email: req.body.email,
                 //favoriteGymIds: req.body.favoriteGymIds, 
-                favoriteGymIds: ["0183a53e-399f-d6d0-7138-547fc0f424c60"],
+                //favoriteGymIds: ["0183a53e-399f-d6d0-7138-547fc0f424c60"],
                 fname: req.body.fname,
                 lname: req.body.lname,
                 //notificationSetting: req.body.notificationSetting, 
                 notificationSetting: 0,
-                paymentapitoken: "striketoken",
+                //paymentapitoken: "striketoken",
                 phoneNumber: req.body.phoneNumber,
-                profilePicture: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Waffles_with_Strawberries.jpg",
+                //profilePicture: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Waffles_with_Strawberries.jpg",
                 id: req.body.id
             }
 
             const data = await graphQLClient.request(userUpdateMutation, variables)
+            if (data) {
+              res.send("Profile Updated!");
+            } else {
+              res.send("Error: Profile Not Updated.")
+            }
 
         }
         else res.send('Access Denied.');

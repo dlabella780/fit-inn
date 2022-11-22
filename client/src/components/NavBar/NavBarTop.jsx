@@ -14,6 +14,7 @@ import {
   getAuth,
 } from "firebase/auth";
 import { UserAddOutlined } from "@ant-design/icons";
+import swal from '@sweetalert/with-react';
 
 const useStyles = makeStyles((theme) => ({
     navlinks: {
@@ -65,8 +66,10 @@ const useStyles = makeStyles((theme) => ({
 function Navbar(props) {
   const logout = () => {
     getAuth().signOut();
-    history.push('/');
-    handleCloseUserMenu();
+    swal({title: "Successfully Logged Out."}).then(okay => {
+      history.push('/');
+      handleCloseUserMenu();
+    })
   }
   
   const classes = useStyles();

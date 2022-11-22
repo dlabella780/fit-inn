@@ -62,7 +62,7 @@ const GymThumbnail = (props) => {
             <Typography variant="body1">
                 {val.description}<br/>
                 <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
-                {val.numReviews === 0 ? val.numReviews : 0}{' Reviews'}<br/>
+                {val.numReviews}{' Reviews'}<br/>{console.log(val)}
                 ${val.cost}/hour<br/>
             </Typography>
           </Grid>

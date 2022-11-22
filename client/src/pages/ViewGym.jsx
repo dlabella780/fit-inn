@@ -17,6 +17,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import { Checkbox } from "@material-ui/core";
+import swal from '@sweetalert/with-react';
 
 export const ViewGyms = (props) => {
   const history = useHistory();
@@ -52,14 +53,13 @@ export const ViewGyms = (props) => {
     } catch (error) { console.log(error); alert("Error on Page");}
   },[]);
 
-  const submitGym = () => { try {
+  const submitGym = () => { try{
     Axios.post('http://localhost:3001/api/showGym', {
-      id: location.state.gymId
-    }).then(   
-      alert('Gym Submitted'),
-      history.push('/', {})
-    )} catch (error) { console.log(error); alert("Error on Page");}
-  }
+        id: location.state.gymId
+    }).then((response) => {    
+        swal({title: response.data}).then(okay => {history.push('/', {})})
+    })} catch (error) { console.log(error); alert("Error on Page");}
+}
   
   const AvailableTimes = (props) => {
     const [day, setDay] = useState(null);
@@ -101,7 +101,7 @@ export const ViewGyms = (props) => {
     </>);
   };
 
-  if (props.userId) { return ( 
+  return ( 
   <div className="view-gym">
     {gymInfo.length === 0 ? 
       <Typography variant="h2" 
@@ -192,14 +192,17 @@ export const ViewGyms = (props) => {
               <Grid item align="right">
                 <AvailableTimes date={reservDate} times={gymInfo.availability}></AvailableTimes>
               </Grid>
-              <Grid item>
-                <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
-              </Grid>
+              {props.userId ? 
+                reservDate ? 
+                <Grid item>
+                  <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
+                </Grid>
+                : <Button variant="contained">Please Select a Time.</Button>
+              :<Button variant="contained">Please Login to Book a Gym.</Button>}
             </Grid>
           </Grid>
         </Grid>
       </Box>
     }
-  </div> )}
-  else{ alert("Not Logged In"); return(<div></div>)}
+  </div> )
 }

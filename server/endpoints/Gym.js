@@ -111,6 +111,7 @@ export default function Gym(app, graphQLClient) {
             rating
             title
             tvType
+            numReviews
         }
         }
     }`;
@@ -150,6 +151,7 @@ export default function Gym(app, graphQLClient) {
             rating
             title
             tvType
+            numReviews
         }
         }
     }`;
@@ -189,6 +191,7 @@ export default function Gym(app, graphQLClient) {
             rating
             title
             tvType
+            numReviews
         }
         }
     }`;
@@ -367,6 +370,11 @@ export default function Gym(app, graphQLClient) {
             }
 
             const data = await graphQLClient.request(gymUpdateMutation, variables)
+            if (data) {
+              res.send("Gym Updated!")
+            } else {
+              res.send("Error: Gym Not Updated.")
+            }
 
         }
         else res.send('Access Denied.');
@@ -389,6 +397,11 @@ export default function Gym(app, graphQLClient) {
         if (VerifyRequest(req)) {
 
             const data = await graphQLClient.request(showGym, { id: req.body.id })
+            if (data) {
+              res.send("Gym Submitted!")
+            } else {
+              res.send("Error: Gym Not Submitted.")
+            }
 
         }
         else res.send('Access Denied.');
@@ -412,6 +425,11 @@ export default function Gym(app, graphQLClient) {
         if (VerifyRequest(req)) {
 
             const data = await graphQLClient.request(hideGym, { id: req.body.id })
+            if (data) {
+              res.send("Gym Deleted.")
+            } else {
+              res.send("Error: Gym Not Deleted.")
+            }
 
         }
         else res.send('Access Denied.');

@@ -150,9 +150,9 @@ export default function Reservation(app, graphQLClient) {
                 const updateTimes = await graphQLClient.request(updateGymTimes, { id: req.body.gymId, availability: str })
                 if (updateTimes && timeRemoved) {
                     const data = await graphQLClient.request(reservationAddMutation, variables);
-                    res.send(data);
+                    res.send("Reservation Added!");
                 }
-                else console.log('time not removed')
+                else res.send('Error: Reservation Not Added.')
             }
         }
         else res.send('Access Denied.');
@@ -212,14 +212,20 @@ export default function Reservation(app, graphQLClient) {
                 else
                     newRating = ((gymInfo.get_Gym.rating * gymInfo.get_Gym.numReviews) + req.body.rating) / (gymInfo.get_Gym.numReviews + 1);
 
+                var newReviewNumber = gymInfo.get_Gym.numReviews + 1;
                 const gymVariables = {
                     id: req.body.gymId,
-                    numReviews: (gymInfo.get_Gym.numReviews + 1),
+                    numReviews: newReviewNumber,
                     rating: newRating
                 }
                 const gymRating = await graphQLClient.request(setGymRating, gymVariables)
                 if (gymRating) {
                     const gymReview = await graphQLClient.request(reservationReview, variables)
+                    if (gymReview) {
+                        res.send("Thank You For Leaving A Review!");
+                    } else {
+                        res.send("Error: Review Not Left.")
+                    }
                 }
             }
 
@@ -266,13 +272,14 @@ export default function Reservation(app, graphQLClient) {
                 if (d < (new Date(req.body.params.timeSlot))) {
                     const data = await graphQLClient.request(deleteReservation, { id: req.body.params.id })
                     if (data) {
+                        res.send("Reservation canceled.")
                         var avail = cancelWarning.get_Gym.availability;
                         avail.push(req.body.params.timeSlot);
                         const addResv = await graphQLClient.request(addReservationBack, { id: req.body.params.gymId, availability: avail })
                     }
                 }
                 else {
-                    res.send('You cannot cancel this close to the reservation.')
+                    res.send("Reservation cannot be canceled this close to the reservation date.")
                 }
             }
         }

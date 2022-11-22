@@ -36,105 +36,95 @@ export default function ViewConfirmation(props){
               color: (theme) => theme.palette.grey[500],
             }}
           >
-            <CloseIcon />
+          <CloseIcon />
           </IconButton>
         ) : null}
       </DialogTitle>
     );
 };
 
-const addReservation = () => {
-
-  Axios.post('http://localhost:3001/api/AddReservation', {
-      gymId: props.gymInfo._id,
-      gymName: props.gymInfo.title,
-			guestId: props.userId,
-			timeSlot: props.date,
-			duration: 60,
-			numGuests: numGests
+  const addReservation = () => {
+    Axios.post('http://localhost:3001/api/AddReservation', {
+        gymId: props.gymInfo._id,
+        gymName: props.gymInfo.title,
+        guestId: props.userId,
+        timeSlot: props.date,
+        duration: 60,
+        numGuests: numGests
+      })
+      .then((response) => {
+        if(response.data) history.push('/PaymentSuccess',{gymInfo: props.gymInfo, date: props.date});
     })
-    .then((response) => {
-      if(response.data) history.push('/PaymentSuccess',{gymInfo: props.gymInfo, date: props.date});
-  })
-}
+  }
 
-    const redirectToPayment = () => {
-        history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
-    }
+  const redirectToPayment = () => {
+    history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
+  }
   
   return(
-  
-      <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <Button variant="contained" onClick={toggleModal}>View Confirmation</Button>
-          
-          
-          {modal && (
-          <div className="modal">
-            <div 
-            onClick={toggleModal} 
-            className="overlay"></div>
-            <div className="modal-content">
-                 <div className="confirm-title">
-                    <h1>${props.gymInfo.cost}/hr <StarIcon sx={{ color: yellow[800] }}/>{props.gymInfo.rating}</h1>
-                </div>
-                
-                <h2>When are you coming?</h2>
-                <button
-                  className="close-modal"
-                  onClick={toggleModal}
-                >Close</button>
-                <Box sx={{ '& .MuiTextField-root': { m: 1, width: '40ch'}}}>
-                  <TextField
-                      id="search-bar"
-                      className="text"
-                      label="Gym Name"
-                      defaultValue={props.gymInfo.description}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                  />
-                    <TextField
-                      id="search-bar"
-                      className="text"
-                      label="Address"
-                      defaultValue={props.gymInfo.address.street1 + 
-                        " " + props.gymInfo.address.City +
-                        " " + props.gymInfo.address.State +
-                        " " + props.gymInfo.address.zipcode}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                  />
-                  <TextField
-                      id="search-bar"
-                      className="text"
-                      // Let blank and change it later
-                      label="Date"
-                      variant="outlined"
-                      placeholder="MM/DD/YYYY"
-                      size="large"
-                      value={new Date(props.date).toLocaleString()} 
-                      //onChange={(e) => setDate(e.target.value)}
-                  />
-                  <TextField
-                      id="max-guests"
-                      label="# of guests?"
-                      type="number"
-                      variant="outlined"
-                      value={numGests} 
-                      onChange={(e) => setNumGuests(e.target.value)}
-                      InputProps={{inputProps: { min: 1 , max: props.gymInfo.numGuestsAllowed}}}
-                  />
-                  <p>You won't be charged yet</p>
-              </Box>
-              <Button onClick={() => addReservation()} variant="contained">Continue</Button>
-              <Button onClick={() => redirectToPayment()} variant="contained">(TESTING) GO TO PAYMENT</Button>
-            </div> 
+    <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+      <Button variant="contained" onClick={toggleModal}>View Confirmation</Button>
+      {modal && (
+      <div className="modal">
+        <div onClick={toggleModal} className="overlay"></div>
+        <div className="modal-content">
+          <div className="confirm-title">
+            <h1>${props.gymInfo.cost}/hr <StarIcon sx={{ color: yellow[800] }}/>{props.gymInfo.rating}</h1>
           </div>
-          )}
-      </Box>
+          <h2>When are you coming?</h2>
+          <button
+            className="close-modal"
+            onClick={toggleModal}
+          >Close</button>
+          <Box sx={{ '& .MuiTextField-root': { m: 1, width: '40ch'}}}>
+            <TextField
+              id="search-bar"
+              className="text"
+              label="Gym Name"
+              defaultValue={props.gymInfo.description}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+            <TextField
+              id="search-bar"
+              className="text"
+              label="Address"
+              defaultValue={props.gymInfo.address.street1 + 
+                " " + props.gymInfo.address.City +
+                " " + props.gymInfo.address.State +
+                " " + props.gymInfo.address.zipcode}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+            <TextField
+                id="search-bar"
+                className="text"
+                // Let blank and change it later
+                label="Date"
+                variant="outlined"
+                placeholder="MM/DD/YYYY"
+                size="large"
+                value={new Date(props.date).toLocaleString()} 
+                //onChange={(e) => setDate(e.target.value)}
+            />
+            <TextField
+                id="max-guests"
+                label="# of guests?"
+                type="number"
+                variant="outlined"
+                value={numGests} 
+                onChange={(e) => setNumGuests(e.target.value)}
+                InputProps={{inputProps: { min: 1 , max: props.gymInfo.numGuestsAllowed}}}
+            />
+            <p>You won't be charged yet</p>
+          </Box>
+          <Button onClick={() => addReservation()} variant="contained">Continue</Button>
+          <Button onClick={() => redirectToPayment()} variant="contained">(TESTING) GO TO PAYMENT</Button>
+        </div> 
+      </div>
+      )}
+    </Box>
   )
 }
-
-      
-      

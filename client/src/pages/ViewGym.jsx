@@ -18,7 +18,8 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import { Checkbox } from "@material-ui/core";
-import { FormControlLabel } from '@material-ui/core';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export const ViewGyms = (props) => {
     const history = useHistory();
@@ -26,8 +27,7 @@ export const ViewGyms = (props) => {
     const [notActive, setNotActive] = useState(false);
     const equipMap = new Map();
     const [equipmentMap, setEquipmentMap] = useState(new Map());
-    const [date, setDate] = useState();
-    const timezoneOffset = ((new Date()).getTimezoneOffset())/60;
+    const [date, setDate] = useState(null);
 
     const location = useLocation();
     useEffect(() => {
@@ -68,9 +68,9 @@ export const ViewGyms = (props) => {
     }
     
     const AvailableTimes = (props) => {
-      const [day, setDay] = useState('');
+      const [day, setDay] = useState(null);
       const [times,setTimes] = useState([]);
-      const handleChange = (newValue) => {
+      const handleDayChange = (newValue) => {
         setDay(newValue);
         let d = new Date(newValue);
         for (let i=0; i<24; i++) {
@@ -87,22 +87,23 @@ export const ViewGyms = (props) => {
       return ( <>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DesktopDatePicker
-            defaultValue={null}
             label="Select a day"
             inputFormat="MM/DD/YYYY"
             value={day}
-            onChange={handleChange}
-            onOpen={() => setTimes([])}
+            onChange={handleDayChange}
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-        
-          {times.map((t,index) => 
-            <Typography key = {index} variant="h5" align="right">
-              <Checkbox onChange={(e) => setDate(t)}></Checkbox>
-              {(new Date(t)).toLocaleTimeString()}
-            </Typography>)
-          } 
+
+        {times.map((t,index) => 
+          <Typography key={index} variant="h5" align="right">
+            <Checkbox onChange={() => setDate(t)}></Checkbox>
+            {(new Date(t)).toLocaleTimeString()}
+          </Typography>)
+        } 
+        <Typography variant="h5" align="right">
+          {(date === null) ? 'No time selected.' : 'Your reserved time: ' + (new Date(date)).toLocaleTimeString()}
+        </Typography>
       </>);
     };
 
@@ -189,21 +190,20 @@ export const ViewGyms = (props) => {
               <Grid item>
                 <Typography variant="h4" align="right">-Availability and Booking-</Typography>
               </Grid>
-              <Grid item align="right">
-
-                <AvailableTimes date={date} times={gymInfo.availability}></AvailableTimes>
-              
+              <Grid container direction="column" style={{padding: 2}} justifyContent="space-between" alignItems="flex-end" spacing={3}>
+                <Grid item><Typography variant="h5" align="right">
+                  Booking Notice: {gymInfo.bookingNotice} Hours<br></br>
+                  Cancelation Notice: {gymInfo.cancelationWarning} Hours
+                </Typography></Grid>
+                <Grid item align="right">
+                  <AvailableTimes date={date} times={gymInfo.availability}></AvailableTimes>
+                </Grid>
+                <Grid item align="right">
+                  <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
+                </Grid>
               </Grid>
-
-              <Grid item><Typography variant="h5" align="right">
-                Booking Notice: {gymInfo.bookingNotice} Hours
-              </Typography></Grid>
-              <Grid item><Typography variant="h5" align="right">
-                Cancelation Notice: {gymInfo.cancelationWarning} Hours
-              </Typography></Grid>
             </Grid>
           </Grid>
-          <ViewConfirmation gymInfo={gymInfo} date={date} userId={props.userId}/>
         </Box>
       }
     </div> )}

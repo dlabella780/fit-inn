@@ -3,15 +3,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import StarIcon from '@mui/icons-material/Star';
-import { purple, yellow } from "@mui/material/colors";
-import Dialog from '@mui/material/Dialog';
+import { yellow } from "@mui/material/colors";
 import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
 export default function ViewConfirmation(props){

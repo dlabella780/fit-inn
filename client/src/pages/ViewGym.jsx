@@ -18,6 +18,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import { Checkbox } from "@material-ui/core";
 import swal from '@sweetalert/with-react';
+import Swal from 'sweetalert2';
 
 export const ViewGyms = (props) => {
   const history = useHistory();
@@ -59,11 +60,12 @@ export const ViewGyms = (props) => {
     }).then((response) => {    
         swal({title: response.data}).then(okay => {history.push('/', {})})
     })} catch (error) { console.log(error); alert("Error on Page");}
-}
+  }
   
   const AvailableTimes = (props) => {
     const [day, setDay] = useState(null);
     const [times, setTimes] = useState([]);
+    const [formattedTimes, setFormattedTimes] = useState([]);
     const handleDayChange = (newValue) => {
       setDay(newValue);
       let d = new Date(newValue);
@@ -71,11 +73,26 @@ export const ViewGyms = (props) => {
         for (let j=0; j<props.times.length; j++) {
           if(props.times[j]===d.toJSON())  {
             times.push(props.times[j])
+            formattedTimes.push((new Date(props.times[j])).toLocaleTimeString())
             break;
           }
         }
         d.setHours(d.getHours() + 1);
       }
+    };
+
+    const handleCloseSetTime = () => {
+      Swal.fire({
+        title: 'Select a time!',
+        input: 'select',
+        inputOptions: { formattedTimes },
+        inputPlaceholder: 'Select a time!',
+        showCancelButton: true,
+      }).then(res => {
+        setReservDate(times[res.value])
+        if (res.isConfirmed) 
+          Swal.fire('Time Reserved!', (new Date(times[res.value])).toLocaleString(), 'success')
+      })
     };
 
     return ( <>
@@ -86,18 +103,9 @@ export const ViewGyms = (props) => {
           value={day}
           onChange={handleDayChange}
           renderInput={(params) => <TextField {...params} />}
+          onClose={handleCloseSetTime}
         />
       </LocalizationProvider>
-      {times.map((t,index) => 
-        <Typography key={index} variant="h5" align="right">
-          <Checkbox onChange={() => setReservDate(t)}></Checkbox>
-          {(new Date(t)).toLocaleTimeString()}
-        </Typography>)
-      } 
-      <Typography variant="h5" align="right">
-        {(reservDate === null) ? 'No time selected.' : 
-        'Your reserved time: ' + (new Date(reservDate)).toLocaleTimeString()}
-      </Typography>
     </>);
   };
 
@@ -148,56 +156,48 @@ export const ViewGyms = (props) => {
         </ImageList>
         <Grid container direction="row" justifyContent="space-between" style={{padding: 2}}>
           <Grid item>
-            <Typography variant="h3" align="left">{gymInfo.description}</Typography>          
+            <Typography variant="h3" align="left">-{gymInfo.description}-</Typography>          
             <Grid container direction="column" style={{padding: 2}} alignItems="flex-start">
               <Grid item>
-                <Typography variant="h4" align="left">-Details-</Typography>
-              </Grid>
-              <Grid item><Typography variant="h5">
-                Host: {gymInfo.isHostHome !== 'false' ? " Not " : " "}Home
-              </Typography></Grid>
-              <Grid item><Typography variant="h5">
-                Bathroom: {gymInfo.hasBathroom === 'true' ? "Available" : "Unavailable"}
-              </Typography></Grid>
-              <Grid item><Typography variant="h5">
-                Wifi: {gymInfo.hasWifi === 'true' ? "Available" : "Unavailable"}
-              </Typography></Grid>
-              <Grid item><Typography variant="h5">
-                Speakers: {gymInfo.hasSpeakers === 'true' ? "Available" : "Unavailable"}
-              </Typography></Grid>
-              <Grid item><Typography variant="h5">
-                TV: {gymInfo.tvType}
-              </Typography></Grid>
-              <Grid item><Typography variant="h5">
-                Access Notes: {gymInfo.accessInformation}
-              </Typography></Grid>
-              <Grid item><Typography variant="h4" align="left">-Equipment-</Typography>
-                {gymInfo.equipment.map(equip => 
-                  <Typography variant="h5" align="left">
-                    {equipmentMap.get(equip.equipmentId)}{' : '}{equip.details}
-                  </Typography>)}
+                <Typography variant="h5" align="left" style={{overflowWrap: 'break-word'}}>
+                  Host: {gymInfo.isHostHome !== 'false' ? " Not " : " "}Home<br></br>
+                  Bathroom: {gymInfo.hasBathroom === 'true' ? "Available" : "Unavailable"}<br></br>
+                  Wifi: {gymInfo.hasWifi === 'true' ? "Available" : "Unavailable"}<br></br>
+                  Speakers: {gymInfo.hasSpeakers === 'true' ? "Available" : "Unavailable"}<br></br>
+                  TV: {gymInfo.tvType}<br></br>
+                  Notes: {gymInfo.accessInformation}<br></br>
+                  Booking Notice: {gymInfo.bookingNotice} Hours<br></br>
+                  Cancelation Notice: {gymInfo.cancelationWarning} Hours
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
           <Grid item>
-            <Typography variant="h2" align="right">${gymInfo.cost}/Hour</Typography>
-            <Grid item>
-              <Typography variant="h4" align="right">-Availability and Booking-</Typography>
+            <Grid item><Typography variant="h3" align="center">-Equipment-</Typography>
+              {gymInfo.equipment.map(equip => 
+                <Typography variant="h5" align="center">
+                  {equipmentMap.get(equip.equipmentId)}{' : '}{equip.details}
+                </Typography>)}
             </Grid>
+          </Grid>
+          <Grid item>
+            <Typography variant="h2" align="right">${gymInfo.cost}/Hour</Typography>
             <Grid container direction="column" style={{padding: 2}} justifyContent="space-between" alignItems="flex-end" spacing={3}>
-              <Grid item><Typography variant="h5" align="right">
-                Booking Notice: {gymInfo.bookingNotice} Hours<br></br>
-                Cancelation Notice: {gymInfo.cancelationWarning} Hours
-              </Typography></Grid>
               <Grid item align="right">
                 <AvailableTimes date={reservDate} times={gymInfo.availability}></AvailableTimes>
+                <Grid item>
+                  <Typography variant="h4" align="center">-Reservation-</Typography>
+                </Grid>
+                <Typography variant="h5" align="center">
+                  {(reservDate === null) ? 'No time selected.' : (new Date(reservDate)).toLocaleString()}
+                </Typography>
               </Grid>
               {props.userId ? 
                 reservDate ? 
                 <Grid item>
                   <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
                 </Grid>
-                : <Button variant="contained">Please Select a Time.</Button>
+                : <Button variant="contained"> Please Select a Time. </Button>
               :<Button variant="contained">Please Login to Book a Gym.</Button>}
             </Grid>
           </Grid>

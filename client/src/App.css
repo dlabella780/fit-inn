@@ -164,7 +164,6 @@
 
 .gym-name{
   padding-top: 60%;
-  
 } 
 
 /* .name-info{
@@ -425,9 +424,11 @@ Button {
   position: fixed;
   top: 10%;
   display: grid;
-  padding: 20px;
+  padding: 25px;
   border-radius: 12px;
   border: 2px solid black;
+  /* overflow-y: scroll;
+  scrollbar-width: thin; */
 }
 
 .item1{

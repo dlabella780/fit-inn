@@ -181,8 +181,8 @@ export const ViewGyms = (props) => {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography variant="h2" align="right">${gymInfo.cost}/Hour</Typography>
             <Grid container direction="column" style={{padding: 2}} justifyContent="space-between" alignItems="flex-end" spacing={3}>
+              <Grid item><Typography variant="h2" align="right">-${gymInfo.cost}/Hour-</Typography></Grid>
               <Grid item align="right">
                 <AvailableTimes date={reservDate} times={gymInfo.availability}></AvailableTimes>
                 <Grid item>
@@ -192,13 +192,15 @@ export const ViewGyms = (props) => {
                   {(reservDate === null) ? 'No time selected.' : (new Date(reservDate)).toLocaleString()}
                 </Typography>
               </Grid>
-              {props.userId ? 
-                reservDate ? 
-                <Grid item>
-                  <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
-                </Grid>
-                : <Button variant="contained"> Please Select a Time. </Button>
-              :<Button variant="contained">Please Login to Book a Gym.</Button>}
+              <Grid item>
+                {props.userId ? reservDate ? 
+                  <Grid item>
+                    <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
+                  </Grid>
+                  : <Button variant="contained" sx={{right:30}}>Please Select a Time.</Button>
+                  : <Button variant="contained" sx={{right:31}}>Login to Book a Gym.</Button>
+                }
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

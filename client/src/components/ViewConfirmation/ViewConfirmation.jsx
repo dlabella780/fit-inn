@@ -63,7 +63,7 @@ export default function ViewConfirmation(props){
   
   return(
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-      <Button variant="contained" onClick={toggleModal}>View Confirmation</Button>
+      <Button variant="contained" onClick={toggleModal} sx={{right:37}}>View Confirmation</Button>
       {modal && (
       <div className="modal">
         <div onClick={toggleModal} className="overlay"></div>

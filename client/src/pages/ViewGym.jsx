@@ -16,9 +16,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
-import { Checkbox } from "@material-ui/core";
 import swal from '@sweetalert/with-react';
 import Swal from 'sweetalert2';
+import dayjs from "dayjs";
 
 export const ViewGyms = (props) => {
   const history = useHistory();
@@ -66,7 +66,8 @@ export const ViewGyms = (props) => {
     const [day, setDay] = useState(null);
     const [times, setTimes] = useState([]);
     const [formattedTimes, setFormattedTimes] = useState([]);
-    const handleDayChange = (newValue) => {
+    
+    const handleChange = (newValue) => {
       setDay(newValue);
       let d = new Date(newValue);
       for (let i=0; i<24; i++) {
@@ -79,20 +80,24 @@ export const ViewGyms = (props) => {
         }
         d.setHours(d.getHours() + 1);
       }
-    };
-
-    const handleCloseSetTime = () => {
-      Swal.fire({
-        title: 'Select a time!',
-        input: 'select',
-        inputOptions: { formattedTimes },
-        inputPlaceholder: 'Select a time!',
-        showCancelButton: true,
-      }).then(res => {
-        setReservDate(times[res.value])
-        if (res.isConfirmed) 
-          Swal.fire('Time Reserved!', (new Date(times[res.value])).toLocaleString(), 'success')
-      })
+      if (formattedTimes.length !== 0) {
+        Swal.fire({
+          title: 'Select a time!',
+          input: 'select',
+          inputOptions: { 'Time Slots Available!': formattedTimes },
+          //inputPlaceholder: 'Time Slots Available',
+          showCancelButton: true,
+        }).then(res => {
+          setReservDate(times[res.value])
+          if (res.isConfirmed) 
+            Swal.fire('Time Reserved!', (new Date(times[res.value])).toLocaleString(), 'success')
+          else if (res.isDismissed)
+            Swal.fire('Reservation Process Canceled', '', 'warning')
+          else 
+            Swal.fire('Reservation Error', '', 'error')
+        })
+      }
+      else Swal.fire("No times available that day!")
     };
 
     return ( <>
@@ -101,9 +106,8 @@ export const ViewGyms = (props) => {
           label="Select a day"
           inputFormat="MM/DD/YYYY"
           value={day}
-          onChange={handleDayChange}
+          onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
-          onClose={handleCloseSetTime}
         />
       </LocalizationProvider>
     </>);
@@ -165,7 +169,7 @@ export const ViewGyms = (props) => {
                   Wifi: {gymInfo.hasWifi === 'true' ? "Available" : "Unavailable"}<br></br>
                   Speakers: {gymInfo.hasSpeakers === 'true' ? "Available" : "Unavailable"}<br></br>
                   TV: {gymInfo.tvType}<br></br>
-                  Notes: {gymInfo.accessInformation}<br></br>
+                  {/* Notes: {gymInfo.accessInformation}<br></br> */}
                   Booking Notice: {gymInfo.bookingNotice} Hours<br></br>
                   Cancelation Notice: {gymInfo.cancelationWarning} Hours
                 </Typography>

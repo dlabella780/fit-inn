@@ -272,7 +272,7 @@ export default function Reservation(app, graphQLClient) {
                 if (d < (new Date(req.body.params.timeSlot))) {
                     const data = await graphQLClient.request(deleteReservation, { id: req.body.params.id })
                     if (data) {
-                        res.send("Reservation canceled.")
+                        res.send("Reservation Canceled.")
                         var avail = cancelWarning.get_Gym.availability;
                         avail.push(req.body.params.timeSlot);
                         const addResv = await graphQLClient.request(addReservationBack, { id: req.body.params.gymId, availability: avail })
@@ -285,5 +285,18 @@ export default function Reservation(app, graphQLClient) {
         }
         else res.send('Access Denied.');
     });
+
+    app.post('/api/CancelReservationHost', async (req, res) => {
+        if (VerifyRequest(req)) {
+            const data = await graphQLClient.request(deleteReservation, { id: req.body.id })
+            if (data) {
+                res.send("Reservation Canceled.")
+            } else {
+                res.send("Error: Reservation Not Canceled.")
+            }
+        }
+        else res.send('Access Denied.');
+    });
+
 
 }

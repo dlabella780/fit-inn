@@ -180,6 +180,16 @@ const UserReservations = (props) => {
         } catch (err) { console.log(err) }
     }
 
+    function CancelGymReservationHost (reservationID) {
+        try {
+            Axios.post('http://localhost:3001/api/CancelReservationHost', 
+                {id: reservationID})
+            .then((response) => {    
+                swal({title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})
+            });
+        } catch (err) { console.log(err) }
+    }
+
     return (
         // <div className="reservation-area">
         //     <ReservationPanel title='Guest Reservations' reserves={GUEST_RESERVATIONS}/>
@@ -345,7 +355,7 @@ const UserReservations = (props) => {
                                                 <Button sx={{ mr: 1 }}
                                                     size="small" 
                                                     variant="contained" 
-                                                    onClick={() => CancelGymReservation(hresv._id, hresv.timeSlot, hresv.gymId)}>
+                                                    onClick={() => CancelGymReservationHost(hresv._id)}>
                                                     Cancel Reservation
                                                 </Button> : <></>
                                                 }

@@ -1,4 +1,4 @@
-import { gql } from 'graphql-request';
+import { gql, GraphQLClient } from 'graphql-request';
 import VerifyRequest from '../VerifyRequest.js';
 
 export default function Gym(app, graphQLClient) {
@@ -418,20 +418,44 @@ export default function Gym(app, graphQLClient) {
           }
         }
       }`;
+    
+    const getRemoveTimes = gql`
+    query MyQuery($eq: String = "", $gt: String = "") {
+      list_GymReservationItems(filter: {gymId: {eq: $eq}, timeSlot: {gt: $gt}}) {
+        _GymReservationItems {
+          _id
+        }
+      }
+    }`;
 
-    //need to pass the gymId as id
+    const removeResvTimes = gql`
+    mutation MyMutation($id: ID = "") {
+      remove_GymReservation(id: $id) {
+        transaction {
+          _id
+        }
+      }
+    }`;
+    
+    
     app.post('/api/deleteGym', async (req, res) => {
 
-        if (VerifyRequest(req)) {
-
+      if (VerifyRequest(req)) {
+          var d = (new Date()).toJSON();
+          const getRemoveableTimes = await graphQLClient.request(getRemoveTimes, {eq: req.body.id, gt: d})
+          if (getRemoveableTimes) {
+            for (let i = 0; i < getRemoveableTimes.list_GymReservationItems._GymReservationItems.length; i++) {
+              const removeTimes = await graphQLClient.request(removeResvTimes, {id: getRemoveableTimes.list_GymReservationItems._GymReservationItems[i]._id});
+            }
             const data = await graphQLClient.request(hideGym, { id: req.body.id })
             if (data) {
               res.send("Gym Deleted.")
             } else {
               res.send("Error: Gym Not Deleted.")
             }
+          } else res.send("Error: Gym Not Deleted.");
 
-        }
-        else res.send('Access Denied.');
+      }
+      else res.send('Access Denied.');
     });
 }

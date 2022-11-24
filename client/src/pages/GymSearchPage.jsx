@@ -132,6 +132,7 @@ function GymSearchPage() {
         loading={gymDataLoading} 
         filterMaxPrice={filterMaxPrice}
         filterEquipment={filterEquip}
+        searchAvailability={searchAvailability}
       />
     </div>
   </Fragment> );

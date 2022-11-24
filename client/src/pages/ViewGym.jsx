@@ -18,7 +18,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import swal from '@sweetalert/with-react';
 import Swal from 'sweetalert2';
-import dayjs from "dayjs";
 
 export const ViewGyms = (props) => {
   const history = useHistory();
@@ -29,17 +28,16 @@ export const ViewGyms = (props) => {
   const [reservDate, setReservDate] = useState(null);
   const location = useLocation();
 
-  // This allows a redirect from GymThubnail and Reservations 
+  //-------------------------------------------------------------------------------
+  // Allows redirect from GymThumbnail, Reservations, Updating, and Submiting a Gym
   let gymID = '';
   if (location.state)
     gymID = location.state.gymId;
-  
   else if (props.props.location.props) 
     gymID = props.props.location.props._id || props.props.location.props;
-  
-  // This allows a redirect from Updating/Submiting a Gym
   else if (props.props.location.state.props)
     gymID = props.props.location.state.props;
+  //-------------------------------------------------------------------------------
 
   useEffect(() => {
     let gym = 'http://localhost:3001/api/getGym/' + gymID;
@@ -52,9 +50,11 @@ export const ViewGyms = (props) => {
       })
       if (location.state) if (!location.state.isActive) setNotActive(true);
     } catch (error) { console.log(error); alert("Error on Page");}
+
+
   },[]);
 
-  const submitGym = () => { try{
+  const submitGym = () => { try {
     Axios.post('http://localhost:3001/api/showGym', {
         id: location.state.gymId
     }).then((response) => {    
@@ -66,7 +66,14 @@ export const ViewGyms = (props) => {
     const [day, setDay] = useState(null);
     const [times, setTimes] = useState([]);
     const [formattedTimes, setFormattedTimes] = useState([]);
-    
+    const searchAvail = props.searchAvail;
+
+    // If user searched by availability, the time is auto reserved
+    if (searchAvail !== '' && reservDate === null) {
+      setReservDate(searchAvail);
+      Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
+    }
+
     const handleChange = (newValue) => {
       setDay(newValue);
       let d = new Date(newValue);
@@ -188,7 +195,7 @@ export const ViewGyms = (props) => {
             <Grid container direction="column" style={{padding: 2}} justifyContent="space-between" alignItems="flex-end" spacing={3}>
               <Grid item><Typography variant="h2" align="right">-${gymInfo.cost}/Hour-</Typography></Grid>
               <Grid item align="right">
-                <AvailableTimes date={reservDate} times={gymInfo.availability}></AvailableTimes>
+                <AvailableTimes date={reservDate} times={gymInfo.availability} searchAvail={props.props.location.avail}></AvailableTimes>
                 <Grid item>
                   <Typography variant="h4" align="center">-Reservation-</Typography>
                 </Grid>

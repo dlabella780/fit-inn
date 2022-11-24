@@ -44,7 +44,7 @@ const GymThumbnail = (props) => {
       <Item className="gym-thumbnail-indiv">
         <Grid container direction="row" spacing={2} sx={{ width: 'flex', height: 'flex' }}>
           <Grid item>
-            <Link to={{pathname: "/ViewGym", props: val }}>
+            <Link to={{pathname: "/ViewGym", props: val, avail: props.searchAvailability}}>
               <ButtonBase sx={{ width: 200, height: 200 }}>
                   <img src={val.photos[0]} width="200" height="200" ></img>
               </ButtonBase>
@@ -62,7 +62,7 @@ const GymThumbnail = (props) => {
             <Typography variant="body1">
                 {val.description}<br/>
                 <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
-                {val.numReviews}{' Reviews'}<br/>{console.log(val)}
+                {val.numReviews}{' Reviews'}<br/>
                 ${val.cost}/hour<br/>
             </Typography>
           </Grid>

@@ -71,21 +71,6 @@ export const ViewGyms = (props) => {
     const [formattedTimes, setFormattedTimes] = useState([]);
     const searchAvail = props.searchAvail;
 
-    const addReservation = () => {
-      Axios.post('http://localhost:3001/api/AddReservation', {
-        gymId: gymInfo._id,
-        gymName: gymInfo.title,
-        guestId: usr,
-        timeSlot: reservDate,
-        duration: 60,
-        numGuests: parseInt(numGests)
-      })
-      .then((response) => { 
-        console.log(response)
-        //if(response.data) history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
-      })
-    }
-  
 const redirectToPayment = () => {
   history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
 }
@@ -265,15 +250,15 @@ const redirectToPayment = () => {
             <Grid container direction="column" style={{padding: 2}} justifyContent="space-between" alignItems="flex-end" spacing={3}>
               <Grid item><Typography variant="h2" align="right">-${gymInfo.cost}/Hour-</Typography></Grid>
               <Grid item align="right">
-                <AvailableTimes date={reservDate} times={gymInfo.availability} searchAvail={props.props.location.avail}></AvailableTimes>
                 <Grid item>
-                  <Typography variant="h4" align="center">-Reservation-</Typography>
+                  <Typography variant="h4" align="center">-Reserve a Time!-</Typography>
                 </Grid>
-                <Typography variant="h5" align="center">
+                <AvailableTimes date={reservDate} times={gymInfo.availability} searchAvail={props.props.location.avail}></AvailableTimes>
+                {/* <Typography variant="h5" align="center">
                   {(reservDate === null) ? 'No time selected.' : (new Date(reservDate)).toLocaleString()}
-                </Typography>
+                </Typography> */}
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 {props.userId ? reservDate ? 
                   <Grid item>
                     <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
@@ -281,7 +266,7 @@ const redirectToPayment = () => {
                   : <Button variant="contained" sx={{right:30}}>Please Select a Time.</Button>
                   : <Button variant="contained" sx={{right:31}}>Login to Book a Gym.</Button>
                 }
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>

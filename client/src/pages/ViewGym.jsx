@@ -28,8 +28,8 @@ export const ViewGyms = (props) => {
   const location = useLocation();
   const [numGests, setNumGuests] = useState(1);
   const usr = props.userId;
-  //const searchAvail = props.props.location.avail;
-
+  const searchAvail = props.props.location.avail;
+  const maxGuests = props.props.location.props.numGuestsAllowed;
   //-------------------------------------------------------------------------------
   // Allows redirect from GymThumbnail, Reservations, Updating, and Submiting a Gym
   let gymID = '';
@@ -53,7 +53,7 @@ export const ViewGyms = (props) => {
         setEquipmentMap(equipMap);
       })
       if (location.state) if (!location.state.isActive) setNotActive(true);
-      //if (searchAvail !== null) setReservDate(searchAvail);
+      if (searchAvail !== null) setReservDate(searchAvail);
     } catch (error) { console.log(error); alert("Error on Page");}
   },[]);
 
@@ -114,7 +114,7 @@ const redirectToPayment = () => {
               title: 'How many guests?',
               icon: 'question',
               input: 'range',
-              inputAttributes: { min: 1, max: 100, step: 1 },
+              inputAttributes: { min: 1, max: maxGuests, step: 1 },
               inputValue: 1
             }).then(res2 => {
               setNumGuests(res2.value)

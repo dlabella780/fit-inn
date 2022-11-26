@@ -63,7 +63,7 @@ export default function ViewConfirmation(props){
   
   return(
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-      <Button variant="contained" onClick={toggleModal} sx={{right:37}}>View Confirmation</Button>
+      <Button variant="contained" onClick={toggleModal}>View Confirmation</Button>
       {modal && (
       <div className="modal">
         <div onClick={toggleModal} className="overlay"></div>
@@ -71,12 +71,12 @@ export default function ViewConfirmation(props){
           <div className="confirm-title">
             <h1>${props.gymInfo.cost}/hr <StarIcon sx={{ color: yellow[800] }}/>{props.gymInfo.rating}</h1>
           </div>
-          <h2>When are you coming?</h2>
+          <h2>-Reservation Details-</h2>
           <button
             className="close-modal"
             onClick={toggleModal}
           >Close</button>
-          <Box sx={{ '& .MuiTextField-root': { m: 1, width: '40ch'}}}>
+          <Box sx={{ '& .MuiTextField-root': { m: 1, width: '46ch'}}}>
             <TextField
               id="search-bar"
               className="text"
@@ -90,24 +90,21 @@ export default function ViewConfirmation(props){
               id="search-bar"
               className="text"
               label="Address"
-              defaultValue={props.gymInfo.address.street1 + 
+              defaultValue={
+                props.gymInfo.address.street1 + 
                 " " + props.gymInfo.address.City +
                 " " + props.gymInfo.address.State +
                 " " + props.gymInfo.address.zipcode}
-              InputProps={{
-                readOnly: true,
-              }}
+              InputProps={{ readOnly: true }}
             />
             <TextField
                 id="search-bar"
                 className="text"
-                // Let blank and change it later
                 label="Date"
                 variant="outlined"
                 placeholder="MM/DD/YYYY"
                 size="large"
                 value={new Date(props.date).toLocaleString()} 
-                //onChange={(e) => setDate(e.target.value)}
             />
             <TextField
                 id="max-guests"

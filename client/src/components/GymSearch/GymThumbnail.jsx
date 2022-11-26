@@ -50,20 +50,20 @@ const GymThumbnail = (props) => {
               </ButtonBase>
             </Link>
           </Grid>
-          <Grid item>
+          <Grid item sx={{ maxWidth: 300 }}>
             <Typography variant="h4">{val.title}</Typography>
             <Typography variant="subtitle1" gutterBottom key={val.address.street1}>
-                {' ' + val.address.street1} 
-                {val.address.street2 === '' ? ' ' + val.address.street2 : ''}<br/>
-                {' ' + val.address.City}
-                {' ' + val.address.State}
-                {' ' + val.address.zipcode}
+              {' ' + val.address.street1} 
+              {val.address.street2 === '' ? ' ' + val.address.street2 : ''}<br/>
+              {' ' + val.address.City}
+              {' ' + val.address.State}
+              {' ' + val.address.zipcode}
             </Typography>
             <Typography variant="body1">
-                {val.description}<br/>
-                <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
-                {val.numReviews}{' Reviews'}<br/>
-                ${val.cost}/hour<br/>
+              {val.description}<br/>
+              <Rating name="gym-rating" value={val.rating} size="small" readOnly/><br/>
+              {val.numReviews}{' Reviews'}<br/>
+              ${val.cost}/hour<br/>
             </Typography>
           </Grid>
         </Grid>

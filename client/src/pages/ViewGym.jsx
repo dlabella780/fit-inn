@@ -26,6 +26,8 @@ export const ViewGyms = (props) => {
   const [equipmentMap, setEquipmentMap] = useState(new Map());
   const [reservDate, setReservDate] = useState(null);
   const location = useLocation();
+  const [numGests, setNumGuests] = useState(1);
+  const usr = props.userId;
 
   //-------------------------------------------------------------------------------
   // Allows redirect from GymThumbnail, Reservations, Updating, and Submiting a Gym
@@ -51,8 +53,6 @@ export const ViewGyms = (props) => {
       })
       if (location.state) if (!location.state.isActive) setNotActive(true);
     } catch (error) { console.log(error); alert("Error on Page");}
-
-
   },[]);
 
   const submitGym = () => { try {
@@ -71,13 +71,46 @@ export const ViewGyms = (props) => {
     const [formattedTimes, setFormattedTimes] = useState([]);
     const searchAvail = props.searchAvail;
 
+    const addReservation = () => {
+      Axios.post('http://localhost:3001/api/AddReservation', {
+        gymId: gymInfo._id,
+        gymName: gymInfo.title,
+        guestId: usr,
+        timeSlot: reservDate,
+        duration: 60,
+        numGuests: parseInt(numGests)
+      })
+      .then((response) => { 
+        console.log(response)
+        //if(response.data) history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
+      })
+    }
+  
+const redirectToPayment = () => {
+  history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
+}
+
     // If user searched by availability, the time is auto reserved
     if (searchAvail !== '' && reservDate === null) {
-      setReservDate(searchAvail);
-      Swal.fire('Time Selected!', (new Date(searchAvail)).toLocaleString(), 'success');
+      Axios.post('http://localhost:3001/api/AddReservation', {
+        gymId: gymInfo._id,
+        gymName: gymInfo.title,
+        guestId: usr,
+        timeSlot: searchAvail,
+        duration: 60,
+        numGuests: parseInt(numGests)
+      })
+      .then((response) => { 
+        Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
+        if(response.data) 
+          history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
+      })
     }
-
+    
     const handleChange = (newValue) => {
+      const swalDismiss = () => { Swal.fire('Reservation Process Canceled', '', 'warning') ; };
+      const swalErr = () => { Swal.fire('Reservation Error', '', 'error'); };
+
       setDay(newValue);
       let d = new Date(newValue);
       for (let i=0; i<24; i++) {
@@ -96,16 +129,53 @@ export const ViewGyms = (props) => {
           title: 'Select a time!',
           input: 'select',
           inputOptions: { 'Time Slots Available!': formattedTimes },
-          //inputPlaceholder: 'Time Slots Available',
           showCancelButton: true,
         }).then(res => {
-          setReservDate(times[res.value])
-          if (res.isConfirmed) 
-            Swal.fire({confirmButtonColor: '#3F51B5', title: 'Time Reserved!\n', text: (new Date(times[res.value])).toLocaleString(), icon: 'success'})
-          else if (res.isDismissed)
-            Swal.fire({confirmButtonColor: '#3F51B5', title: 'Reservation Process Canceled', icon: 'warning'})
-          else 
-            Swal.fire({confirmButtonColor: '#3F51B5', title: 'Reservation Error', icon: 'error'})
+          if (res.isConfirmed) {
+            Swal.fire({
+              title: 'How many guests?',
+              icon: 'question',
+              input: 'range',
+              inputAttributes: { min: 1, max: 100, step: 1 },
+              inputValue: 1
+            }).then(res2 => {
+              setNumGuests(res2.value)
+              if (res2.isConfirmed) {
+                Swal.fire({
+                  title: '-Confirm Reservation-',
+                  showDenyButton: true,
+                  confirmButtonText: 'Confirm',
+                  denyButtonText: `Deny`,
+                  html: (new Date(times[res.value])).toLocaleString() + '<br>Guests: ' + res2.value,
+                }).then((res3) => {
+                  if (res3.isConfirmed) {
+                    Swal.fire('Reservation Confirmed!', '', 'success');
+                    setReservDate(times[res.value]);
+                    Axios.post('http://localhost:3001/api/AddReservation', {
+                      gymId: gymInfo._id,
+                      gymName: gymInfo.title,
+                      guestId: usr,
+                      timeSlot: times[res.value],
+                      duration: 60,
+                      numGuests: parseInt(numGests)
+                    })
+                    .then((response) => { 
+                      if(response.data) 
+                        history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
+                    })
+                  }
+                  else if (res3.isDenied) 
+                    Swal.fire('RED BUTTON', '', 'warning');
+                  else if (res3.isDismissed) swalDismiss();
+                  else swalErr();
+                })
+              }
+              else if (res2.isDismissed) swalDismiss();
+              else swalErr();
+            })
+          }
+          else if (res.isDismissed) swalDismiss();
+          else swalErr();
         })
       }
       else Swal.fire({confirmButtonColor: '#3F51B5', title: "No times available that day!"})

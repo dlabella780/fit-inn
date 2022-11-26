@@ -36,7 +36,8 @@ import { uploadFile } from "react-s3";
 import AWS from 'aws-sdk';
 import AvailabilitySelector from './AvailabilitySelector';
 import dayjs from 'dayjs';
-import swal from '@sweetalert/with-react';
+import Swal from 'sweetalert2';
+
 
 
 const S3_BUCKET = "fit-inn";
@@ -95,7 +96,9 @@ function UploadTab(props) {
 	const history = useHistory();
 
     useEffect(() => {
+		Swal.showLoading();
 		Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
+		Swal.close();
 		for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
 			equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
 		setEquipmentMap(equipMap);
@@ -252,7 +255,9 @@ function UploadTab(props) {
 					redirectToGym(response.data)
 				)
 			} catch (error) { console.log(error); alert("Error on Page")}
-		} else { try {
+		} else { 
+			Swal.showLoading();
+			try {
 			Axios.post('http://localhost:3001/api/updateGym', {
 				accessInformation: accessInformation, 
 				address: address, 
@@ -277,7 +282,8 @@ function UploadTab(props) {
 				equipment: equipmentObj,
 				id: props.gymId})
 				.then((response) => {    
-					swal({title: response.data}).then(okay => {redirectToGym(props.gymId)})
+					Swal.hideLoading();
+					Swal.fire({confirmButtonColor: '#3F51B5', title: response.data}).then(okay => {redirectToGym(props.gymId)})
 				});
 			} catch (error) { console.log(error); alert("Error on Page")}
 		}
@@ -347,8 +353,10 @@ function UploadTab(props) {
 	const equipMap = new Map();
 
 	if(props.gymId && !oldGymLoaded) {
+		Swal.showLoading();
 		let str = 'http://localhost:3001/api/getGym/' + props.gymId
 		Axios.get(str).then((response) => {
+			Swal.close();
 			if (response.data.get_Gym.isActive) setIsActive(response.data.get_Gym.isActive);
 			setDays(response.data.get_Gym.days);
 			setStartingDate(dayjs(response.data.get_Gym.startingDate));

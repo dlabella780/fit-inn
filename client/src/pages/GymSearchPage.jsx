@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Swal from 'sweetalert2';
 
 function GymSearchPage() {
   const [gymData, setGymData] = useState([]);
@@ -26,7 +27,9 @@ function GymSearchPage() {
 	function searchForGym() {
     Axios.get('http://localhost:3001/api/gymSearch', {
       params: {zipcode: searchZip, avail: searchAvailability}})
-        .then((response) => { setGymData(response.data) })
+        .then((response) => { 
+          Swal.close();
+          setGymData(response.data) })
         .catch((error) => { console.log(error)} );
     if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
   }
@@ -45,6 +48,7 @@ function GymSearchPage() {
   }
 
   function handleSearchClick() {
+    Swal.showLoading();
     setUpdateSearch(updateSearch + 1)
     if (dateTime !== null) setSearchAvailability(dateTime.toJSON());
   }
@@ -117,6 +121,7 @@ function GymSearchPage() {
               </Select>
             </FormControl>
             <Button 
+              color='primary'
               variant="contained" 
               onClick={() => {handleSearchClick()}}
               style={{height: '8ch'}}

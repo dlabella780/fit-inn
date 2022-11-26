@@ -11,14 +11,15 @@ import LanguageSharpIcon from '@mui/icons-material/LanguageSharp';
 import EmailSharpIcon from '@mui/icons-material/EmailSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import ContactPhoneSharpIcon from '@mui/icons-material/ContactPhoneSharp';
-import swal from '@sweetalert/with-react';
+import Swal from 'sweetalert2';
 
 function EditProfileInfo (props) {
 
     const history = useHistory();
     const SubmitUser = (e) => {
         e.preventDefault();
-            Axios.post('http://localhost:3001/api/updateProfile', {
+        Swal.showLoading();    
+        Axios.post('http://localhost:3001/api/updateProfile', {
                 street1: street1, 
                 street2: street2,
                 city: city,
@@ -31,7 +32,8 @@ function EditProfileInfo (props) {
                 phoneNumber: phoneNumber,
                 id: props.userId 
             }).then((response) => {    
-            swal({title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})
+                Swal.hideLoading();
+                Swal.fire({confirmButtonColor: '#3F51B5', title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)});
         })
     }
 

@@ -16,7 +16,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
-import swal from '@sweetalert/with-react';
 import Swal from 'sweetalert2';
 
 export const ViewGyms = (props) => {
@@ -40,10 +39,12 @@ export const ViewGyms = (props) => {
   //-------------------------------------------------------------------------------
 
   useEffect(() => {
+    Swal.showLoading();
     let gym = 'http://localhost:3001/api/getGym/' + gymID;
     try {
       Axios.get(gym).then((response) => {setGymInfo(response.data.get_Gym);})
       Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
+      Swal.close();
       for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
         equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
         setEquipmentMap(equipMap);
@@ -55,10 +56,12 @@ export const ViewGyms = (props) => {
   },[]);
 
   const submitGym = () => { try {
+    Swal.showLoading();
     Axios.post('http://localhost:3001/api/showGym', {
         id: location.state.gymId
     }).then((response) => {    
-        swal({title: response.data}).then(okay => {history.push('/', {})})
+      Swal.hideLoading();  
+      Swal.fire({confirmButtonColor: '#3F51B5', title: response.data}).then(okay => {history.push('/', {})})
     })} catch (error) { console.log(error); alert("Error on Page");}
   }
   
@@ -71,7 +74,7 @@ export const ViewGyms = (props) => {
     // If user searched by availability, the time is auto reserved
     if (searchAvail !== '' && reservDate === null) {
       setReservDate(searchAvail);
-      Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
+      Swal.fire('Time Selected!', (new Date(searchAvail)).toLocaleString(), 'success');
     }
 
     const handleChange = (newValue) => {
@@ -89,6 +92,7 @@ export const ViewGyms = (props) => {
       }
       if (formattedTimes.length !== 0) {
         Swal.fire({
+          confirmButtonColor: '#3F51B5', 
           title: 'Select a time!',
           input: 'select',
           inputOptions: { 'Time Slots Available!': formattedTimes },
@@ -97,14 +101,14 @@ export const ViewGyms = (props) => {
         }).then(res => {
           setReservDate(times[res.value])
           if (res.isConfirmed) 
-            Swal.fire('Time Reserved!', (new Date(times[res.value])).toLocaleString(), 'success')
+            Swal.fire({confirmButtonColor: '#3F51B5', title: 'Time Reserved!\n', text: (new Date(times[res.value])).toLocaleString(), icon: 'success'})
           else if (res.isDismissed)
-            Swal.fire('Reservation Process Canceled', '', 'warning')
+            Swal.fire({confirmButtonColor: '#3F51B5', title: 'Reservation Process Canceled', icon: 'warning'})
           else 
-            Swal.fire('Reservation Error', '', 'error')
+            Swal.fire({confirmButtonColor: '#3F51B5', title: 'Reservation Error', icon: 'error'})
         })
       }
-      else Swal.fire("No times available that day!")
+      else Swal.fire({confirmButtonColor: '#3F51B5', title: "No times available that day!"})
     };
 
     return ( <>
@@ -123,11 +127,7 @@ export const ViewGyms = (props) => {
   return ( 
   <div className="view-gym">
     {gymInfo.length === 0 ? 
-      <Typography variant="h2" 
-        align="left" 
-        style={{padding: 15, margin: 10, color:"black"}}>
-        Loading...
-      </Typography>
+      <></>
       :
       <Box sx={{ width: 1000, height: 'flex' }}>
         {notActive ? <>

@@ -11,6 +11,7 @@ import UserReservations from "../components/ProfilePage/UserReservations";
 import UserPayment from "../components/ProfilePage/UserPayment";
 import EditProfileInfo from "../components/ProfilePage/EditProfileInfo";
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,6 +55,7 @@ export default function BasicTabs(props) {
   const [profileUpdated, setProfileUpdated] = useState(0);
 
   useEffect(() => {
+    Swal.showLoading();
     if (props.userId) {
       let str = 'http://localhost:3001/api/getUser/' + props.userId
       try{
@@ -64,6 +66,7 @@ export default function BasicTabs(props) {
       str = 'http://localhost:3001/api/getUserGyms/' + props.userId
       try{
       Axios.get(str).then((response) => {
+        Swal.close();
         setUserGymData(response.data);
         console.log(userGymData)
         setUserGymLoading(false);

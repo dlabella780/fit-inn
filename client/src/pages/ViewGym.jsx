@@ -72,10 +72,6 @@ export const ViewGyms = (props) => {
     const [times, setTimes] = useState([]);
     const [formattedTimes, setFormattedTimes] = useState([]);
 
-const redirectToPayment = () => {
-  history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
-}
-
     // if (searchAvail !== null) {
     //   if (searchAvail !== null) setReservDate(searchAvail);
     //   // Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
@@ -123,8 +119,8 @@ const redirectToPayment = () => {
                   confirmButtonColor: '#3F51B5',
                   title: '-Confirm Reservation-',
                   showDenyButton: true,
-                  confirmButtonText: 'Confirm',
-                  denyButtonText: `Deny`,
+                  confirmButtonText: 'Confirm Reservation',
+                  denyButtonText: `Cancel`,
                   html: (new Date(times[res.value])).toLocaleString() + '<br>Guests: ' + res2.value,
                 }).then((res3) => {
                   if (res3.isConfirmed) {
@@ -144,7 +140,7 @@ const redirectToPayment = () => {
                       })
                       .then((response) => { 
                         if(response.data) 
-                          history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
+                          history.push('/Payments', { gymInfo: gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
                       })
                     })
                   }

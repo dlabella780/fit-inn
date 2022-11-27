@@ -66,8 +66,7 @@ const LandingPage = (props) => {
                 }).then(() => {    
             })
             }
-            if (response.data.get_User.profilePicture ==''){
-                console.log("No picture")
+                console.log("Updating Profile picture")
                 Axios.post('http://localhost:3001/api/updateProfile', {
                     street1: response.data.get_User.street1, 
                     street2: response.data.get_User.street2,
@@ -82,7 +81,6 @@ const LandingPage = (props) => {
                     profilePicture: userPhoto,
                     id: props.userId 
             })
-        }
           })} catch (error) { console.log(error); alert("Error on Page");}
         } else{console.log("Not Logged In")}
       });

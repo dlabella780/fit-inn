@@ -34,8 +34,61 @@ import {
     signOut,
     getAuth,
   } from "firebase/auth";
+  import Axios from 'axios';
 
 const LandingPage = (props) => {   
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+  
+    useEffect(() => {
+        if (props.userId) {
+            let userEmail = user.email;
+            let userPhoto = user.photoURL;
+          let str = 'http://localhost:3001/api/getUser/' + props.userId
+          try{
+          Axios.get(str).then((response) => {
+            if(response.data.get_User.email == ''){
+                console.log("No Email")
+                Axios.post('http://localhost:3001/api/updateProfile', {
+                    street1: response.data.get_User.street1, 
+                    street2: response.data.get_User.street2,
+                    city: response.data.get_User.city,
+                    state: response.data.get_User.state,
+                    country: response.data.get_User.country,
+                    zipcode: response.data.get_User.zipcode,
+                    email: userEmail, 
+                    fname: response.data.get_User.fname,
+                    lname: response.data.get_User.lname,  
+                    phoneNumber: response.data.get_User.phoneNumber,
+                    profilePicture: response.data.get_User.profilePicture,
+                    id: props.userId 
+                }).then(() => {    
+            })
+            }
+            if (response.data.get_User.profilePicture ==''){
+                console.log("No picture")
+                Axios.post('http://localhost:3001/api/updateProfile', {
+                    street1: response.data.get_User.street1, 
+                    street2: response.data.get_User.street2,
+                    city: response.data.get_User.city,
+                    state: response.data.get_User.state,
+                    country: response.data.get_User.country,
+                    zipcode: response.data.get_User.zipcode,
+                    email: response.data.get_User.email, 
+                    fname: response.data.get_User.fname,
+                    lname: response.data.get_User.lname,  
+                    phoneNumber: response.data.get_User.phoneNumber,
+                    profilePicture: userPhoto,
+                    id: props.userId 
+            })
+        }
+          })} catch (error) { console.log(error); alert("Error on Page");}
+        } else{console.log("Not Logged In")}
+      });
+
+//console.log(props.userData.get_User.email);
+
     return ( <div>
         <span classnam = "top-nav-bar">
             <NavBarTop userId={props.userId}/>

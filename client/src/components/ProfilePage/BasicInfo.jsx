@@ -8,9 +8,14 @@ import LanguageSharpIcon from '@mui/icons-material/LanguageSharp';
 import EmailSharpIcon from '@mui/icons-material/EmailSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import ContactPhoneSharpIcon from '@mui/icons-material/ContactPhoneSharp';
-
+import {
+    signOut,
+    getAuth,
+  } from "firebase/auth";
 
 function BasicInfo(props) {
+    const auth = getAuth();
+    const user = auth.currentUser;
 
     if (props.loading) return "Loading...";
 

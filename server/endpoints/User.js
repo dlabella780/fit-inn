@@ -192,7 +192,7 @@ export default function User(app, graphQLClient) {
                 notificationSetting: 0,
                 //paymentapitoken: "striketoken",
                 phoneNumber: req.body.phoneNumber,
-                //profilePicture: "https://upload.wikimedia.org/wikipedia/commons/5/5b/Waffles_with_Strawberries.jpg",
+                profilePicture: req.body.profilePicture,
                 id: req.body.id
             }
 

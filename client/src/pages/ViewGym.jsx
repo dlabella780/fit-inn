@@ -29,7 +29,7 @@ export const ViewGyms = (props) => {
   const [numGests, setNumGuests] = useState(1);
   const usr = props.userId;
   const searchAvail = props.props.location.avail;
-  const maxGuests = 1;
+  let maxGuests = 1;
   if (!location.state) 
     maxGuests = props.props.location.props.numGuestsAllowed
 
@@ -177,15 +177,22 @@ export const ViewGyms = (props) => {
 
   return ( 
   <div className="view-gym">
-    {gymInfo.length === 0 ? 
-      <></>
-      :
+    {gymInfo.length === 0 ? <></> :
       <Box sx={{ width: 1000, height: 'flex' }}>
-        {notActive ? <>
-          <Button onClick={() => submitGym()}>Submit Gym</Button>
-          <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>Go Back</NavLink>
-        </> : <></>}
-        <Typography variant="h2" align="left">{gymInfo.title}</Typography>
+        <Grid container direction="row" justifyContent="space-between" style={{padding: 2}} >
+          <Grid item><Typography variant="h2" align="left">{gymInfo.title}</Typography></Grid>
+            {notActive ? <>
+              <Grid item>
+                <Button variant="contained" onClick={() => submitGym()}>
+                  <Typography variant="h5" align='center'>Submit Gym</Typography>
+                </Button>
+                <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>
+                  <Typography variant="h5" align='center'>Go Back</Typography>
+                </NavLink>
+              </Grid>
+              </> : <></>
+            }
+        </Grid>
         <Grid container direction="row" spacing={2} style={{padding: 2}}>
           <Grid item><Rating name="gym-rating" value={gymInfo.rating} size="large" readOnly/><br/></Grid>
           <Grid item>

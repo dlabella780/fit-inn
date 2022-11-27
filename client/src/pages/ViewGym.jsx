@@ -28,11 +28,15 @@ export const ViewGyms = (props) => {
   const location = useLocation();
   const [numGests, setNumGuests] = useState(1);
   const usr = props.userId;
+  const searchAvail = props.props.location.avail;
+  let maxGuests = 1;
+  if (!location.state) 
+    maxGuests = props.props.location.props.numGuestsAllowed
 
   //-------------------------------------------------------------------------------
   // Allows redirect from GymThumbnail, Reservations, Updating, and Submiting a Gym
   let gymID = '';
-  if (location.state)
+  if (location.state) 
     gymID = location.state.gymId;
   else if (props.props.location.props) 
     gymID = props.props.location.props._id || props.props.location.props;
@@ -52,6 +56,7 @@ export const ViewGyms = (props) => {
         setEquipmentMap(equipMap);
       })
       if (location.state) if (!location.state.isActive) setNotActive(true);
+      if (searchAvail !== null) setReservDate(searchAvail);
     } catch (error) { console.log(error); alert("Error on Page");}
   },[]);
 
@@ -69,28 +74,14 @@ export const ViewGyms = (props) => {
     const [day, setDay] = useState(null);
     const [times, setTimes] = useState([]);
     const [formattedTimes, setFormattedTimes] = useState([]);
-    const searchAvail = props.searchAvail;
 
-const redirectToPayment = () => {
-  history.push('/Payments', { gymInfo: props.gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
-}
-
-    // If user searched by availability, the time is auto reserved
-    if (searchAvail !== '' && reservDate === null) {
-      Axios.post('http://localhost:3001/api/AddReservation', {
-        gymId: gymInfo._id,
-        gymName: gymInfo.title,
-        guestId: usr,
-        timeSlot: searchAvail,
-        duration: 60,
-        numGuests: parseInt(numGests)
-      })
-      .then((response) => { 
-        Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
-        if(response.data) 
-          history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
-      })
-    }
+    // if (searchAvail !== null) {
+    //   if (searchAvail !== null) setReservDate(searchAvail);
+    //   // Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
+    //   // setReservDate(searchAvail);
+    //   // if (reservDate !== null) console.log(reservDate);
+    //   // searchAvail = null;
+    // }
     
     const handleChange = (newValue) => {
       const swalDismiss = () => { Swal.fire('Reservation Process Canceled', '', 'warning') ; };
@@ -118,40 +109,45 @@ const redirectToPayment = () => {
         }).then(res => {
           if (res.isConfirmed) {
             Swal.fire({
+              confirmButtonColor: '#3F51B5',
               title: 'How many guests?',
               icon: 'question',
               input: 'range',
-              inputAttributes: { min: 1, max: 100, step: 1 },
+              inputAttributes: { min: 1, max: maxGuests, step: 1 },
               inputValue: 1
             }).then(res2 => {
               setNumGuests(res2.value)
               if (res2.isConfirmed) {
                 Swal.fire({
+                  confirmButtonColor: '#3F51B5',
                   title: '-Confirm Reservation-',
                   showDenyButton: true,
-                  confirmButtonText: 'Confirm',
-                  denyButtonText: `Deny`,
+                  confirmButtonText: 'Confirm Reservation',
+                  denyButtonText: `Cancel`,
                   html: (new Date(times[res.value])).toLocaleString() + '<br>Guests: ' + res2.value,
                 }).then((res3) => {
                   if (res3.isConfirmed) {
-                    Swal.fire('Reservation Confirmed!', '', 'success');
-                    setReservDate(times[res.value]);
-                    Axios.post('http://localhost:3001/api/AddReservation', {
-                      gymId: gymInfo._id,
-                      gymName: gymInfo.title,
-                      guestId: usr,
-                      timeSlot: times[res.value],
-                      duration: 60,
-                      numGuests: parseInt(numGests)
-                    })
-                    .then((response) => { 
-                      if(response.data) 
-                        history.push('/PaymentSuccess',{gymInfo: gymInfo, date: reservDate});
+                    Swal.fire({
+                      confirmButtonColor: '#3F51B5',
+                      title: 'Reservation Confirmed!',
+                      icon: 'success'
+                    }).then((res4) => {
+                      setReservDate(times[res.value]);
+                      Axios.post('http://localhost:3001/api/AddReservation', {
+                        gymId: gymInfo._id,
+                        gymName: gymInfo.title,
+                        guestId: usr,
+                        timeSlot: times[res.value],
+                        duration: 60,
+                        numGuests: parseInt(numGests)
+                      })
+                      .then((response) => { 
+                        if(response.data) 
+                          history.push('/Payments', { gymInfo: gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
+                      })
                     })
                   }
-                  else if (res3.isDenied) 
-                    Swal.fire('RED BUTTON', '', 'warning');
-                  else if (res3.isDismissed) swalDismiss();
+                  else if (res3.isDenied || res3.isDismissed) swalDismiss();
                   else swalErr();
                 })
               }
@@ -181,15 +177,22 @@ const redirectToPayment = () => {
 
   return ( 
   <div className="view-gym">
-    {gymInfo.length === 0 ? 
-      <></>
-      :
+    {gymInfo.length === 0 ? <></> :
       <Box sx={{ width: 1000, height: 'flex' }}>
-        {notActive ? <>
-          <Button onClick={() => submitGym()}>Submit Gym</Button>
-          <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>Go Back</NavLink>
-        </> : <></>}
-        <Typography variant="h2" align="left">{gymInfo.title}</Typography>
+        <Grid container direction="row" justifyContent="space-between" style={{padding: 2}} >
+          <Grid item><Typography variant="h2" align="left">{gymInfo.title}</Typography></Grid>
+            {notActive ? <>
+              <Grid item>
+                <Button variant="contained" onClick={() => submitGym()}>
+                  <Typography variant="h5" align='center'>Submit Gym</Typography>
+                </Button>
+                <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>
+                  <Typography variant="h5" align='center'>Go Back</Typography>
+                </NavLink>
+              </Grid>
+              </> : <></>
+            }
+        </Grid>
         <Grid container direction="row" spacing={2} style={{padding: 2}}>
           <Grid item><Rating name="gym-rating" value={gymInfo.rating} size="large" readOnly/><br/></Grid>
           <Grid item>
@@ -216,8 +219,8 @@ const redirectToPayment = () => {
           </Grid>
         </Grid>
         <ImageList variant="quilted" cols={2} rowHeight={400} columnWidth={400}>
-          {gymInfo.photos.map((item) => (
-            <ImageListItem key={item.img}><img src={item}/></ImageListItem>
+          {gymInfo.photos.map((item, index) => (
+            <ImageListItem key={index}><img src={item}/></ImageListItem>
           ))}
         </ImageList>
         <Grid container direction="row" justifyContent="space-between" style={{padding: 2}}>
@@ -240,8 +243,8 @@ const redirectToPayment = () => {
           </Grid>
           <Grid item>
             <Grid item><Typography variant="h3" align="center">-Equipment-</Typography>
-              {gymInfo.equipment.map(equip => 
-                <Typography variant="h5" align="center">
+              {gymInfo.equipment.map((equip, index) => 
+                <Typography variant="h5" align="center" key={index}>
                   {equipmentMap.get(equip.equipmentId)}{' : '}{equip.details}
                 </Typography>)}
             </Grid>

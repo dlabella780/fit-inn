@@ -29,11 +29,14 @@ export const ViewGyms = (props) => {
   const [numGests, setNumGuests] = useState(1);
   const usr = props.userId;
   const searchAvail = props.props.location.avail;
-  const maxGuests = props.props.location.props.numGuestsAllowed;
+  const maxGuests = 1;
+  if (!location.state) 
+    maxGuests = props.props.location.props.numGuestsAllowed
+
   //-------------------------------------------------------------------------------
   // Allows redirect from GymThumbnail, Reservations, Updating, and Submiting a Gym
   let gymID = '';
-  if (location.state)
+  if (location.state) 
     gymID = location.state.gymId;
   else if (props.props.location.props) 
     gymID = props.props.location.props._id || props.props.location.props;

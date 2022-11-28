@@ -143,7 +143,7 @@ function Navbar(props) {
             <MenuItem onClick={logout}><NavLink to="/" className={classes.sublink}>Logout</NavLink></MenuItem>
             {props.userId ? <MenuItem onClick={handleCloseUserMenu}><NavLink to="/Profile" className={classes.sublink}>Profile</NavLink></MenuItem> : 
             <MenuItem onClick={() => alert('Please Login to View Profile')}>Profile</MenuItem>}
-            <MenuItem onClick={handleCloseUserMenu}><NavLink to="/" className={classes.sublink}>Gym Dashboard</NavLink></MenuItem>
+            {/* <MenuItem onClick={handleCloseUserMenu}><NavLink to="/" className={classes.sublink}>Gym Dashboard</NavLink></MenuItem> */}
           </Menu>
         </Box>
             </div>

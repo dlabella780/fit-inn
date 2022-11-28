@@ -6,7 +6,7 @@ class ProtectionAndInsurancePage extends Component {
     render() { return (
         <Box>
             <div className="policy-page-items">
-                <Typography variant="h3">Protection and Insurance</Typography>
+                <Typography variant="h3">Host Liability Protection and Insurance</Typography>
                 <Typography className = "policy-page-update" variant="h5">Last Update: 9/30/2022</Typography>
 
                 <span className="terms-page-links">

@@ -117,7 +117,6 @@ function Navbar(props) {
               <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>
               {props.userId ? <NavLink to={{pathname: '/GymUpload', state:{ gymId: false}}} className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink> :
               <NavLink onClick={() => alert('Please Login to upload a Gym.')} to={{state:{ gymId: false}}} className={isActive => (isActive ? classes.linkActive : classes.link)}>List a Gym</NavLink> }<br/>
-              <NavLink to="/Payment" className={isActive => (isActive ? classes.linkActive : classes.link)}>Go to Payment</NavLink>
               <Box sx={{ flexGrow: 0 }}>
           <Tooltip title="Settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 4 }}>

@@ -41,11 +41,11 @@
 
 .helpsection {
   position: absolute;
-  top: 10%;
   background-color: white;
   padding: 10px;
   border: 2px solid black;
   border-radius: 12px;
+  margin-top: 150px;
 }
 
 .helpsection h1{

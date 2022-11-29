@@ -463,7 +463,7 @@ function UploadTab(props) {
 			axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 			index={value}
 			onChangeIndex={handleChangeIndex}
-			style={{width: '87ch', height: '65ch'}}
+			style={{width: '100ch', height: '80ch'}}
 		>
 		  <TabPanel value={value} index={0} dir={theme.direction}>
 			<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
@@ -709,6 +709,7 @@ function UploadTab(props) {
 					endingHours={endingHours}
 					setEndingHours={setEndingHours}
 					setAvailability={setAvailability}/>
+				{/* {availability} */}
 				<TextField
 					id="hourly-rate"
 					label="Hourly Rate?"

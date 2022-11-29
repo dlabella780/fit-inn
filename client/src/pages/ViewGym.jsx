@@ -143,7 +143,8 @@ export const ViewGyms = (props) => {
                       })
                       .then((response) => { 
                         if(response.data) 
-                          history.push('/Payments', { gymInfo: gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
+                          history.push('/Payments', 
+                          { gymInfo: gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
                       })
                     })
                   }
@@ -229,10 +230,10 @@ export const ViewGyms = (props) => {
             <Grid container direction="column" style={{padding: 2}} alignItems="flex-start">
               <Grid item>
                 <Typography variant="h5" align="left" style={{overflowWrap: 'break-word'}}>
-                  Host: {gymInfo.isHostHome !== 'false' ? " Not " : " "}Home<br></br>
-                  Bathroom: {gymInfo.hasBathroom === 'true' ? "Available" : "Unavailable"}<br></br>
-                  Wifi: {gymInfo.hasWifi === 'true' ? "Available" : "Unavailable"}<br></br>
-                  Speakers: {gymInfo.hasSpeakers === 'true' ? "Available" : "Unavailable"}<br></br>
+                  Host: {gymInfo.isHostHome  !== true ? " Not " : " "}Home<br></br>
+                  Bathroom: {gymInfo.hasBathroom  === true ? "Available" : "Unavailable"}<br></br>
+                  Wifi: {gymInfo.hasWifi  === true ? "Available" : "Unavailable"}<br></br>
+                  Speakers: {gymInfo.hasSpeakers  === true ? "Available" : "Unavailable"}<br></br>
                   TV: {gymInfo.tvType}<br></br>
                   {/* Notes: {gymInfo.accessInformation}<br></br> */}
                   Booking Notice: {gymInfo.bookingNotice} Hours<br></br>

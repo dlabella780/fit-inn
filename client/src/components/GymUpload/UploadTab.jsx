@@ -644,6 +644,13 @@ function UploadTab(props) {
 			<SelectEquipment/>
 			<Typography variant='h5' color='gray'>Equipment List</Typography>
 			{GetEquip()}
+			{isActive ? 
+			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+				UPDATE GYM
+			</Button>
+			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+				REVIEW GYM
+			</Button>}		
 		  </TabPanel>
 		  <TabPanel value={value} index={2} dir={theme.direction}>
 			<Stack direction="row" spacing={2}>
@@ -695,9 +702,16 @@ function UploadTab(props) {
 				</FormControl>
 			</Box>
 			</Stack>
+			{isActive ? 
+			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+				UPDATE GYM
+			</Button>
+			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+				REVIEW GYM
+			</Button>}		
 		  </TabPanel>
 		  <TabPanel value={value} index={3} dir={theme.direction}>
-			<Box sx={{ '& .MuiTextField-root': { m: 1, width: '33ch' }}}>
+			<Box sx={{ '& .MuiTextField-root': { m: .75, width: '33ch' }}}>
 				<AvailabilitySelector 
 					gymId={props.gymId}
 					days={days}
@@ -743,6 +757,13 @@ function UploadTab(props) {
 					/>
 				</div>
 			</Box>
+			{isActive ? 
+			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+				UPDATE GYM
+			</Button>
+			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
+				REVIEW GYM
+			</Button>}		
 		  </TabPanel>
 		</SwipeableViews>
 

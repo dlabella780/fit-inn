@@ -6,15 +6,6 @@ import { Typography, Box, Button } from "@material-ui/core";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 
-//Hold the total amount
-let total = "$10.00"
-
-//Hold Gym being rented
-let gym = "Gary's Gym"
-
-//Hold date and time for rental
-let time = "Aug. 8 2022 5:30pm - 6:30pm"
-
 const CARD_OPTIONS = {
 	iconStyle: "solid",
 	style: {
@@ -127,8 +118,7 @@ export default function PaymentForm(props) {
                 </div>
             </fieldset>
             <Stack padding="5px" direction="row" spacing={25}>
-            <Typography variant="h6">{gym}</Typography>
-            <Typography variant="h6">{time}</Typography>
+                        <Typography variant="h6">You are reserving: {props.gymInfo.title}</Typography>
             </Stack>
             <Stack direction="row" spacing={45}>
                 <Button variant="contained" color="primary" href="/">Cancel</Button>

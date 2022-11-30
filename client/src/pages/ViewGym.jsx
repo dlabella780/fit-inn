@@ -75,14 +75,6 @@ export const ViewGyms = (props) => {
     const [times, setTimes] = useState([]);
     const [formattedTimes, setFormattedTimes] = useState([]);
 
-    // if (searchAvail !== null) {
-    //   if (searchAvail !== null) setReservDate(searchAvail);
-    //   // Swal.fire('Time Reserved!', (new Date(searchAvail)).toLocaleString(), 'success');
-    //   // setReservDate(searchAvail);
-    //   // if (reservDate !== null) console.log(reservDate);
-    //   // searchAvail = null;
-    // }
-    
     const handleChange = (newValue) => {
       const swalDismiss = () => { Swal.fire('Reservation Process Canceled', '', 'warning') ; };
       const swalErr = () => { Swal.fire('Reservation Error', '', 'error'); };
@@ -258,19 +250,7 @@ export const ViewGyms = (props) => {
                   <Typography variant="h4" align="center">-Reserve a Time!-</Typography>
                 </Grid>
                 <AvailableTimes date={reservDate} times={gymInfo.availability} searchAvail={props.props.location.avail}></AvailableTimes>
-                {/* <Typography variant="h5" align="center">
-                  {(reservDate === null) ? 'No time selected.' : (new Date(reservDate)).toLocaleString()}
-                </Typography> */}
               </Grid>
-              {/* <Grid item>
-                {props.userId ? reservDate ? 
-                  <Grid item>
-                    <ViewConfirmation gymInfo={gymInfo} date={reservDate} userId={props.userId}/>
-                  </Grid>
-                  : <Button variant="contained" sx={{right:30}}>Please Select a Time.</Button>
-                  : <Button variant="contained" sx={{right:31}}>Login to Book a Gym.</Button>
-                }
-              </Grid> */}
             </Grid>
           </Grid>
         </Grid>

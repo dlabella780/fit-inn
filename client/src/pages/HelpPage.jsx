@@ -36,3 +36,4 @@ class HelpPage extends Component {
 export default HelpPage;
 
 // Gym room vector image created by upklyak - www.freepik.com
+// https://www.freepik.com/free-vector/sport-fitness-equipment-gym_7743070.htm?query=gym#from_view=detail_alsolike

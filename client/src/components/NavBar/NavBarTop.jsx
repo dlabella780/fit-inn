@@ -14,6 +14,7 @@ import {
   getAuth,
 } from "firebase/auth";
 import { UserAddOutlined } from "@ant-design/icons";
+import SiteLogo from "./fitinn-logo-white.png"
 
 const useStyles = makeStyles((theme) => ({
     navlinks: {
@@ -82,7 +83,7 @@ function Navbar(props) {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-            <Link to="/" className={classes.logo}>FIT-INN</Link>
+              <Link to="/" className={classes.logo}><img src={SiteLogo} height="50px" /></Link>
         </Typography> { !props.userId ? (
           <div className={classes.navlinks}>
           <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>

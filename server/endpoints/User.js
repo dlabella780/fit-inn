@@ -163,7 +163,7 @@ export default function User(app, graphQLClient) {
 		$id: ID = "") {
 	update_User(
 	  id: $id
-	  input: {email: $email, favoriteGymIds: $favoriteGymIds, fname: $fname, lname: $lname, notificationSetting: $notificationSetting, paymentapitoken: $paymentapitoken, phoneNumber: $phoneNumber, profilePicture: $profilePicture, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}}
+	  input: {email: $email, favoriteGymIds: $favoriteGymIds, fname: $fname, lname: $lname, notificationSetting: $notificationSetting, paymentapitoken: $paymentapitoken, phoneNumber: $phoneNumber, address: {City: $City, Country: $Country, State: $State, stree2: $stree2, street1: $street1, zipcode: $zipcode}}
 	) {
 	  transaction {
 		_id

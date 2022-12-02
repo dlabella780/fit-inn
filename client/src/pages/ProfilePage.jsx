@@ -70,7 +70,7 @@ export default function BasicTabs(props) {
         setUserGymData(response.data);
         console.log(userGymData)
         setUserGymLoading(false);
-    })}catch (error) { console.log(error); alert("Error on Page");}} else{alert("Not Logged In")}
+    })}catch (error) { console.log(error); alert("Error on Page");}}
   },[props,profileUpdated]);
 
   const handleChange = (event, newValue) => {

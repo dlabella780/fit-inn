@@ -79,7 +79,7 @@ export default function Gym(app, graphQLClient) {
     const gymSearchZipAvail = gql`
     query MyQuery($eq: String = "", $contains: String = "") {
         list_GymItems(
-        filter: {address: {zipcode: {eq: $eq}}, availability: {contains: $contains}, isActive: {eq: true}}
+        filter: {address: {zipcode: {contains: $eq}}, availability: {contains: $contains}, isActive: {eq: true}}
         ) {
         _GymItems {
             _id
@@ -159,7 +159,7 @@ export default function Gym(app, graphQLClient) {
     const gymSearchZip = gql`
     query MyQuery($eq: String = "") {
         list_GymItems(
-        filter: {address: {zipcode: {eq: $eq}}, isActive: {eq: true}}
+        filter: {address: {zipcode: {contains: $eq}}, isActive: {eq: true}}
         ) {
         _GymItems {
             _id
@@ -344,7 +344,8 @@ export default function Gym(app, graphQLClient) {
 
     app.post('/api/updateGym', async (req, res) => {
 
-        if (VerifyRequest(req)) {
+      if (VerifyRequest(req)) {
+            console.log('gym updated called')  
             const variables = {
                 accessInformation: req.body.accessInformation,
                 availability: req.body.availability,

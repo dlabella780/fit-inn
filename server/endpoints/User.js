@@ -133,10 +133,11 @@ export default function User(app, graphQLClient) {
 
     app.post('/api/AddUser', async (req, res) => {
         if (VerifyRequest(req)) {
-            const variables = {
+          console.log('user add called')  
+          const variables = {
                 ssoapitoken: req.body.uid,
-                //profilePicture: req.body.profilePicture,
-                //email: req.body.email
+                profilePicture: req.body.photo,
+                email: req.body.email
             }
 
             const data = await graphQLClient.request(userAddMutation, variables)
@@ -158,8 +159,7 @@ export default function User(app, graphQLClient) {
 		$lname: String = "", 
 		$notificationSetting: Int = 10, 
 		$paymentapitoken: String = "", 
-		$phoneNumber: String = "", 
-		$profilePicture: String = "", 
+		$phoneNumber: String = "",
 		$id: ID = "") {
 	update_User(
 	  id: $id
@@ -176,7 +176,8 @@ export default function User(app, graphQLClient) {
 
     app.post('/api/UpdateProfile', async (req, res) => {
         if (VerifyRequest(req)) {
-            const variables = {
+          console.log('update profile called')  
+          const variables = {
                 City: req.body.city,
                 Country: req.body.country,
                 State: req.body.state,
@@ -192,7 +193,7 @@ export default function User(app, graphQLClient) {
                 notificationSetting: 0,
                 //paymentapitoken: "striketoken",
                 phoneNumber: req.body.phoneNumber,
-                profilePicture: req.body.profilePicture,
+                //profilePicture: req.body.profilePicture,
                 id: req.body.id
             }
 

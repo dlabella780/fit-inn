@@ -36,11 +36,7 @@ function BasicInfo(props) {
             </Box>
             <Box className = "basic-info-text-padding" sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <EditRoadSharpIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
-                <Typography variant="h6">Street 1: {props.data.get_User.address.street1}</Typography>
-            </Box>
-            <Box className = "basic-info-text-padding" sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                <EditRoadSharpIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />
-                <Typography variant="h6">Street 2: {props.data.get_User.address.stree2}</Typography>
+                <Typography variant="h6">Address: {props.data.get_User.address.street1}</Typography>
             </Box>
             <Box className = "basic-info-text-padding" sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <LocationCitySharpIcon sx={{ color: 'primary.main', mr: 1, my: 0.5 }} />

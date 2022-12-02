@@ -6,8 +6,10 @@ import * as dotenv from 'dotenv';
 import Gym from './endpoints/Gym.js'
 import User from './endpoints/User.js'
 import Reservation from './endpoints/Reservation.js'
+import axios from 'axios';
 dotenv.config();
 import Stripe from 'stripe';
+import VerifyRequest from './VerifyRequest.js';
 const stripe = Stripe(process.env.STRIPE_SK);
 const app = express();
 
@@ -65,6 +67,20 @@ app.post('/create-payment-intent', async (req, res) => {
 				},
 			});
 		}
+	}
+	else res.send('Access Denied.');
+});
+
+app.get('/api/verifyAddress/:line1/:line2', async (req, res) => {
+	if (VerifyRequest(req)) {
+		var str = 'http://www.yaddress.net/api/address?AddressLine1=' + req.params.line1 + '&AddressLine2=' + req.params.line2 + '&UserKey=' + process.env.YADDRESS_KEY;
+		axios.get(str).then(response => {
+			if (response.data.ErrorCode === 0) {
+				res.send(response.data)
+			} else {
+				res.send('Please Enter a Valid Address.')
+			}
+		})
 	}
 	else res.send('Access Denied.');
 });

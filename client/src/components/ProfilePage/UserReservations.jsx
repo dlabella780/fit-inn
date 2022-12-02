@@ -143,13 +143,13 @@ const UserReservations = (props) => {
         Swal.showLoading();
 		let str = 'http://localhost:3001/api/getReservationUser/' + props.userId
         Axios.get(str).then((response) => {
+            Swal.close();
             setGuestReservations(response.data.list_GymReservationItems._GymReservationItems);
             setGuestLoading(false);
         })
         for (let i=0; i<props.userGyms.list_GymItems._GymItems.length; i++) {
             let str = 'http://localhost:3001/api/getReservationGym/' + props.userGyms.list_GymItems._GymItems[i]._id
             Axios.get(str).then((response) => {
-                Swal.close();
                 for (let j=0; j<response.data.list_GymReservationItems._GymReservationItems.length; j++) {
                     setHostReservations(prevState => [...prevState, response.data.list_GymReservationItems._GymReservationItems[j]])
                 }

@@ -40,8 +40,9 @@ export default function App() {
       let str = 'http://localhost:3001/api/getUserId/' + user.uid;
       Axios.get(str).then((response) => {
         if (response.data.length === 0) {
+          console.log(user)
           Axios.post('http://localhost:3001/api/AddUser', {
-            uid: user.uid}).then((data, loading, error) => {    
+            uid: user.uid, photo: user.photoURL, email: user.email}).then((data, loading, error) => {    
             if(error) 
               console.log(error);
             else {

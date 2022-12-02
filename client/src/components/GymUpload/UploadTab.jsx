@@ -28,11 +28,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Axios from 'axios';
 import { Stack } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useHistory } from "react-router-dom";
-import { uploadFile } from "react-s3";
 import AWS from 'aws-sdk';
 import AvailabilitySelector from './AvailabilitySelector';
 import dayjs from 'dayjs';
@@ -169,6 +165,8 @@ function UploadTab(props) {
     }
 
     const SubmitGym = () => {
+		
+		Swal.showLoading();
 		if (title === '') {
             alert('Please Set a Gym Name');
             return;
@@ -197,10 +195,10 @@ function UploadTab(props) {
             alert('Please Set a State');
             return;
         }
-        if (zip === '' || isNaN(zip)) {
-            alert('Please Set a Zip');
-            return;
-        }
+        // if (zip === '' || isNaN(zip)) {
+        //     alert('Please Set a Zip');
+        //     return;
+        // }
         if (equipment.length < 1) {
             alert('Please Select at Least One Piece of Equipment');
             return;
@@ -218,7 +216,7 @@ function UploadTab(props) {
         for (let i = 0; i < equipment.length; i++) 
             equipmentObj.push({"details": equipmentDetails[i], "equipmentId": equipment[i]});
 
-		const address = {"street1": street1, "stree2": street2, "City": city, "State": state, "Country": "United States", "zipcode": zip};
+		const line2 = city + ", " + state;
 		var isHostHomeB = false;
         var hasWifiB = false;
         var hasSpeakersB = false;
@@ -227,8 +225,15 @@ function UploadTab(props) {
         if (hasWifi === 'true') hasWifiB = true;
         if (hasSpeakers === 'true') hasSpeakersB = true;
         if (hasBathroom === 'true') hasBathroomB = true;
-
-		if(!props.gymId) { try {
+		var str = 'http://localhost:3001/api/verifyAddress/' + street1 + '/' + line2;
+		Axios.get(str).then(response => {
+			Swal.close();
+			if (response.data.ErrorCode === 0) {
+				const fullZip = response.data.Zip + '-' + response.data.Zip4;
+				const address = {"street1": response.data.AddressLine1, "stree2": "", 
+				"City": response.data.City, "State": response.data.State, "Country": "United States", 
+				"zipcode": fullZip};
+				if(!props.gymId) { try {
 			Axios.post('http://localhost:3001/api/uploadgym', {
 				accessInformation: accessInformation, 
 				address: address, 
@@ -287,6 +292,13 @@ function UploadTab(props) {
 				});
 			} catch (error) { console.log(error); alert("Error on Page")}
 		}
+			} else {
+				Swal.fire({confirmButtonColor: '#3F51B5', title: response.data})
+			}
+			
+		})
+
+		
     }
 
 	const DeleteEquip = (index) => {
@@ -581,7 +593,7 @@ function UploadTab(props) {
 				}
 				error={!isNaN(state) && state !== ""}
 				/>}
-				{props.gymId && isActive ? 
+				{/* {props.gymId && isActive ? 
 				<TextField
 					required
 					id="location-zip"
@@ -608,7 +620,7 @@ function UploadTab(props) {
 						isNaN(zip) ? 'Not a zip.' : ' ' 
 					}
 					error={isNaN(zip)}
-				/>}
+				/>} */}
 				<Box sx={{ flexGrow: 1 }}>
 				  <Grid>
 					<Stack direction="row" spacing={2}>

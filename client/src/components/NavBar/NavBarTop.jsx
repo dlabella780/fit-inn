@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: "1",
         cursor: "pointer",
         alignItems: 'center',
+        top:20,
+        marginTop: '10px'
     },
     link: {
         textDecoration: "none",
@@ -83,7 +85,9 @@ function Navbar(props) {
       <CssBaseline />
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
-              <Link to="/" className={classes.logo}><img src={SiteLogo} height="50px" /></Link>
+          <Link to="/" className={classes.logo}>
+            <img src={SiteLogo} height="50px"/>
+          </Link>
         </Typography> { !props.userId ? (
           <div className={classes.navlinks}>
           <NavLink to="/GymSearch" className={isActive => (isActive ? classes.linkActive : classes.link)}>Find a Gym</NavLink>

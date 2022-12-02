@@ -1,12 +1,10 @@
-import { Checkbox, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Axios from 'axios';
 import { send } from "emailjs-com";
-import React, { Component, useCallback, useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
-import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 import Fireworks from '../components/Particles/Fireworks.js';
 

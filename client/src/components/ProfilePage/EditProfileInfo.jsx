@@ -6,8 +6,6 @@ import DriveFileRenameOutlineSharpIcon from '@mui/icons-material/DriveFileRename
 import EditRoadSharpIcon from '@mui/icons-material/EditRoadSharp';
 import LocationCitySharpIcon from '@mui/icons-material/LocationCitySharp';
 import BusinessSharpIcon from '@mui/icons-material/BusinessSharp';
-import LanguageSharpIcon from '@mui/icons-material/LanguageSharp';
-import EmailSharpIcon from '@mui/icons-material/EmailSharp';
 import AlternateEmailSharpIcon from '@mui/icons-material/AlternateEmailSharp';
 import ContactPhoneSharpIcon from '@mui/icons-material/ContactPhoneSharp';
 import Swal from 'sweetalert2';
@@ -44,11 +42,8 @@ function EditProfileInfo (props) {
     }
 
     const [street1, setStreet1] = useState(props.data.get_User.address.street1);
-    const [street2, setStreet2] = useState(props.data.get_User.address.stree2);
     const [city, setCity] = useState(props.data.get_User.address.City);
     const [state, setState] = useState(props.data.get_User.address.State);
-    const [country, setCountry] = useState(props.data.get_User.address.Country);
-    const [zipcode, setZipcode] = useState(props.data.get_User.address.zipcode);
     const [email, setEmail] = useState(props.data.get_User.email);
     const [fname, setFname] = useState(props.data.get_User.fname);
     const [lname, setLname] = useState(props.data.get_User.lname);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { updateComment } from "../api";
 import CommnetForm from "./CommentForm";
 
 const Commnet = ({comment, replies, currentUserId, delteComment,
@@ -26,7 +25,7 @@ const Commnet = ({comment, replies, currentUserId, delteComment,
     return (
         <div className="comment">
             <div className="comment-image-container">
-                <img src="/user-icon.png" />
+                <img src="/user-icon.png" alt="" />
             </div>
             <div className="comment-right-part">
                 <div className="comment-content">

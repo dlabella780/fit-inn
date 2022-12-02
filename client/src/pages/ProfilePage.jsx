@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import BasicInfo from "../components/ProfilePage/BasicInfo";
 import UserListings from "../components/ProfilePage/UserListings";
 import UserReservations from "../components/ProfilePage/UserReservations";
-import UserPayment from "../components/ProfilePage/UserPayment";
 import EditProfileInfo from "../components/ProfilePage/EditProfileInfo";
 import Axios from 'axios';
 import Swal from 'sweetalert2';

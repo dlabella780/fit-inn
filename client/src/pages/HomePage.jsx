@@ -1,8 +1,7 @@
 import { Typography } from "@material-ui/core";
 import Box from '@mui/material/Box';
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import HowTo from "../components/Descriptions/HowTo";
-import SupportEngine from "../components/SupportEngine";
 import FitInnLogo from "../components/HomePage/fitinn-logo.png";
 import FlairPic from "../components/HomePage/homepage-flair.png";
 

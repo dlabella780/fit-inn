@@ -1,7 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component } from "react";
 import { Typography, Box, Button } from "@material-ui/core";
 import Description from "../components/ContactUsForm/Description.jsx";
-import FileUploadBox from "../components/ContactUsForm/FileUpload.jsx";
 import OptionalBookingID from "../components/ContactUsForm/OptionalBookingID.jsx";
 import QuickSummary from "../components/ContactUsForm/QuickSummary.jsx";
 import RoleDropDownMenu from "../components/ContactUsForm/RoleDropDownMenu.jsx";

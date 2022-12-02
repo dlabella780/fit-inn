@@ -1,8 +1,6 @@
-import React, { Component, useState, useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 import { withRouter } from "react-router";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 import HomePage from "./HomePage";
 import GymSearchPage from "./GymSearchPage.jsx";
 import GymUploadPage from "./GymUploadPage.jsx";
@@ -24,7 +22,6 @@ import PolicyForHostsPage from "./PolicyForHostsPage.jsx";
 import ProtectionAndInsurancePage from "./ProtectionAndInsurancePage.jsx";
 import CreateAccount from "../components/CreateAccount/CreateAccount.jsx";
 import Login from "../components/Login/Login.jsx";
-import PaymentPage from "./PaymentPage.jsx";
 import StripePayment from "../components/PaymentForm/StripeContainer.jsx";
 import ReservationsPage from "./ReservationsPage.jsx";
 import ContactUsPage from "./ContactUsPage.jsx";
@@ -92,9 +89,6 @@ const LandingPage = (props) => {
                 </Route>
                 <Route path={`/pages/ContactInfo`}>
                     <ContactInfoPage />
-                </Route>
-                <Route path={`/Payment`}>
-                    <PaymentPage />
                 </Route>
                 <Route path={'/Profile'}>
                     <ProfilePage userId={props.userId}/>

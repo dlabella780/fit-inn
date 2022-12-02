@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import UploadTab from "../components/GymUpload/UploadTab";
 import { useLocation } from "react-router-dom";
 

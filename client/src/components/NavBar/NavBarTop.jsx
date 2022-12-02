@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { AppBar, Toolbar, IconButton, CssBaseline,
-        Typography, makeStyles, useTheme, useMediaQuery,
+        Typography, makeStyles,
 } from "@material-ui/core";
 import { Link, NavLink, useHistory } from "react-router-dom";
-import DrawerComponent from "./Drawer";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {
-  signOut,
   getAuth,
 } from "firebase/auth";
-import { UserAddOutlined } from "@ant-design/icons";
 import SiteLogo from "./fitinn-logo-white.png"
 
 const useStyles = makeStyles((theme) => ({
@@ -74,9 +71,6 @@ function Navbar(props) {
   
   const classes = useStyles();
   const history = useHistory();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  //const accountSettings = ['Account Settings', 'Profile', 'Gym Dashboard', 'Login/Logout'];
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenUserMenu = (event) => { setAnchorElUser(event.currentTarget); };
   const handleCloseUserMenu = () => {setAnchorElUser(null); };
@@ -86,7 +80,7 @@ function Navbar(props) {
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
           <Link to="/" className={classes.logo}>
-            <img src={SiteLogo} height="50px"/>
+            <img src={SiteLogo} height="50px" alt="Fit-Inn Logo"/>
           </Link>
         </Typography> { !props.userId ? (
           <div className={classes.navlinks}>

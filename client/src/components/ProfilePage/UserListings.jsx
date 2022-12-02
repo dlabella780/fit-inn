@@ -1,7 +1,5 @@
-import React, {useState} from "react";
-import { gql, useQuery } from "@apollo/client";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import GymUploadPage from "../../pages/GymUploadPage";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Axios from 'axios';
-import { Typography, Button, Box, Container } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import Swal from 'sweetalert2';
 
 const UserListings = (props) => {

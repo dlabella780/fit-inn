@@ -1,7 +1,6 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { useLocation } from "react-router-dom";
-import React, { useEffect, useState, Fragment } from "react";
-import { Typography, Box, Button } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm.jsx";
 import Axios from "axios";

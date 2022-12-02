@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-import { Typography, Box, Button } from "@material-ui/core";
+import React, { Component } from "react";
+import { Typography, Box } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 
 class GymUsersPage extends Component {

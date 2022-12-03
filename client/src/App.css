@@ -356,7 +356,7 @@ Button {
   padding: 25px;
   width: auto;
   margin-top: 510px;
-  width: 50;
+  width: 30%;
   height: 200px;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple green;

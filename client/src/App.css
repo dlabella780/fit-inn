@@ -355,8 +355,12 @@ Button {
   border: 2px solid black;
   padding: 25px;
   width: auto;
-  margin-top: 775px;
-
+  margin-top: 510px;
+  width: 50;
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
 }
 
 .FAQ-page-search-bar{

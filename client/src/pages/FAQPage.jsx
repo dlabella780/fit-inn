@@ -65,7 +65,7 @@ export default function FAQPage() {
   }, [search, jumpPage]);
 
   return (
-    <div className="FAQ-page" style={{ minHeight: "100vh" }}>
+    <div className="FAQ-page" style={{ minHeight: "80vh" }}>
       <div>
         <main
           role="main"

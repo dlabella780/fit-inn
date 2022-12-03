@@ -337,9 +337,9 @@ Button {
   border: 2px solid black;
   padding: 25px;
   margin: auto;
-  margin-top: 630px;
+  margin-top: 510px;
   width: 90%;
-  height: 815px;
+  height: 775px;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
@@ -383,9 +383,9 @@ Button {
   border: 2px solid black;
   padding: 25px;
   margin: auto;
-  margin-top: 630px;
+  margin-top: 510px;
   width: 90%;
-  height: 815px;
+  height: 775px;
   overflow-y: scroll;
   scrollbar-color: rebeccapurple green;
   scrollbar-width: thin;
@@ -571,7 +571,7 @@ Button {
 /*Help Page*/
 
 .help-page-items {
-  margin-top: 350px;
+  margin-top: 250px;
   -ms-flex-align: center;
   /*position: absolute;*/
   padding: 40px;

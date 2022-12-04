@@ -87,7 +87,7 @@ const Fireworks = ({ particlesInit, particlesLoaded }) => {
                     duration: {
                       value: {
                         min: 1,
-                        max: 2,
+                        max: 5,
                       },
                     },
                   },

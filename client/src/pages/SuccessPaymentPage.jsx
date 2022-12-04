@@ -15,25 +15,7 @@ export default function SuccessPaymentPage(props) {
     // Parameters to be used in the confirmation e-mail that gets sent.
     // If you add anything to this list, be sure to account for it in the EmailJS template.
     const [emailParam, setEmailParam] = useState('');
-
-    // useEffect(() => {
-    //     try {
-    //     if (location.state.gymInfo !== undefined) {
-    //         Axios.post('http://localhost:3001/api/AddReservation', {
-    //             gymId: location.state.gymInfo._id,
-    //             gymName: location.state.gymInfo.title,
-    //             guestId: location.state.userId,
-    //             timeSlot: location.state.date,
-    //             duration: 60, //hard coded value, change if we allow for dynamically setting # of hours
-    //             numGuests: location.state.numGuests
-    //         })
-    //             .then((response) => {
-    //                 if (!response.data) {
-    //                     console.log("ERROR found in Payment Success Page!"); alert("Payment not processed");
-    //                 }
-    //             })
-    //     }}catch (error) { console.log(error); alert("No Gym Selected");}
-    // }, []);
+    const [fireworksLoaded, setFireworksLoaded] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -61,6 +43,7 @@ export default function SuccessPaymentPage(props) {
     };
 
     const handleChange = (e) => {
+        e.preventDefault();
         setEmailParam(e.target.value);
     }
 
@@ -77,9 +60,21 @@ export default function SuccessPaymentPage(props) {
          
      }
 
+     const particlesInit = async (main) => {
+        await loadFull(main);
+      };
+
+    const particlesLoaded = (container) => {
+        setFireworksLoaded(true)
+    };
+
     return (
         <div className="row-product">
-            <Fireworks />
+            {!fireworksLoaded ? <Fireworks 
+                particlesLoaded={particlesLoaded}
+                particlesInit={particlesInit}
+            />: <Fireworks 
+            />}
             <Box sx={{
                 backgroundColor: 'dark'
             }}>
@@ -94,8 +89,8 @@ export default function SuccessPaymentPage(props) {
                 } 
                 <Typography variant="h5" align="center" style={{padding: 15, color:"black"}}>How to Access: {location.state.gymInfo.accessInformation}</Typography>
                 <Box align="center" >
-                    <Typography variant="h5" align="center" style={{ padding: 15, color: "black" }}>Need a confirmation e-mail? Enter your e-mail address: </Typography>
-                    <TextField id="outlined-basic" variant="outlined" placeholder='yourname@example.com' value={emailParam} onChange={handleChange}/>
+                    <Typography variant="h5" align="center" style={{ padding: 15, color: "black" }}>Need a confirmation e-mail?</Typography>
+                    <TextField id="outlined-basic" variant="outlined" placeholder='yourname@example.com' value={emailParam} onChange={(e) => handleChange(e)}/>
                     <p></p><Button size = "large" variant="contained" onClick={onSubmit}>Submit</Button><p></p>
                 </Box>
                 <Box align="center" >

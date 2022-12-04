@@ -1,0 +1,293 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Fit-Inn App",
+  "description": "Uni schema for Fit-Inn App",
+  "type": "object",
+  "properties": {
+    "User": {
+      "description": "User",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "description": "User email used to login",
+            "type": "string"
+          },
+          "fname": {
+            "description": "User First Name",
+            "type": "string"
+          },
+          "lname": {
+            "description": "User Last Name",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "description": "User phone number",
+            "type": "string"
+          },
+          "address": {
+            "description": "User address object",
+            "type": "object",
+            "properties": {
+              "street1": {
+                "description": "Main street address",
+                "type": "string"
+              },
+              "stree2": {
+                "description": "Secondary street address",
+                "type": "string"
+              },
+              "City": {
+                "description": "City name",
+                "type": "string"
+              },
+              "State": {
+                "description": "State or Region",
+                "type": "string"
+              },
+              "Country": {
+                "description": "Country name",
+                "type": "string"
+              },
+              "zipcode": {
+                "description": "Zipcode",
+                "type": "string"
+              }
+            }
+          },
+          "profilePicture": {
+            "description": "User profile picture",
+            "type": "string"
+          },
+          "paymentapitoken": {
+            "description": "Token for stripe api",
+            "type": "string"
+          },
+          "ssoapitoken": {
+            "description": "Token for sso api",
+            "type": "string"
+          },
+          "notificationSetting": {
+            "description": "Integer is used to track which notifications user has enabled",
+            "type": "integer"
+          },
+          "favoriteGymIds": {
+            "description": "List of gym ids user has favorited",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Gym": {
+      "description": "Gym",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "description": "Whether the gym is publicly listed on fit-inn",
+            "type": "boolean"
+          },
+          "ownerId": {
+            "description": "Gym Owner User id",
+            "type": "string"
+          },
+          "title": {
+            "description": "Title of the gym",
+            "type": "string"
+          },
+          "address": {
+            "description": "User address object",
+            "type": "object",
+            "properties": {
+              "street1": {
+                "description": "Main street address",
+                "type": "string"
+              },
+              "stree2": {
+                "description": "Secondary street address",
+                "type": "string"
+              },
+              "City": {
+                "description": "City name",
+                "type": "string"
+              },
+              "State": {
+                "description": "State or Region",
+                "type": "string"
+              },
+              "Country": {
+                "description": "Country name",
+                "type": "string"
+              },
+              "zipcode": {
+                "description": "Zipcode",
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "description": "Description of Gym",
+            "type": "string"
+          },
+          "startingDate": {
+            "description": "Starting date of Gym",
+            "type": "string"
+          },
+          "startingHours": {
+            "description": "Starting Hours of Gym",
+            "type": "string"
+          },
+          "endingHours": {
+            "description": "Ending Hours of Gym",
+            "type": "string"
+          },
+          "days": {
+            "description": "Which days the gym is available",
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "accessInformation": {
+            "description": "How to access the owner's Gym",
+            "type": "string"
+          },
+          "isHostHome": {
+            "description": "Whether the owner will be home while the guest works out",
+            "type": "boolean"
+          },
+          "numGuestsAllowed": {
+            "description": "How many guests are allowed to use the gym at once",
+            "type": "integer"
+          },
+          "photos": {
+            "description": "List of Photos in gym",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rating": {
+            "description": "Gym rating /5",
+            "type": "number"
+          },
+          "numReviews": {
+            "description": "Number of User Reviews",
+            "type": "integer"
+          },
+          "equipment": {
+            "description": "List of equipment in gym",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "equipmentId": {
+                  "description": "The id for the piece of equipment",
+                  "type": "string"
+                },
+                "details": {
+                  "description": "Details about the equipment i.e. weight,size",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "hasBathroom": {
+            "description": "Whether the guests have access to a bathroom",
+            "type": "boolean"
+          },
+          "hasWifi": {
+            "description": "Whether the guests have access to WiFi",
+            "type": "boolean"
+          },
+          "hasSpeakers": {
+            "description": "Whether the guests have access to speakers",
+            "type": "boolean"
+          },
+          "tvType": {
+            "description": "What Type of TV the guests have access to",
+            "type": "string"
+          },
+          "cost": {
+            "description": "How much the gym costs to rent",
+            "type": "integer"
+          },
+          "bookingNotice": {
+            "description": "Many hours ahead to guests need to book the gym",
+            "type": "integer"
+          },
+          "cancelationWarning": {
+            "description": "how many hours ahead to guests need to cancel the booking",
+            "type": "integer"
+          },
+          "availability": {
+            "description": "List of Times the gym is available",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Equipment": {
+      "description": "Equipment",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the gym equipment",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GymReservation": {
+      "description": "List of Gym Reservations",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gymId": {
+            "description": "Id of the gym being rented",
+            "type": "string"
+          },
+          "gymName": {
+            "description": "Name of the Gym",
+            "type": "string"
+          },
+          "guestId": {
+            "description": "Id of the guest renting the gym",
+            "type": "string"
+          },
+          "timeSlot": {
+            "description": "When the guest is renting the gym",
+            "type": "string"
+          },
+          "duration": {
+            "description": "How many minutes the guest will be renting the gym",
+            "type": "integer"
+          },
+          "numGuests": {
+            "description": "How many guests are attending the reservation",
+            "type": "integer"
+          },
+          "guestReview": {
+            "description": "After reservation review by the guest(s)",
+            "type": "string"
+          },
+          "rating": {
+            "description": "After reservation rating by the guest /5",
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

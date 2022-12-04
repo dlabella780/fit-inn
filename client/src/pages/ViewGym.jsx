@@ -246,10 +246,11 @@ export const ViewGyms = (props) => {
             <Grid container direction="column" style={{padding: 2}} justifyContent="space-between" alignItems="flex-end" spacing={3}>
               <Grid item><Typography variant="h2" align="right">-${gymInfo.cost}/Hour-</Typography></Grid>
               <Grid item align="right">
-                <Grid item>
+                {notActive ? <></> 
+                : <><Grid item>
                   <Typography variant="h4" align="center">-Reserve a Time!-</Typography>
                 </Grid>
-                <AvailableTimes date={reservDate} times={gymInfo.availability} searchAvail={props.props.location.avail}></AvailableTimes>
+                <AvailableTimes date={reservDate} times={gymInfo.availability} searchAvail={props.props.location.avail}></AvailableTimes></>}
               </Grid>
             </Grid>
           </Grid>

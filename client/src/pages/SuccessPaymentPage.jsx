@@ -92,6 +92,7 @@ export default function SuccessPaymentPage(props) {
                     :
                     <Typography variant="h5" style={{padding: 15, color:"black"}}> Located at {location.state.gymInfo.address.street1} {location.state.gymInfo.address.street2} {location.state.gymInfo.address.City}, {location.state.gymInfo.address.Country} {location.state.gymInfo.address.zipcode}</Typography>
                 } 
+                <Typography variant="h5" align="center" style={{padding: 15, color:"black"}}>How to Access: {location.state.gymInfo.accessInformation}</Typography>
                 <Box align="center" >
                     <Typography variant="h5" align="center" style={{ padding: 15, color: "black" }}>Need a confirmation e-mail? Enter your e-mail address: </Typography>
                     <TextField id="outlined-basic" variant="outlined" placeholder='yourname@example.com' value={emailParam} onChange={handleChange}/>

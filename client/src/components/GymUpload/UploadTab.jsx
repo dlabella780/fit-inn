@@ -325,6 +325,7 @@ function UploadTab(props) {
 					REMOVE
 				</Button>
 				<inline><strong >{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}</strong></inline>
+				<p></p>
 
 			</div>));
 		}
@@ -640,14 +641,7 @@ function UploadTab(props) {
 					<br />
 					<br />
 					<Button onClick={() => uploadFile(selectedFile)} variant="contained" component="label" startIcon={<PhotoCamera/>}>Upload Picture
-					</Button>	
-					{isActive ? 
-					<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-						UPDATE GYM
-					</Button>
-					: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-						REVIEW GYM
-					</Button>}					
+					</Button>					
 				  </Grid>
 				</Box>
 			</Box>
@@ -656,13 +650,7 @@ function UploadTab(props) {
 			<SelectEquipment/>
 			<Typography variant='h5' color='gray'>Equipment List</Typography>
 			{GetEquip()}
-			{isActive ? 
-			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-				UPDATE GYM
-			</Button>
-			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-				REVIEW GYM
-			</Button>}		
+				
 		  </TabPanel>
 		  <TabPanel value={value} index={2} dir={theme.direction}>
 			<Stack direction="row" spacing={2}>
@@ -713,14 +701,7 @@ function UploadTab(props) {
 					</Select>
 				</FormControl>
 			</Box>
-			</Stack>
-			{isActive ? 
-			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-				UPDATE GYM
-			</Button>
-			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-				REVIEW GYM
-			</Button>}		
+			</Stack>	
 		  </TabPanel>
 		  <TabPanel value={value} index={3} dir={theme.direction}>
 			<Box sx={{ '& .MuiTextField-root': { m: .75, width: '33ch' }}}>
@@ -768,16 +749,16 @@ function UploadTab(props) {
 						helperText={cancelationWarning === "" ? 'Please enter any cancelation requirements.' : ' '}
 					/>
 				</div>
-			</Box>
-			{isActive ? 
-			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-				UPDATE GYM
-			</Button>
-			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '40%'}}>
-				REVIEW GYM
-			</Button>}		
+			</Box>		
 		  </TabPanel>
 		</SwipeableViews>
+		{isActive ? 
+			<Button variant="contained" onClick={() => SubmitGym()} style={{left: '82%'}}>
+				UPDATE GYM
+			</Button>
+			: <Button variant="contained" onClick={() => SubmitGym()} style={{left: '82%'}}>
+				REVIEW GYM
+			</Button>}	
 
 		<ReviewDialog onClose={handleClose} open={open}>
 			<ReviewDialogTitle onClose={handleClose}>

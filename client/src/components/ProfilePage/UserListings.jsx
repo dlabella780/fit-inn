@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 
 const UserListings = (props) => {
     
-    if (props.loading) return "Loading...";
+  if (props.loading) return "Loading...";
 
     function DeleteGymListing(gymID) {
       Swal.showLoading();  
@@ -54,7 +54,7 @@ const UserListings = (props) => {
                     <TableCell>{val.address.State} </TableCell>
                     <TableCell>{val.address.Country}</TableCell>
                     <TableCell>{val.address.zipcode}</TableCell>
-                    <TableCell>{val.rating} Stars</TableCell>
+                    <TableCell>{Math.round(val.rating)} Stars</TableCell>
                     <TableCell>
                       <NavLink to={{pathname: '/GymUpload', state:{ gymId: val._id }}}>
                           Update

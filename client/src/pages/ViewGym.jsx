@@ -136,7 +136,7 @@ export const ViewGyms = (props) => {
                       .then((response) => { 
                         if(response.data) 
                           history.push('/Payments', 
-                          { gymInfo: gymInfo, date: props.date, userId: props.userId, numGuests: numGests });
+                          { gymInfo: gymInfo, date: times[res.value], userId: props.userId, numGuests: numGests });
                       })
                     })
                   }

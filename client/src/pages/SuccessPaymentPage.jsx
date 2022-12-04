@@ -4,9 +4,11 @@ import Button from '@mui/material/Button';
 import { send } from "emailjs-com";
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import TextField from '@mui/material/TextField';
 
 import { loadFull } from "tsparticles";
 import Fireworks from '../components/Particles/Fireworks.js';
+import Swal from 'sweetalert2'
 
 export default function SuccessPaymentPage(props) {
     const location = useLocation();
@@ -35,7 +37,7 @@ export default function SuccessPaymentPage(props) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
+        Swal.showLoading();
         if (location.state.gymInfo !== undefined) {
 
             send('service_gxe5x7j', 'template_djood08', {
@@ -48,6 +50,7 @@ export default function SuccessPaymentPage(props) {
             }, 'ycOoL0tly-4oK2Lej')
                 .then((response) => {
                     console.log('Confirmation e-mail sent!', response.status, response.text);
+                    Swal.close();
                 })
                 .catch((error) => {
                     console.log('Error in sending confirmation e-mail.', error);
@@ -74,38 +77,26 @@ export default function SuccessPaymentPage(props) {
          
      }
 
-
-    // Sparticles
-    const particlesInit = async (main) => {
-        console.log(main);
-    
-        // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-        // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-        // starting from v2 you can add only the features you need reducing the bundle size
-        await loadFull(main);
-      };
-    
-    const particlesLoaded = (container) => {
-        console.log(container);
-    };
-
     return (
         <div className="row-product">
-            <Fireworks
-                particlesLoaded={particlesLoaded}
-                particlesInit={particlesInit}
-            />
+            <Fireworks />
             <Box sx={{
                 backgroundColor: 'dark'
             }}>
-                <Typography variant="h2" align="center" style={{padding: 15, color:"white"}}>Payment Successful</Typography>
-                <Typography variant="h4" align="center" style={{padding: 15, color:"white"}}>You booking of {location.state.gymInfo.title}</Typography>
-                <Typography variant="h5" align="center" style={{padding: 15, color:"white"}}>Has been confirmed for {new Date(location.state.date).toLocaleString()}</Typography>
+                {console.log(location)}
+                <Typography variant="h2" align="center" style={{padding: 15, color:"black"}}>Payment Successful!</Typography>
+                <Typography variant="h4" align="center" style={{padding: 15, color:"black"}}>Your booking of {location.state.gymInfo.title}</Typography>
+                <Typography variant="h5" align="center" style={{padding: 15, color:"black"}}>Has been confirmed for {new Date(location.state.date).toLocaleString()}</Typography>
                 {location.state.gymInfo.address.Country === "United States" ? 
-                    <Typography variant="h5" style={{padding: 15, color:"white"}}> Located at {location.state.gymInfo.address.street1} {location.state.gymInfo.address.street2} {location.state.gymInfo.address.City}, {location.state.gymInfo.address.State} {location.state.gymInfo.address.zipcode}</Typography>
+                    <Typography variant="h5" style={{padding: 15, color:"black"}}> Located at {location.state.gymInfo.address.street1} {location.state.gymInfo.address.street2} {location.state.gymInfo.address.City}, {location.state.gymInfo.address.State} {location.state.gymInfo.address.zipcode}</Typography>
                     :
-                    <Typography variant="h5" style={{padding: 15, color:"white"}}> Located at {location.state.gymInfo.address.street1} {location.state.gymInfo.address.street2} {location.state.gymInfo.address.City}, {location.state.gymInfo.address.Country} {location.state.gymInfo.address.zipcode}</Typography>
+                    <Typography variant="h5" style={{padding: 15, color:"black"}}> Located at {location.state.gymInfo.address.street1} {location.state.gymInfo.address.street2} {location.state.gymInfo.address.City}, {location.state.gymInfo.address.Country} {location.state.gymInfo.address.zipcode}</Typography>
                 } 
+                <Box align="center" >
+                    <Typography variant="h5" align="center" style={{ padding: 15, color: "black" }}>Need a confirmation e-mail? Enter your e-mail address: </Typography>
+                    <TextField id="outlined-basic" variant="outlined" placeholder='yourname@example.com' value={emailParam} onChange={handleChange}/>
+                    <p></p><Button size = "large" variant="contained" onClick={onSubmit}>Submit</Button><p></p>
+                </Box>
                 <Box align="center" >
                     <NavLink to="/">
                         <Button onClick={getDirections}>Link for Directions</Button>

@@ -260,7 +260,7 @@ Button {
 }
 
 .row-product {
-  margin-top: -300px;
+  margin-top: 300px;
   background-color: white;
   border-radius: 12px;
   border:  white;
@@ -590,7 +590,7 @@ Button {
 
 /*Payment Page*/
 .payment-items {
-  margin-top: 250px;
+  margin-top: 300px;
   left: 40%;
   right: 40%;
   background-color: white;

@@ -178,9 +178,9 @@ export const ViewGyms = (props) => {
               <Grid item>
                 <Button variant="contained" onClick={() => submitGym()}>
                   <Typography variant="h5" align='center'>Submit Gym</Typography>
-                </Button>
-                <NavLink to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>
-                  <Typography variant="h5" align='center'>Go Back</Typography>
+                </Button><br></br><p></p>
+                <NavLink className = "NavLinkButton2" to={{pathname: '/GymUpload', state:{ gymId: location.state.gymId}}}>
+                  GO BACK                
                 </NavLink>
               </Grid>
               </> : <></>

@@ -56,8 +56,8 @@ const UserListings = (props) => {
                     <TableCell>{val.address.zipcode}</TableCell>
                     <TableCell>{Math.round(val.rating)} Stars</TableCell>
                     <TableCell>
-                      <NavLink to={{pathname: '/GymUpload', state:{ gymId: val._id }}}>
-                          Update
+                      <NavLink className="NavLinkButton" to={{pathname: '/GymUpload', state:{ gymId: val._id }}}>
+                          UPDATE
                       </NavLink>
                     </TableCell>
                     <TableCell>

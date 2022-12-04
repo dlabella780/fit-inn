@@ -588,6 +588,25 @@ Button {
   padding-top: 40px;
 }
 
+.NavLinkButton {
+  background-color: #3F51B5;
+  padding: 7px;
+  border-radius: 3px;
+  color: white;
+  text-decoration: none;
+}
+
+.NavLinkButton2 {
+  background-color: #1976D2;
+  padding: 7px;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  font-size: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 /*Payment Page*/
 .payment-items {
   margin-top: 300px;

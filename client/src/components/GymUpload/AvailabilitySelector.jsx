@@ -29,7 +29,7 @@ const AvailabilitySelector = (props) => {
 
     useEffect(() => {
         if (props.gymId) {
-            let str = 'http://localhost:3001/api/getTakenTimes/' + props.gymId;
+            let str = process.env.REACT_APP_BACKEND_APP + '/api/getTakenTimes/' + props.gymId;
             Axios.get(str).then((response) => {
                 setTakenTimes(response.data.list_GymReservationItems._GymReservationItems)
                 setTimesLoaded(true)

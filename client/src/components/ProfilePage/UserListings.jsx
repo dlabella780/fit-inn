@@ -18,7 +18,8 @@ const UserListings = (props) => {
     function DeleteGymListing(gymID) {
       Swal.showLoading();  
       try {
-            Axios.post('http://localhost:3001/api/deleteGym', {id: gymID})
+          let bestr = process.env.REACT_APP_BACKEND_APP + '/api/deleteGym';  
+          Axios.post(bestr, {id: gymID})
             .then((response) => {
               Swal.hideLoading();
               Swal.fire({confirmButtonColor: '#3F51B5', title: response.data}).then(okay => {props.setValue(0); props.setProfileUpdated(props.profileUpdated+1)})});

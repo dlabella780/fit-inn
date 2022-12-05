@@ -17,7 +17,8 @@ export default function StripeContainer(props) {
 	const [clientSecret, setClientSecret] = useState("");
 
 	useEffect(() => { try {
-		Axios.post('http://localhost:3001/create-payment-intent', {
+		let bestr = process.env.REACT_APP_BACKEND_APP + '/create-payment-intent';
+		Axios.post(bestr, {
 					id: "gym-reservation",
 					cost: location.state.gymInfo.cost,
 		}).then(async (res) => {

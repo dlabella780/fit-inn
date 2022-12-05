@@ -120,7 +120,7 @@ const UserReservations = (props) => {
     };
     
     const getDirections = (gymId) => {
-        let gym = 'http://localhost:3001/api/getGym/' + gymId;
+        let gym = process.env.REACT_APP_BACKEND_APP + '/api/getGym/' + gymId;
         Axios.get(gym).then((response) => {
             var directionsString = '';
             directionsString += response.data.get_Gym.address.street1 +'+'+ response.data.get_Gym.address.State + '+' + response.data.get_Gym.address.zipcode ;
@@ -136,14 +136,14 @@ const UserReservations = (props) => {
     // Calling API data from Backend
     useEffect(() => {
         Swal.showLoading();
-		let str = 'http://localhost:3001/api/getReservationUser/' + props.userId
+		let str = process.env.REACT_APP_BACKEND_APP + '/api/getReservationUser/' + props.userId
         Axios.get(str).then((response) => {
             Swal.close();
             setGuestReservations(response.data.list_GymReservationItems._GymReservationItems);
             setGuestLoading(false);
         })
         for (let i=0; i<props.userGyms.list_GymItems._GymItems.length; i++) {
-            let str = 'http://localhost:3001/api/getReservationGym/' + props.userGyms.list_GymItems._GymItems[i]._id
+            let str = process.env.REACT_APP_BACKEND_APP + '/api/getReservationGym/' + props.userGyms.list_GymItems._GymItems[i]._id
             Axios.get(str).then((response) => {
                 for (let j=0; j<response.data.list_GymReservationItems._GymReservationItems.length; j++) {
                     setHostReservations(prevState => [...prevState, response.data.list_GymReservationItems._GymReservationItems[j]])
@@ -158,7 +158,8 @@ const UserReservations = (props) => {
     function ReviewGymReservation (review, rating, reservationID, gym) {
         Swal.showLoading();
         try {
-            Axios.post('http://localhost:3001/api/ReservationReview', 
+            let bestr = process.env.REACT_APP_BACKEND_APP + '/api/ReservationReview';
+            Axios.post(bestr, 
                 {guestReview: review, rating: rating, id: reservationID, gymId: gym})
             .then((response) => {    
                 Swal.hideLoading();
@@ -171,7 +172,8 @@ const UserReservations = (props) => {
     function CancelGymReservation (reservationID, time, gym) {
         Swal.showLoading();
         try {
-            Axios.post('http://localhost:3001/api/CancelReservation', 
+            let bestr = process.env.REACT_APP_BACKEND_APP + '/api/CancelReservation';
+            Axios.post(bestr, 
                 {params: {id: reservationID, timeSlot: time, gymId: gym}})
             .then((response) => {    
                 Swal.hideLoading();
@@ -183,7 +185,8 @@ const UserReservations = (props) => {
     function CancelGymReservationHost (reservationID) {
         Swal.showLoading();
         try {
-            Axios.post('http://localhost:3001/api/CancelReservationHost', 
+            let bestr = process.env.REACT_APP_BACKEND_APP + '/api/CancelReservationHost';
+            Axios.post(bestr, 
                 {id: reservationID})
             .then((response) => {    
                 Swal.hideLoading();
@@ -224,7 +227,7 @@ const UserReservations = (props) => {
                                 bgcolor: 'background.paper',
                             }}
                         >
-                        <Typography component="legend">Rating</Typography>
+                        <Typography variant="h4" component="legend">Rating</Typography>
                         <Rating
                             name="simple-controlled"
                             value={rating}
@@ -233,7 +236,7 @@ const UserReservations = (props) => {
                             }}
                         />                             
                         <br></br>
-                        <textarea 
+                        <textarea className="review-popup"
                             placeholder="What's your feedback?"
                             onChange={handleReviewChange}/>
                         <br></br>

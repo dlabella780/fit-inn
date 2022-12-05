@@ -25,7 +25,8 @@ function GymSearchPage() {
   const [dateTime, setDateTime] = useState(null);
 
 	function searchForGym() {
-    Axios.get('http://localhost:3001/api/gymSearch', {
+    let bestr = process.env.REACT_APP_BACKEND_APP + '/api/gymSearch';
+    Axios.get(bestr, {
       params: {zipcode: searchZip, avail: searchAvailability}})
         .then((response) => { 
           Swal.close();

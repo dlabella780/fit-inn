@@ -46,10 +46,11 @@ export const ViewGyms = (props) => {
 
   useEffect(() => {
     Swal.showLoading();
-    let gym = 'http://localhost:3001/api/getGym/' + gymID;
+    let gym = process.env.REACT_APP_BACKEND_APP + '/api/getGym/' + gymID;
     try {
       Axios.get(gym).then((response) => {setGymInfo(response.data.get_Gym);})
-      Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
+      let bestr = process.env.REACT_APP_BACKEND_APP + '/api/listEquipment';
+      Axios.get(bestr).then((response) => {
       Swal.close();
       for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
         equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
@@ -62,7 +63,8 @@ export const ViewGyms = (props) => {
 
   const submitGym = () => { try {
     Swal.showLoading();
-    Axios.post('http://localhost:3001/api/showGym', {
+    let bestr = process.env.REACT_APP_BACKEND_APP + '/api/showGym';
+    Axios.post(bestr, {
         id: location.state.gymId
     }).then((response) => {    
       Swal.hideLoading();  
@@ -125,7 +127,8 @@ export const ViewGyms = (props) => {
                       icon: 'success'
                     }).then((res4) => {
                       setReservDate(times[res.value]);
-                      Axios.post('http://localhost:3001/api/AddReservation', {
+                      let bestr = process.env.REACT_APP_BACKEND_APP + '/api/AddReservation';
+                      Axios.post(bestr, {
                         gymId: gymInfo._id,
                         gymName: gymInfo.title,
                         guestId: usr,

@@ -93,7 +93,8 @@ function UploadTab(props) {
 
     useEffect(() => {
 		Swal.showLoading();
-		Axios.get('http://localhost:3001/api/listEquipment').then((response) => {
+		let bestr = process.env.REACT_APP_BACKEND_APP + '/api/listEquipment';
+		Axios.get(bestr).then((response) => {
 		Swal.close();
 		for (let i =0; i < response.data.list_EquipmentItems._EquipmentItems.length; i++) 
 			equipMap.set(response.data.list_EquipmentItems._EquipmentItems[i]._id, response.data.list_EquipmentItems._EquipmentItems[i].name);
@@ -130,8 +131,8 @@ function UploadTab(props) {
 					value={equip}
 					onChange={(e) => setEquip(e.target.value)}
 				>
-					{equipmentObj.map((val) => 
-						<MenuItem value={val.key}>
+					{equipmentObj.map((val, index) => 
+						<MenuItem key={index} value={val.key}>
 							{val.value}
 						</MenuItem>)}
 				</Select>
@@ -168,31 +169,38 @@ function UploadTab(props) {
 		
 		Swal.showLoading();
 		if (title === '') {
-            alert('Please Set a Gym Name');
+            Swal.close();
+			alert('Please Set a Gym Name');
             return;
         }
         if (description === '') {
-            alert('Please Set a Description');
+            Swal.close();
+			alert('Please Set a Description');
             return;
         }
 		if (numGuestsAllowed === '' || numGuestsAllowed <= 0 || isNaN(numGuestsAllowed)) {
-            alert('Number of Guests must be greater than 0.');
+            Swal.close();
+			alert('Number of Guests must be greater than 0.');
             return;
         }
 		if (accessInformation === '') {
-            alert('Please Give Access Information');
+            Swal.close();
+			alert('Please Give Access Information');
             return;
         }
         if (street1 === '') {
-            alert('Please Set a Street');
+            Swal.close();
+			alert('Please Set a Street');
             return;
         }
         if (city === '' || !isNaN(city)) {
-            alert('Please Set a City');
+            Swal.close();
+			alert('Please Set a City');
             return;
         }
         if (state === '' || !isNaN(state)) {
-            alert('Please Set a State');
+            Swal.close();
+			alert('Please Set a State');
             return;
         }
         // if (zip === '' || isNaN(zip)) {
@@ -200,14 +208,17 @@ function UploadTab(props) {
         //     return;
         // }
         if (equipment.length < 1) {
-            alert('Please Select at Least One Piece of Equipment');
+            Swal.close();
+			alert('Please Select at Least One Piece of Equipment');
             return;
         }
 		if (availability.length < 1) {
-            alert('Please Select available Times');
+            Swal.close();
+			alert('Please Select available Times');
             return;
         }
 		if (cost <= 0 || cost > 100 || isNaN(cost)) {
+			Swal.close();
 			alert('Hourly rate must be a number from 1-100.');
             return;
 		}
@@ -225,7 +236,7 @@ function UploadTab(props) {
         if (hasWifi === 'true') hasWifiB = true;
         if (hasSpeakers === 'true') hasSpeakersB = true;
         if (hasBathroom === 'true') hasBathroomB = true;
-		var str = 'http://localhost:3001/api/verifyAddress/' + street1 + '/' + line2;
+		var str = process.env.REACT_APP_BACKEND_APP + '/api/verifyAddress/' + street1 + '/' + line2;
 		Axios.get(str).then(response => {
 			Swal.close();
 			if (response.data.ErrorCode === 0) {
@@ -234,7 +245,8 @@ function UploadTab(props) {
 				"City": response.data.City, "State": response.data.State, "Country": "United States", 
 				"zipcode": fullZip};
 				if(!props.gymId) { try {
-			Axios.post('http://localhost:3001/api/uploadgym', {
+					let bestr = process.env.REACT_APP_BACKEND_APP + '/api/uploadgym';
+					Axios.post(bestr, {
 				accessInformation: accessInformation, 
 				address: address, 
 				availability: availability, 
@@ -263,7 +275,8 @@ function UploadTab(props) {
 		} else { 
 			Swal.showLoading();
 			try {
-			Axios.post('http://localhost:3001/api/updateGym', {
+				let bestr = process.env.REACT_APP_BACKEND_APP + '/api/updateGym';
+				Axios.post(bestr, {
 				accessInformation: accessInformation, 
 				address: address, 
 				availability: availability, 
@@ -324,7 +337,7 @@ function UploadTab(props) {
 				>
 					REMOVE
 				</Button>
-				<inline><strong >{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}</strong></inline>
+				<strong >{equipmentMap.get(equipment[i])} : {equipmentDetails[i]}</strong>
 				<p></p>
 
 			</div>));
@@ -367,7 +380,7 @@ function UploadTab(props) {
 
 	if(props.gymId && !oldGymLoaded) {
 		Swal.showLoading();
-		let str = 'http://localhost:3001/api/getGym/' + props.gymId
+		let str = process.env.REACT_APP_BACKEND_APP + '/api/getGym/' + props.gymId
 		Axios.get(str).then((response) => {
 			Swal.close();
 			if (response.data.get_Gym.isActive) setIsActive(response.data.get_Gym.isActive);

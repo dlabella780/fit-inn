@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 import HomePage from "./HomePage";
 import GymSearchPage from "./GymSearchPage.jsx";
@@ -29,6 +29,13 @@ import FAQPage from "./FAQPage.jsx";
 import SuccessPaymentPage from "./SuccessPaymentPage.jsx"
 
 const LandingPage = (props) => {   
+
+    const history = useHistory();
+    
+    window.onbeforeunload = function() {
+        console.log('yo')    
+        history.push('/')
+    };
 
     return ( <div>
         <span classnam = "top-nav-bar">

@@ -31,11 +31,12 @@ export default function App() {
   const GetUserId = (user) => {
     if (!loading) {
       setLoading(true);
-      let str = 'http://localhost:3001/api/getUserId/' + user.uid;
+      let str = process.env.REACT_APP_BACKEND_APP + '/api/getUserId/' + user.uid;
       Axios.get(str).then((response) => {
         if (response.data.length === 0) {
           console.log(user)
-          Axios.post('http://localhost:3001/api/AddUser', {
+          let bestr = process.env.REACT_APP_BACKEND_APP + '/api/AddUser'
+          Axios.post(bestr, {
             uid: user.uid, photo: user.photoURL, email: user.email}).then((data, loading, error) => {    
             if(error) 
               console.log(error);

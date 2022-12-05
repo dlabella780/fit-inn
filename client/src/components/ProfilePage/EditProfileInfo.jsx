@@ -15,11 +15,12 @@ function EditProfileInfo (props) {
     const SubmitUser = () => {
         Swal.showLoading();    
         const line2 = city + ", " + state;
-        const str = 'http://localhost:3001/api/verifyAddress/' + street1 + '/' + line2;
+        const str = process.env.REACT_APP_BACKEND_APP + '/api/verifyAddress/' + street1 + '/' + line2;
 		Axios.get(str).then(response => {
 			if (response.data.ErrorCode === 0) {
 				const fullZip = response.data.Zip + '-' + response.data.Zip4;
-                Axios.post('http://localhost:3001/api/updateProfile', {
+                let bestr = process.env.REACT_APP_BACKEND_APP + '/api/updateProfile';
+                Axios.post(bestr, {
                 street1: response.data.AddressLine1, 
                 city: response.data.City,
                 state: response.data.State,

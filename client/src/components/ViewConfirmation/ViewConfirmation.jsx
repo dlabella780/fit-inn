@@ -44,7 +44,8 @@ export default function ViewConfirmation(props){
 };
 
   const addReservation = () => {
-    Axios.post('http://localhost:3001/api/AddReservation', {
+    let bestr = process.env.REACT_APP_BACKEND_APP + '/api/AddReservation';
+    Axios.post(bestr, {
         gymId: props.gymInfo._id,
         gymName: props.gymInfo.title,
         guestId: props.userId,

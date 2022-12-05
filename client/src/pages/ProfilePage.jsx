@@ -56,13 +56,13 @@ export default function BasicTabs(props) {
   useEffect(() => {
     Swal.showLoading();
     if (props.userId) {
-      let str = 'http://localhost:3001/api/getUser/' + props.userId
+      let str = process.env.REACT_APP_BACKEND_APP + '/api/getUser/' + props.userId
       try{
       Axios.get(str).then((response) => {
         setUserData(response.data);
         setUserLoading(false);
       })} catch (error) { console.log(error); alert("Error on Page");}
-      str = 'http://localhost:3001/api/getUserGyms/' + props.userId
+      str = process.env.REACT_APP_BACKEND_APP + '/api/getUserGyms/' + props.userId
       try{
       Axios.get(str).then((response) => {
         Swal.close();

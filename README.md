@@ -111,7 +111,7 @@ Your app is ready to be deployed!
 ## Setting up Environment Files
 Both the client and server will need properly labled .env files placed in their main directories.
 ### Client
-- REACT_APP_BACKEND_APP
+- REACT_APP_BACKEND_APP \
 This is the link to your back-end web server.
 - REACT_APP_FIREBASE_API_KEY
 - REACT_APP_FIREBASE_AUTH_DOMAIN
@@ -119,18 +119,18 @@ This is the link to your back-end web server.
 - REACT_APP_FIREBASE_STORAGE_BUCKET
 - REACT_APP_FIREBASE_MESSAGING_SENDER_ID
 - REACT_APP_FIREBASE_APP_ID
-- REACT_APP_FIREBASE_MEASUREMENT_ID
+- REACT_APP_FIREBASE_MEASUREMENT_ID \
 These are all of the firebase variables you need to set for SSO. See [Firebase](#Firebase-Set-Up) for how to obtain them.
 ### Server
 - GRAPHQL_ENDPOINT
-- API_KEY
+- API_KEY \
 These are the two Vendia variables you need to access the database. See [Vendia](#Vendia-Set-Up) for how to obtain them.
 - CLIENT_URL
-- CLIENT_URL_SECURE
+- CLIENT_URL_SECURE \
 This is the URL to your front-end website. One is http:// and one is https://
-- STRIPE_SK
+- STRIPE_SK \
 This is the key needed to utilize the stripe payment API. See [Stripe](#Stripe-Set-Up) for how to obtain it.
-- YADDRESS_KEY
+- YADDRESS_KEY \
 This is the API key used to verify addresses. See [Yaddress](#Yaddress-Set-Up) for how to obtain it.
 
 ## Firebase Set Up
